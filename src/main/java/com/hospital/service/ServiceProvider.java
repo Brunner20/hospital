@@ -2,7 +2,7 @@ package com.hospital.service;
 
 import com.hospital.service.impl.AccountServiceImpl;
 
-public class ServiceProvider {
+public final class ServiceProvider {
 
     private static ServiceProvider instance = new ServiceProvider();
 

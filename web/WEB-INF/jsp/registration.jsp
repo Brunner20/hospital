@@ -17,7 +17,7 @@
 	   Enter Login:<br />
 	   <input type="text" name="login" value="" /><br />
 	   Enter Password:<br />
-	   <input type="text" name="password" value="" /><br />
+	   <input type="password" name="password" value="" /><br />
 
 	   <input type="submit" value="Отправить" /><br />
 	</form>

@@ -1,4 +1,4 @@
-package com.hospital.connection;
+package com.hospital.dao.connection;
 
 public class ConnectionPoolException extends Exception{
 

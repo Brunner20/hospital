@@ -2,7 +2,7 @@ package com.hospital.dao;
 
 import com.hospital.dao.impl.AccountDAOImpl;
 
-public class DAOProvider {
+public final class DAOProvider {
 
     private static DAOProvider instance = new DAOProvider();
 

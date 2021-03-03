@@ -1,4 +1,4 @@
-package com.hospital.connection.data;
+package com.hospital.dao.connection.resource;
 
 import java.util.ResourceBundle;
 

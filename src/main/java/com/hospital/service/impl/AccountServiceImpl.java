@@ -10,11 +10,14 @@ import com.hospital.service.ServiceException;
 
 public class AccountServiceImpl implements AccountService {
 
+    private static final String WRONG_LOGIN_OR_PASSWORD = "login and password are required";
+    private static final String WRONG_REG_INFO = "name and surname are required";
+
     @Override
     public Visitor authorization(String login, String password) throws ServiceException {
 
         if(login==null||login.isEmpty()||password==null||password.isEmpty())
-        {throw new ServiceException("login and password are required");}
+        {throw new ServiceException(WRONG_LOGIN_OR_PASSWORD);}
 
         DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
@@ -34,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
         if(regInfo.getFirstname()==null||regInfo.getFirstname().isEmpty()||
                 regInfo.getLastname()==null||regInfo.getLastname().isEmpty())
-        {throw new ServiceException("name and surname are required");}
+        {throw new ServiceException(WRONG_REG_INFO);}
 
         DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();

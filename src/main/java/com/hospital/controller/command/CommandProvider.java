@@ -5,7 +5,7 @@ import com.hospital.controller.command.impl.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandProvider {
+public final class CommandProvider {
 
     private Map<CommandName,Command> commands = new HashMap<>();
 

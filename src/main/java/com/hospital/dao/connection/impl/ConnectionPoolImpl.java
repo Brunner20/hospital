@@ -1,9 +1,9 @@
-package com.hospital.connection.impl;
+package com.hospital.dao.connection.impl;
 
-import com.hospital.connection.ConnectionPool;
-import com.hospital.connection.ConnectionPoolException;
-import com.hospital.connection.data.DBParameter;
-import com.hospital.connection.data.DBResourceManager;
+import com.hospital.dao.connection.ConnectionPool;
+import com.hospital.dao.connection.ConnectionPoolException;
+import com.hospital.dao.connection.resource.DBParameter;
+import com.hospital.dao.connection.resource.DBResourceManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -55,20 +55,24 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     @Override
-    public Connection getConnection() {
+    public Connection getConnection() throws ConnectionPoolException {
         Connection connection = null;
         try {
             connection = connectionPool.take();
             usedConnections.add(connection);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new ConnectionPoolException("can't take connection",e);
         }
         return connection;
     }
 
     @Override
     public boolean releaseConnection(Connection connection) {
-        connectionPool.add(connection);
-        return usedConnections.remove(connection);
+        if(connection!=null)
+        {
+            usedConnections.remove(connection);
+            return connectionPool.add(connection);
+        }
+        return false;
     }
 }
