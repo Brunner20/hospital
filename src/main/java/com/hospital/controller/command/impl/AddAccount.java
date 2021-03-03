@@ -12,6 +12,10 @@ import java.io.IOException;
 
 public class AddAccount implements Command {
 
+    private static final String REGISTRATION_SUCCESSFUL = "Controller?command=gotoindexpage&message=registration is successful";
+    private static final String REGISTRATION_UNSUCCESSFUL = "Controller?command=gotoindexpage&message=registration is unsuccessful";
+    private static final String WRONG_IN_CATCH = "Controller?command=gotoindexpage&message=wrong in catch";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String firstname;
@@ -30,13 +34,13 @@ public class AddAccount implements Command {
         AccountService userService = provider.getAccountService();
         try {
            if(!userService.registration(registrationInfo)){
-               response.sendRedirect("Controller?command=gotoindexpage&message=registration is successful");
+               response.sendRedirect(REGISTRATION_SUCCESSFUL);
                return;
            }
-            response.sendRedirect("Controller?command=gotoindexpage&message=registration is unsuccessful");
+            response.sendRedirect(REGISTRATION_UNSUCCESSFUL);
 
         } catch (ServiceException e) {
-            response.sendRedirect("Controller?command=gotoindexpage&message=wrong in catch");
+            response.sendRedirect(WRONG_IN_CATCH);
             e.printStackTrace();
         }
     }

@@ -13,6 +13,10 @@ public class GoToMainPage implements Command {
 
    // public static final Logger logger = LogManager.getLogger(GoToMainPage.class);
 
+    private static final String WRONG_SESSION ="Controller?command=gotoindexpage&message=wrong session";
+    private static final String WRONG_AUTH ="Controller?command=gotoindexpage&message=wrong auth";
+    private static final String PATH_TO_MAIN = "/WEB-INF/jsp/main.jsp";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -20,7 +24,7 @@ public class GoToMainPage implements Command {
 
         if(session == null) {
            // logger.log(Level.ERROR,"session is null");
-            response.sendRedirect("Controller?command=gotoindexpage&message=wrong session");
+            response.sendRedirect(WRONG_SESSION);
             return;
         }
 
@@ -28,11 +32,11 @@ public class GoToMainPage implements Command {
 
         if (isAuth == null || !isAuth) {
            // logger.log(Level.ERROR,"Auth is null");
-            response.sendRedirect("Controller?command=gotoindexpage&message=wrong auth");
+            response.sendRedirect(WRONG_AUTH);
             return;
         }
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN);
        // logger.log(Level.INFO,"go to main.jsp");
         requestDispatcher.forward(request, response);
 

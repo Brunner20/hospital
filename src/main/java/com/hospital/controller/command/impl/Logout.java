@@ -11,6 +11,8 @@ public class Logout implements Command {
 
   //  public static final Logger logger = LogManager.getLogger(Logout.class);
 
+    private static final String GO_TO_INDEX_PAGE ="Controller?command=gotoindexpage&message=logout ok";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -20,6 +22,6 @@ public class Logout implements Command {
             session.removeAttribute("auth");
         }
        // logger.log(Level.INFO,"logout ok");
-        response.sendRedirect("Controller?command=gotoindexpage&message=logout ok");
+        response.sendRedirect(GO_TO_INDEX_PAGE);
     }
 }

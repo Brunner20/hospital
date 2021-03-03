@@ -20,6 +20,11 @@ public class Logination implements Command {
 
    // public static final Logger logger = LogManager.getLogger(Logination.class);
 
+    private static final String GO_TO_INDEX_PAGE_WROGN ="Controller?command=gotoindexpage&message=wrong login  or password";
+    private static final String GO_TO_MAIN_PAGE ="Controller?command=gotomainpage";
+    private static final String GO_TO_MAIN_PATIENT_PAGE ="Controller?command=gotomainpatientpage";
+    private static final String GO_TO_INDEX_PAGE_WROGN_IN_CATCH ="Controller?command=gotoindexpage&message=wrong in catch";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login;
@@ -39,7 +44,7 @@ public class Logination implements Command {
 
             if (visitor == null) {
                // logger.log(Level.WARN,"login or password invalid");
-                response.sendRedirect("Controller?command=gotoindexpage&message=wrong login  or password");
+                response.sendRedirect(GO_TO_INDEX_PAGE_WROGN);
                 return;
             }
 
@@ -49,14 +54,14 @@ public class Logination implements Command {
            // logger.log(Level.INFO,"logination is successful");
 
             if(visitor instanceof Staff)
-            {response.sendRedirect("Controller?command=gotomainpage");
+            {response.sendRedirect(GO_TO_MAIN_PAGE);
             }
             else
-                response.sendRedirect("Controller?command=gotomainpatientpage");
+                response.sendRedirect(GO_TO_MAIN_PATIENT_PAGE);
 
         } catch (ServiceException e) {
            // logger.log(Level.ERROR,"wring in catch:"+e.getMessage());
-            response.sendRedirect("Controller?command=gotoindexpage&message=wrong in catch");
+            response.sendRedirect(GO_TO_INDEX_PAGE_WROGN_IN_CATCH);
         }
     }
 }
