@@ -8,11 +8,11 @@
 <title>Hospital Registration</title>
 </head>
 <body>
-   <form action="Controller" method="post">
+   <form align = "center" action="Controller" method="post">
 		<input type="hidden" name="command" value="addaccount" />
-		Enter Firstname:<br />
+		Enter Name:<br />
 		<input type="text" name="firstname" value="" /><br />
-		Enter Lastname:<br />
+		Enter Surname:<br />
 		<input type="text" name="lastname" value="" /><br />
 	   Enter Login:<br />
 	   <input type="text" name="login" value="" /><br />

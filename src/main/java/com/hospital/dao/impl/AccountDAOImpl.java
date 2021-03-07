@@ -62,24 +62,33 @@ public class AccountDAOImpl implements AccountDAO {
         Connection connection = null;
         PreparedStatement accountSt = null;
         boolean isInserted = false;
-
-        //todo транзакция вствки аккаунта и пациента
+        Savepoint savepointOne = null;
 
         try {
-            if(!insertAccount(regInfo.getLogin(),regInfo.getPassword()))
+            connection = connectionPool.getConnection();
+            connection.setAutoCommit(false);
+            savepointOne = connection.setSavepoint("SavepointOne");
+            if(!insertAccount(regInfo.getLogin(),regInfo.getPassword(),connection))
             {
-                connection = connectionPool.getConnection();
                 accountSt = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
                 accountSt.setString(1, regInfo.getLogin());
                 accountSt.setString(2, regInfo.getPassword());
                 ResultSet resultSet = accountSt.executeQuery();
                 if(resultSet.next()){
-                   isInserted = insertPatient(regInfo.getFirstname(),regInfo.getLastname(),resultSet.getInt(1));
+                   isInserted = insertPatient(regInfo.getFirstname(),regInfo.getLastname(),
+                           resultSet.getInt(1),connection);
+                   connection.commit();
                 }
                 accountSt.close();
             }
 
         } catch (SQLException | ConnectionPoolException throwables) {
+            try {
+                if(connection!=null)
+                connection.rollback(savepointOne);
+            } catch (SQLException e) {
+                throw new DAOException(throwables);
+            }
             throw new DAOException(throwables);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -95,29 +104,24 @@ public class AccountDAOImpl implements AccountDAO {
         return isInserted;
     }
 
-    private boolean insertPatient(String firstname,String lastname, int accountId) throws SQLException, ConnectionPoolException {
+    private boolean insertPatient(String firstname,String lastname, int accountId,Connection connection) throws SQLException, ConnectionPoolException {
         boolean isInserted;
-        Connection connection = connectionPool.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PATIENT);
         preparedStatement.setString(1,firstname);
         preparedStatement.setString(2,lastname);
         preparedStatement.setInt(3,accountId);
         isInserted= preparedStatement.execute();
-        connectionPool.releaseConnection(connection);
         preparedStatement.close();
-
         return isInserted;
     }
 
-    private boolean insertAccount(String login,String password) throws SQLException, ConnectionPoolException {
+    private boolean insertAccount(String login,String password,Connection connection) throws SQLException, ConnectionPoolException {
         boolean isInserted;
-        Connection connection = connectionPool.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ACCOUNT);
         preparedStatement.setString(1, login);
         preparedStatement.setString(2, password);
         preparedStatement.setInt(3,3);
         isInserted= preparedStatement.execute();
-        connectionPool.releaseConnection(connection);
         preparedStatement.close();
 
         return isInserted;

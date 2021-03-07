@@ -7,6 +7,7 @@ import com.hospital.entity.RegistrationInfo;
 import com.hospital.entity.Visitor;
 import com.hospital.service.AccountService;
 import com.hospital.service.ServiceException;
+import com.hospital.service.validation.AccountValidator;
 
 public class AccountServiceImpl implements AccountService {
 
@@ -16,8 +17,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Visitor authorization(String login, String password) throws ServiceException {
 
-        if(login==null||login.isEmpty()||password==null||password.isEmpty())
-        {throw new ServiceException(WRONG_LOGIN_OR_PASSWORD);}
+        if(!AccountValidator.isPasswordValid(password)&&!AccountValidator.isLoginValid(login))
+        {
+            throw new ServiceException(WRONG_LOGIN_OR_PASSWORD);
+        }
 
         DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
@@ -35,9 +38,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean registration(RegistrationInfo regInfo) throws ServiceException {
 
-        if(regInfo.getFirstname()==null||regInfo.getFirstname().isEmpty()||
-                regInfo.getLastname()==null||regInfo.getLastname().isEmpty())
-        {throw new ServiceException(WRONG_REG_INFO);}
+        if(AccountValidator.isRegistrationInfoValid(regInfo))
+        {
+            throw new ServiceException(WRONG_REG_INFO);
+        }
 
         DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
