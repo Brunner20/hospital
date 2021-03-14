@@ -18,6 +18,15 @@
 		<url-pattern>/Controller</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>registration</servlet-name>
+		<jsp-file>/WEB-INF/jsp/registration.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>registration</servlet-name>
+		<url-pattern>/Registration</url-pattern>
+	</servlet-mapping>
+
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>

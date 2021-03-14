@@ -8,13 +8,26 @@ import com.hospital.service.ServiceProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AddAccount implements Command {
 
-    private static final String REGISTRATION_SUCCESSFUL = "Controller?command=gotoindexpage&message=registration is successful";
-    private static final String REGISTRATION_UNSUCCESSFUL = "Controller?command=gotoindexpage&message=registration is unsuccessful";
-    private static final String WRONG_IN_CATCH = "Controller?command=gotoindexpage&message=wrong in catch";
+    private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
+
+    private static final String ATTRIBUTE_INFO_MESSAGE = "informationMessage";
+    private static final String REGISTRATION_OK = "registration successful";
+    private static final String REGISTRATION_ERROR = "registration unsuccessful";
+
+    private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
+    private static final String WRONG_IN_CATCH = "wrong in catch";
+
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
+    private static final String FIRSTNAME = "firstname";
+    private static final String LASTNAME = "lastname";
+
+    private static final String ATTRIBUTE_URL = "url";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -23,10 +36,13 @@ public class AddAccount implements Command {
         String login;
         String password;
 
-        firstname = request.getParameter("firstname");
-        lastname = request.getParameter("lastname");
-        login = request.getParameter("login");
-        password = request.getParameter("password");
+        firstname = request.getParameter(FIRSTNAME);
+        lastname = request.getParameter(LASTNAME);
+        login = request.getParameter(LOGIN);
+        password = request.getParameter(PASSWORD);
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
 
         RegistrationInfo registrationInfo = new RegistrationInfo(firstname,lastname,login,password);
 
@@ -34,14 +50,15 @@ public class AddAccount implements Command {
         AccountService userService = provider.getAccountService();
         try {
            if(!userService.registration(registrationInfo)){
-               response.sendRedirect(REGISTRATION_SUCCESSFUL);
+               request.setAttribute(ATTRIBUTE_INFO_MESSAGE,REGISTRATION_OK);
                return;
            }
-            response.sendRedirect(REGISTRATION_UNSUCCESSFUL);
+           request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,REGISTRATION_ERROR);
+           response.sendRedirect(GO_TO_INDEX_PAGE);
 
         } catch (ServiceException e) {
-            response.sendRedirect(WRONG_IN_CATCH);
-            e.printStackTrace();
+            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_IN_CATCH );
+            response.sendRedirect(GO_TO_INDEX_PAGE);
         }
     }
 }

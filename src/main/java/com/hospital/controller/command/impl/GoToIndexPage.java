@@ -10,16 +10,14 @@ import java.io.IOException;
 
 public class GoToIndexPage implements Command {
 
-   // public static final Logger logger = LogManager.getLogger(GoToIndexPage.class);
+	private static final String PATH_TO_INDEX = "/WEB-INF/jsp/main_index.jsp";
 
-    private static final String PATH_TO_MAIN_INDEX = "/WEB-INF/jsp/main_index.jsp";
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_INDEX);
+			requestDispatcher.forward(request, response);
 
+	}
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN_INDEX);
-        requestDispatcher.forward(request, response);
-
-    }
 }

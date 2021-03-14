@@ -10,13 +10,14 @@ public final class CommandProvider {
     private Map<CommandName,Command> commands = new HashMap<>();
 
     public CommandProvider() {
-        commands.put(CommandName.LOGINATION, new Logination());
+        commands.put(CommandName.LOGIN, new Login());
         commands.put(CommandName.REGISTRATION, new Registration());
         commands.put(CommandName.ADDACCOUNT, new AddAccount());
         commands.put(CommandName.LOGOUT, new Logout());
-        commands.put(CommandName.GOTOINDEXPAGE,new GoToIndexPage());
-        commands.put(CommandName.GOTOMAINPAGE, new GoToMainPage());
+        commands.put(CommandName.GOTOINDEXPAGE, new GoToIndexPage());
+        commands.put(CommandName.GOTOMAINSTAFFPAGE, new GoToMainStaffPage());
         commands.put(CommandName.GOTOMAINPATIENTPAGE, new GoToMainPatientPage());
+        commands.put(CommandName.CHANGELOCALE, new ChangeLocale());
     }
 
     public Command takeCommand(String name){
