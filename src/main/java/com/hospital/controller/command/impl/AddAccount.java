@@ -51,6 +51,7 @@ public class AddAccount implements Command {
         try {
            if(!userService.registration(registrationInfo)){
                request.setAttribute(ATTRIBUTE_INFO_MESSAGE,REGISTRATION_OK);
+               response.sendRedirect(GO_TO_INDEX_PAGE);
                return;
            }
            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,REGISTRATION_ERROR);

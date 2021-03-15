@@ -4,17 +4,14 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@ include file = "header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <link  href="header.jsp">
     <title>Login page</title>
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
-    <fmt:message bundle="${loc}" key="local.lang.eng" var="en_button"/>
-    <fmt:message bundle="${loc}" key="local.lang.rus" var="ru_button"/>
     <fmt:message bundle="${loc}" key="local.login" var="login"/>
     <fmt:message bundle="${loc}" key="local.password" var="password"/>
     <fmt:message bundle="${loc}" key="local.submit" var="submit"/>
@@ -31,23 +28,9 @@
 
     <c:if test="${requestScope.informationMessage != null}">
         <font color="green">${requestScope.informationMessage}</font>
-        <c:remove var="infoMessage"/>
+        <c:remove var="informationMessage"/>
     </c:if>
 
-    <br />
-    <form action="Controller" method="post" class="locale">
-        <input type="hidden" name="command" value="changelocale"/>
-        <input type="hidden" name="loc" value="local_en"/>
-        <input type="submit" value="${en_button}"/> <br />
-    </form>
-
-    <form action="Controller" method="post" class="locale">
-        <input type="hidden" name="command" value="changelocale"/>
-        <input type="hidden" name="loc" value="local_ru"/>
-        <input type="submit" value="${ru_button}"/> <br />
-    </form>
-
-    <br />
 
 
     <form action="Controller" method="post">
@@ -60,7 +43,7 @@
 
         <br />
 
-        <a href="Registration">${registration} </a>
+        <a href="Controller?command=registration">${registration} </a>
     </form>
 
 

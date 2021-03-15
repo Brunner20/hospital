@@ -14,7 +14,9 @@ import java.sql.SQLException;
 public class PatientDAOImpl implements PatientDAO {
 
     private static final String UPDATE_PATIENT ="UPDATE hospital.patients SET firstname= ?, lastname = ?, age = ?, " +
-            "receipt_date = ?, department_id = ?, attendingDoctor_id = ?, status_id =?, account = ?  WHERE id = ?";
+            "receipt_date = ?, department_id = ?, attending_doctor = ?, status =?, account_id = ?  WHERE id = ?";
+
+    private static final String UPDATE_AGE = "UPDATE hospital.patients SET age = ? where id = ?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -50,5 +52,30 @@ public class PatientDAOImpl implements PatientDAO {
         }
 
 
+    }
+
+    @Override
+    public void updateAge(long id,int age) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_AGE);
+            preparedStatement.setInt(1,age);
+            preparedStatement.setLong(2,id);
+            preparedStatement.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
     }
 }

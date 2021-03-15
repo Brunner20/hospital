@@ -1,5 +1,6 @@
 package com.hospital.dao.connection.impl;
 
+import com.hospital.dao.DAOException;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.resource.DBParameter;
@@ -74,5 +75,30 @@ public class ConnectionPoolImpl implements ConnectionPool {
             return connectionPool.add(connection);
         }
         return false;
+    }
+
+    public void dispose()throws DAOException{
+        try {
+            clearConnectionQueue();
+        } catch (SQLException throwables) {
+            throw new DAOException(throwables);
+        }
+    }
+
+    private void clearConnectionQueue() throws SQLException {
+        closeConnectionQueue(connectionPool);
+        closeConnectionQueue(usedConnections);
+    }
+
+    private void closeConnectionQueue(BlockingQueue<Connection> connectionPool) throws SQLException {
+
+        Connection connection;
+        while ((connection= connectionPool.poll())!=null){
+            if(!connection.getAutoCommit()) {
+               connection.commit();
+            }
+           connection.close();
+        }
+
     }
 }

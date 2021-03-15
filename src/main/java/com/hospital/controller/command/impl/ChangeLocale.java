@@ -12,7 +12,7 @@ public class ChangeLocale implements Command {
 
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_LOCAL = "locale";
-    private static final String PARAMETER_LOC = "loc";
+    private static final String PARAMETER_LOC = "lang";
 
     private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
 

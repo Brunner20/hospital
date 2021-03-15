@@ -133,9 +133,9 @@ public class AccountDAOImpl implements AccountDAO {
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             if (resultSet.getString("title").equals("patient")) {
-                visitor = getPatientInfo(resultSet.getString(5));
+                visitor = getPatientInfo(resultSet.getString(1));
             } else {
-                visitor = getStaffInfo(resultSet.getString(5));
+                visitor = getStaffInfo(resultSet.getString(1));
             }
         }
         preparedStatement.close();
@@ -179,6 +179,7 @@ public class AccountDAOImpl implements AccountDAO {
             patient.setFirstname(resultSet.getString(2));
             patient.setLastname(resultSet.getString(3));
             patient.setAge(resultSet.getInt(4));
+            if(resultSet.getDate(5)!=null)
             patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
             patient.setDepartmentID(resultSet.getInt(6));
             patient.setAttendingDoctorID(resultSet.getInt(7));

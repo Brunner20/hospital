@@ -5,6 +5,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ include file = "header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,16 +14,14 @@
 <title>Welcome Staff</title>
 	<fmt:setLocale value="${sessionScope.locale}"/>
 	<fmt:setBundle basename="localization.local" var="loc"/>
-	<fmt:message bundle="${loc}" key="local.lang.eng" var="en_button"/>
-	<fmt:message bundle="${loc}" key="local.lang.rus" var="ru_button"/>
 	<fmt:message bundle="${loc}" key="local.logout" var="logout"/>
+	<fmt:message bundle="${loc}" key="local.welcome" var="welcome"/>
 </head>
 <body>
 
 
-
+	!!! ${welcome}!!!
 	<h1 align="center">
-		!!! Welcome Staff!!!
 	</h1>
 	My Patients
 	<table border="1">
@@ -29,8 +29,8 @@
 			<tr>
 				<td>
 					<font size="18" color="blue">
-						<c:out value="${n.firstname}" />
-						<c:out value="${n.lastname}" />
+						<c:out value="${patient.firstname}" />
+						<c:out value="${patient.lastname}" />
 					</font></td>
 			</tr>
 		</c:forEach>

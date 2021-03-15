@@ -1,40 +1,32 @@
-<%@ page language="java" contentType="text/html;
-    charset=utf-8"
-         pageEncoding="utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
+<link rel="stylesheet" href="style.css">
+
+
     <meta charset="utf-8">
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.lang.eng" var="en_button"/>
     <fmt:message bundle="${loc}" key="local.lang.rus" var="ru_button"/>
+    <fmt:message bundle="${loc}" key="header.home" var="home"/>
 
-</head>
-<body>
+<br/>
 
-<header>
-<form action="Controller" method="post" class="locale">
-    <input type="hidden" name="command" value="changelocale"/>
-    <%--		<input type="hidden" name="page" value="${pageContext.request.requestURI}"/>--%>
-    <input type="submit" value="${en_button}"/> <br />
-</form>
 
-<form action="Controller" method="post" class="locale">
-    <input type="hidden" name="command" value="changelocale"/>
-    <%--		<input type="hidden" name="page" value="${pageContext.request.requestURI}"/>--%>
-    <input type="submit" value="${ru_button}"/> <br />
-</form>
+<header style = "background-color:deepskyblue; height:100px">
 
-    <div class="block-top-auth">
-        <p><a href="#">Вход</a></p>
-        <p><a href="#">Регистрация</a></p>
-    </div>
+<h1 align="center">${home}</h1>
+    <form align = "right" action="Controller" method="post" class="locale">
+        <input type="hidden" name="command" value="changelocale"/>
+        <input type="hidden" name="lang" value="en"/>
+        <input type="submit" value="${en_button}"/> <br />
+    </form>
 
+    <form align = "right" action="Controller" method="post" class="locale">
+        <input type="hidden" name="command" value="changelocale"/>
+        <input type="hidden" name="lang" value="ru"/>
+        <input type="submit" value="${ru_button}"/> <br />
+    </form>
 </header>
 
-</body>
-</html>
+<br/>

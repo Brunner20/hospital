@@ -15,6 +15,7 @@ public final class CommandProvider {
         commands.put(CommandName.ADDACCOUNT, new AddAccount());
         commands.put(CommandName.LOGOUT, new Logout());
         commands.put(CommandName.GOTOINDEXPAGE, new GoToIndexPage());
+        commands.put(CommandName.ADDADDITIONALINFOPAGE, new AddAdditionalInfoPage());
         commands.put(CommandName.GOTOMAINSTAFFPAGE, new GoToMainStaffPage());
         commands.put(CommandName.GOTOMAINPATIENTPAGE, new GoToMainPatientPage());
         commands.put(CommandName.CHANGELOCALE, new ChangeLocale());

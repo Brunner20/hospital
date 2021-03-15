@@ -12,10 +12,9 @@ import java.io.IOException;
 public class GoToMainPatientPage implements Command {
 
     private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
-
+    private static final String GO_TO_PATIENT_PAGE = "Controller?command=gotomainpatientpage";
 
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
-    private static final String WRONG_IN_SESSION = "wrong session";
     private static final String WRONG_AUTH ="wrong auth";
 
     private static final String PATH_TO_MAIN_PATIENT ="/WEB-INF/jsp/main_patient.jsp";
@@ -34,14 +33,14 @@ public class GoToMainPatientPage implements Command {
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
 
         if (isAuth == null || !isAuth) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
             request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
 
         request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
-        session.setAttribute(ATTRIBUTE_URL,PATH_TO_MAIN_PATIENT);
+        session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN_PATIENT);
         requestDispatcher.forward(request, response);
     }

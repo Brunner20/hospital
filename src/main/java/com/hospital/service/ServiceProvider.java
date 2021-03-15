@@ -1,6 +1,7 @@
 package com.hospital.service;
 
 import com.hospital.service.impl.AccountServiceImpl;
+import com.hospital.service.impl.PatientServiceImpl;
 import com.hospital.service.impl.StaffServiceImpl;
 
 public final class ServiceProvider {
@@ -13,6 +14,8 @@ public final class ServiceProvider {
 
     private final StaffService staffService = new StaffServiceImpl();
 
+    private final PatientService patientService = new PatientServiceImpl();
+
     public static ServiceProvider getInstance(){return instance;}
 
     public AccountService getAccountService(){
@@ -20,4 +23,6 @@ public final class ServiceProvider {
     }
 
     public StaffService getStaffService() {return staffService;}
+
+    public PatientService getPatientService() {return patientService;}
 }

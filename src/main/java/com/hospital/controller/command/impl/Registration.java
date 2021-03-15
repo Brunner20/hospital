@@ -12,13 +12,14 @@ import java.io.IOException;
 public class Registration implements Command {
 
     private static final String GO_TO_REG_PAGE ="/WEB-INF/jsp/registration.jsp";
+    private static final String GO_TO_REGISTRATION_PAGE = "Controller?command=registration";
     private static final String ATTRIBUTE_URL = "url";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        session.setAttribute(ATTRIBUTE_URL,GO_TO_REG_PAGE);
+        session.setAttribute(ATTRIBUTE_URL, GO_TO_REGISTRATION_PAGE);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(GO_TO_REG_PAGE);
         requestDispatcher.forward(request, response);
     }

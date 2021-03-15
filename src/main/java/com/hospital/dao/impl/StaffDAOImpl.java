@@ -15,9 +15,9 @@ import java.util.List;
 public class StaffDAOImpl implements StaffDAO {
 
     private static final String UPDATE_STAFF ="UPDATE hospital.staff SET firstname= ?, lastname = ?,  " +
-            "picture = ?, department_id = ?, staff_type = ? WHERE id = ?";
+            "staff_pic = ?, department_id = ?, type_id = ? WHERE id = ?";
 
-    private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE 'attending doctor' =?";
+    private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
