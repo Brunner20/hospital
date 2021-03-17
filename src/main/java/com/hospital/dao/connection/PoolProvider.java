@@ -7,15 +7,8 @@ public final class PoolProvider {
 
     private PoolProvider() {}
 
-    private static ConnectionPool  connectionPool = null;
+    private static ConnectionPool  connectionPool = new ConnectionPoolImpl();
 
-    static {
-        try {
-            connectionPool = new ConnectionPoolImpl();
-        } catch (ConnectionPoolException e) {
-             throw new PoolProviderException(e);
-        }
-    }
 
     public static ConnectionPool getConnectionPool() {return connectionPool;}
 }

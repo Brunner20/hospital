@@ -1,6 +1,5 @@
 package com.hospital.dao.connection.impl;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.resource.DBParameter;
@@ -23,7 +22,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private String password;
     private int size;
 
-    public ConnectionPoolImpl() throws ConnectionPoolException {
+    public ConnectionPoolImpl()  {
         DBResourceManager resourceManager = DBResourceManager.getInstance();
         this.driver = resourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = resourceManager.getValue(DBParameter.DB_URL);
@@ -35,10 +34,11 @@ public class ConnectionPoolImpl implements ConnectionPool {
         }catch (NumberFormatException e){
             this.size = 10;
         }
-        init();
+
     }
 
-    private void init()throws ConnectionPoolException{
+    @Override
+    public void init()throws ConnectionPoolException{
         try {
             Class.forName(driver);
             connectionPool = new ArrayBlockingQueue<>(size);
@@ -77,11 +77,12 @@ public class ConnectionPoolImpl implements ConnectionPool {
         return false;
     }
 
-    public void dispose()throws DAOException{
+    @Override
+    public void dispose()throws ConnectionPoolException{
         try {
             clearConnectionQueue();
         } catch (SQLException throwables) {
-            throw new DAOException(throwables);
+            throw new ConnectionPoolException(throwables);
         }
     }
 
