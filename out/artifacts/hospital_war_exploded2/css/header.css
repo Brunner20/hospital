@@ -1,0 +1,36 @@
+header{
+    horiz-align:right ;
+    padding: 20px;
+    background-color: #282830;
+    border-radius: 15px 15px 0 0;
+    text-transform: uppercase;
+}
+.pref {
+    *zoom: 1;
+
+}
+
+.pref:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.pref:after {
+    clear: both;
+}
+
+.locale{
+    padding:0;
+    background: none;
+}
+
+.locale>input[type="submit"]{
+    padding: 0 5px;
+    font-size: 14px;
+    background: none;
+    color: #fff;
+}
+
+.locale>input[type="submit"]:hover{
+    text-decoration: underline;
+    background: none;
+}

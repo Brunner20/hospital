@@ -17,36 +17,41 @@
     <fmt:message bundle="${loc}" key="local.submit" var="submit"/>
     <fmt:message bundle="${loc}" key="local.registration" var="registration"/>
 </head>
+
+<link rel="stylesheet" href="../../css/login.css">
 <body>
 
+<div class="login-form">
 
     <c:if test="${requestScope.errorMessage != null}">
-        <font color="red">${requestScope.errorMessage}</font>
+        <c:forEach var="error" items="${requestScope.errorMessage}">
+            <div class="error">
+                <h4>${error}</h4>
+            </div>
+        </c:forEach>
         <c:remove var="errorMessage"/>
     </c:if>
 
 
     <c:if test="${requestScope.informationMessage != null}">
-        <font color="green">${requestScope.informationMessage}</font>
-        <c:remove var="informationMessage"/>
+        <c:forEach var="info" items="${requestScope.informationMessage}">
+            <div class="information">
+                <h4>${info}</h4>
+            </div>
+        </c:forEach>
+        <c:remove var="info"/>
     </c:if>
 
-
-
-    <form action="Controller" method="post">
-        <input type="hidden" name="command" value="login" />
-        <input type="text" name="login" placeholder="${login}" /><br />
-        <input type="password" name="password" placeholder="${password}" /><br />
-
-        <input type="submit" value="${submit}" /><br />
-
-
-        <br />
-
-        <a href="Controller?command=registration">${registration} </a>
-    </form>
-
-
+    <div class="login-s">
+        <form action="Controller" method="post">
+            <input type="hidden" name="command" value="login" />
+            <input type="text" name="login" required placeholder="${login}" />
+            <input type="password" name="password" required placeholder="${password}" />
+            <input type="submit" value="${submit}" /><br />
+            <a href="Controller?command=registration">${registration} </a>
+        </form>
+    </div >
+</div>
 
 </body>
 </html>

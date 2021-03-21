@@ -28,20 +28,20 @@ public class GoToMainStaffPage implements Command {
     private static final String ATTRIBUTE_AUTH = "auth";
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_ID = "id";
+
     private static final String ATTRIBUTE_PATIENT = "patientList";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession(true);
-
         if(session == null) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
 
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
-
         if (isAuth == null || !isAuth) {
            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
@@ -54,13 +54,14 @@ public class GoToMainStaffPage implements Command {
 
         List<Patient> patients = null;
         try {
-            patients = staffService.getAllPatients((Long) session.getAttribute(ATTRIBUTE_ID));
+            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_ID));
             request.setAttribute(ATTRIBUTE_PATIENT,patients);
             session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN);
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-           response.sendRedirect(GO_TO_INDEX_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
         }
 
 

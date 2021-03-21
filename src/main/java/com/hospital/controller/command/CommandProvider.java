@@ -19,6 +19,10 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOMAINSTAFFPAGE, new GoToMainStaffPage());
         commands.put(CommandName.GOTOMAINPATIENTPAGE, new GoToMainPatientPage());
         commands.put(CommandName.CHANGELOCALE, new ChangeLocale());
+        commands.put(CommandName.GOTODOCTORSPATIENTSPAGE, new GoToDoctorsPatientsPage());
+        commands.put(CommandName.GOTOFREEPATIENTSPAGE, new GoToFreePatientsPage());
+        commands.put(CommandName.ADDPATIENTSTODOCTOR, new AddPatientsToDoctor());
+        commands.put(CommandName.GOTOPROFILEPAGE, new GoToProfilePage());
     }
 
     public Command takeCommand(String name){

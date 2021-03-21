@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class GoToIndexPage implements Command {
 
-	private static final String PATH_TO_INDEX = "/WEB-INF/jsp/main_index.jsp";
+	private static final String PATH_TO_INDEX = "/WEB-INF/jsp/login.jsp";
 	private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
 	private static final String ATTRIBUTE_URL = "url";
 
