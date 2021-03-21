@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class RegistrationInfo {
 	
-	private String firstname;
-	private String lastname;
+	private String name;
+	private String surname;
 	private String login;
 	private String password;
 
@@ -13,27 +13,27 @@ public class RegistrationInfo {
 	public RegistrationInfo() {
 	}
 
-	public RegistrationInfo(String firstname, String lastname, String login, String password) {
-		this.firstname = firstname;
-		this.lastname = lastname;
+	public RegistrationInfo(String name, String surname, String login, String password) {
+		this.name = name;
+		this.surname = surname;
 		this.login = login;
 		this.password = password;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getLogin() {
@@ -57,19 +57,19 @@ public class RegistrationInfo {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		RegistrationInfo that = (RegistrationInfo) o;
-		return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(login, that.login) && Objects.equals(password, that.password);
+		return Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(login, that.login) && Objects.equals(password, that.password);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstname, lastname, login, password);
+		return Objects.hash(name, surname, login, password);
 	}
 
 	@Override
 	public String toString() {
 		return "RegistrationInfo{" +
-				"name='" + firstname + '\'' +
-				", surname='" + lastname + '\'' +
+				"name='" + name + '\'' +
+				", surname='" + surname + '\'' +
 				", login='" + login + '\'' +
 				", password='" + password + '\'' +
 				'}';

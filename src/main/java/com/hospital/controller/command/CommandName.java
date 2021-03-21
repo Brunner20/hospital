@@ -1,13 +1,10 @@
 package com.hospital.controller.command;
 
 public enum CommandName {
-    LOGIN,
+    LOGINATION,
     REGISTRATION,
     LOGOUT,
     ADDACCOUNT,
     GOTOINDEXPAGE,
-    GOTOMAINSTAFFPAGE,
-    GOTOMAINPATIENTPAGE,
-    ADDADDITIONALINFOPAGE,
-    CHANGELOCALE
+    FOTOMAONPAGE
 }
