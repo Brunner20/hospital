@@ -21,23 +21,41 @@
 
 
 	!!! ${welcome}!!!
-	<h1 align="center">
-	</h1>
-	My Patients
-	<table border="1">
-		<c:forEach var="patient" items="${requestScope.patientList}">
-			<tr>
-				<td>
-					<font size="18" color="blue">
-						<c:out value="${patient.firstname}" />
-						<c:out value="${patient.lastname}" />
-					</font></td>
-			</tr>
-		</c:forEach>
-	</table>
-	
-	<br/>
-	
-	<a href="Controller?command=logout">${logout}</a>
+	<div class="content">
+
+		<section>
+				<c:if test="${sessionScope.role == 'doctor'}">
+					<div class ="doctor">
+						<form action="Controller" method="post">
+							<input type="hidden" name="command" value="setappointment"/>
+							<input type="hidden" name="page" value=""/>
+							<input type="submit" value="Дать назначение пациенту"/>
+						</form>
+
+						<form action="Controller" method="post">
+							<input type="hidden" name="command" value="gotodoctorspatientspage"/>
+							<input type="submit" value="Список моих пациентов"/>
+						</form>
+
+						<form action="Controller" method="post">
+							<input type="hidden" name="command" value="gotofreepatientspage"/>
+							<input type="submit" value="Взять себе пациента"/>
+						</form>
+					</div>
+				</c:if>
+					<div>
+						<form action="appointments.html" method="post">
+							<input type="hidden" name="command" value=""/>
+							<input type="submit" value="Назначения к выполнению"/>
+
+						</form>
+					</div>
+		</section>
+
+	</div>
+
+
+
+
 </body>
 </html>

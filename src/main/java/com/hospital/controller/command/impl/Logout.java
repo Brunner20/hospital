@@ -1,9 +1,6 @@
 package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,17 +9,24 @@ import java.io.IOException;
 
 public class Logout implements Command {
 
-    public static final Logger logger = LogManager.getLogger(Logout.class);
+ 
+
+    private static final String GO_TO_INDEX_PAGE ="Controller?command=gotoindexpage";
+    private static final String ATTRIBUTE_INFO_MESSAGE = "informationMessage";
+    private static final String LOGOUT_OK = "logout successful";
+    private static final String ATTRIBUTE_AUTH = "auth";
+    private static final String ATTRIBUTE_URL = "url";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
 
         if(session != null) {
-            session.removeAttribute("auth");
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            session.removeAttribute(ATTRIBUTE_AUTH);
         }
-        logger.log(Level.INFO,"logout ok");
-        response.sendRedirect("Controller?command=gotoindexpage&message=logout ok");
+        request.setAttribute(ATTRIBUTE_INFO_MESSAGE,LOGOUT_OK);
+        response.sendRedirect(GO_TO_INDEX_PAGE);
     }
 }

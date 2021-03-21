@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
 
-    private static final long serialVersionUID = 178651L;
+    private static final long serialVersionUID = 1788742651L;
 
     private final CommandProvider provider = new CommandProvider();
 

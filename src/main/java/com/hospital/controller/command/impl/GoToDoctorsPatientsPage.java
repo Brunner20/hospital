@@ -6,7 +6,6 @@ import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,38 +13,23 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class GoToMainStaffPage implements Command {
-
-
+public class GoToDoctorsPatientsPage implements Command {
 
     private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
-    private static final String GO_TO_STAFF_PAGE = "Controller?command=gotomainstaffpage";
-
-    private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
-    private static final String WRONG_AUTH ="wrong auth";
-
-    private static final String PATH_TO_MAIN = "/WEB-INF/jsp/main_staff.jsp";
-    private static final String ATTRIBUTE_AUTH = "auth";
+    private static final String PATH_TO_PATIENTS = "/WEB-INF/jsp/patients.jsp";
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_ID = "id";
-
     private static final String ATTRIBUTE_PATIENT = "patientList";
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 
         HttpSession session = request.getSession(true);
+
         if(session == null) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
-            return;
-        }
-
-        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
-        if (isAuth == null || !isAuth) {
-           session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-           request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
-           response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
 
@@ -55,17 +39,11 @@ public class GoToMainStaffPage implements Command {
         List<Patient> patients = null;
         try {
             patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_ID));
-            request.setAttribute(ATTRIBUTE_PATIENT,patients);
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN);
-            requestDispatcher.forward(request, response);
-        } catch (ServiceException e) {
+            request.setAttribute(ATTRIBUTE_PATIENT, patients);
+            request.getRequestDispatcher(PATH_TO_PATIENTS).forward(request,response);
+        }catch (ServiceException e){
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
         }
-
-
-
     }
-
 }

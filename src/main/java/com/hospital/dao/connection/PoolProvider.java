@@ -10,5 +10,11 @@ public final class PoolProvider {
     private static ConnectionPool  connectionPool = new ConnectionPoolImpl();
 
 
-    public static ConnectionPool getConnectionPool() {return connectionPool;}
+    public static ConnectionPool getConnectionPool() {
+        try {
+            connectionPool.init();
+        } catch (ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+        return connectionPool;}
 }

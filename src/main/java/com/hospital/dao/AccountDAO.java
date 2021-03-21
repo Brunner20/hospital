@@ -1,6 +1,5 @@
 package com.hospital.dao;
 
-import com.hospital.entity.Account;
 import com.hospital.entity.RegistrationInfo;
 import com.hospital.entity.Visitor;
 

@@ -2,6 +2,8 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 import com.hospital.entity.Patient;
+import com.hospital.entity.Staff;
+import com.hospital.service.PatientService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
@@ -12,27 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-public class GoToMainStaffPage implements Command {
-
-
+public class GoToProfilePage implements Command {
 
     private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
-    private static final String GO_TO_STAFF_PAGE = "Controller?command=gotomainstaffpage";
+    private static final String GO_TO_PROFILE_PAGE = "Controller?command=gotoprofilepage";
+    private static final String PATH_TO_PROFILE = "/WEB-INF/jsp/profile.jsp";
 
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
     private static final String WRONG_AUTH ="wrong auth";
 
-    private static final String PATH_TO_MAIN = "/WEB-INF/jsp/main_staff.jsp";
     private static final String ATTRIBUTE_AUTH = "auth";
     private static final String ATTRIBUTE_URL = "url";
+    private static final String ATTRIBUTE_ROLE = "role";
     private static final String ATTRIBUTE_ID = "id";
-
-    private static final String ATTRIBUTE_PATIENT = "patientList";
-
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
         if(session == null) {
@@ -43,29 +40,36 @@ public class GoToMainStaffPage implements Command {
 
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         if (isAuth == null || !isAuth) {
-           session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-           request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
-           response.sendRedirect(GO_TO_INDEX_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
 
+        Long id = (Long) session.getAttribute(ATTRIBUTE_ID);
+        String role = (String)session.getAttribute(ATTRIBUTE_ROLE);
+
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         StaffService staffService = serviceProvider.getStaffService();
+        PatientService patientService = serviceProvider.getPatientService();
 
-        List<Patient> patients = null;
+        session.setAttribute(ATTRIBUTE_URL,GO_TO_PROFILE_PAGE);
         try {
-            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_ID));
-            request.setAttribute(ATTRIBUTE_PATIENT,patients);
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN);
-            requestDispatcher.forward(request, response);
+            if (role.contains("doctor") || role.contains("nurse")) {
+
+                Staff staff = staffService.getStaffById(id);
+                request.setAttribute("staff",staff);
+            } else {
+                Patient patient = patientService.getPatientById(id);
+                Staff attendingDoctor = staffService.getStaffById(patient.getAttendingDoctorID());
+                request.setAttribute("patient",patient);
+                request.setAttribute("attendingDoctor",attendingDoctor);
+            }
+            request.getRequestDispatcher(PATH_TO_PROFILE).forward(request, response);
         } catch (ServiceException e) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
-        }
-
-
+            }
 
     }
-
 }

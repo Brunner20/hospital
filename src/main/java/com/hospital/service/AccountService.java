@@ -1,6 +1,5 @@
 package com.hospital.service;
 
-import com.hospital.entity.Account;
 import com.hospital.entity.RegistrationInfo;
 import com.hospital.entity.Visitor;
 

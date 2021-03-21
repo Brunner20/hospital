@@ -21,8 +21,27 @@
     !!! ${welcome}!!!
 </h1>
 
-<br/>
+<div class="content">
 
-<a href="Controller?command=logout">${logout}</a>
+    <section>
+        <c:if test="${sessionScope.role == 'patient'}">
+            <div class ="doctor">
+                <form action="/" method="post">
+                    <input type="hidden" name="command" value=""/>
+                    <input type="hidden" name="page" value=""/>
+                    <input type="submit" value="Мои назначения"/>
+                </form>
+
+                <form action="medical.history.html" method="post">
+                    <input type="hidden" name="command" value=""/>
+                    <input type="submit" value="Моя история болезни"/>
+                </form>
+
+        </div>
+        </c:if>
+    </section>
+
+</div>
+
 </body>
 </html>

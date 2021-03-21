@@ -34,7 +34,7 @@ public class Login implements Command {
     private static final String ATTRIBUTE_AUTH = "auth";
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_ROLE = "role";
-    private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_VISITOR_ID = "id";
 
 
 
@@ -66,15 +66,19 @@ public class Login implements Command {
 
             if(visitor instanceof Staff)
             {
+                Staff staff = (Staff) visitor;
                 session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_STAFF_PAGE);
-                session.setAttribute(ATTRIBUTE_ROLE,"staff");
-                session.setAttribute(ATTRIBUTE_ID,((Staff) visitor).getId());
+                if(staff.getStaffTypeID()==1)
+                session.setAttribute(ATTRIBUTE_ROLE,"doctor");
+                else
+                    session.setAttribute(ATTRIBUTE_ROLE,"nurse");
+                session.setAttribute(ATTRIBUTE_VISITOR_ID,((Staff) visitor).getId());
                 response.sendRedirect(GO_TO_MAIN_STAFF_PAGE);
             }
             else if (visitor instanceof Patient)
             {
                 session.setAttribute(ATTRIBUTE_ROLE,"patient");
-                session.setAttribute(ATTRIBUTE_ID,((Patient)visitor).getId());
+                session.setAttribute(ATTRIBUTE_VISITOR_ID,((Patient)visitor).getId());
                 Patient patient = (Patient) visitor;
                 if(patient.getAge()==0)
                 {

@@ -1,0 +1,75 @@
+#login-form {
+    margin: 150px auto;
+    width: 300px;
+}
+
+
+#login-form> .login-s{
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+    padding: 20px;
+    position: relative;
+}
+
+#login-form>.login-s input {
+    font-size: 14px;
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"] {
+    border: 1px solid #dcdcdc;
+    padding: 12px 10px;
+    width: 260px;
+}
+
+#login-form input[type="text"] {
+    border-radius: 3px 3px 0 0;
+}
+
+#login-form input[type="password"] {
+    border-top: none;
+    border-radius: 0px 0px 3px 3px;
+}
+
+#login-form>.login-s input[type="submit"] {
+    border-radius: 3px;
+    float: right;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 12px 20px;
+    color: #fff;
+    cursor: pointer;
+    background: #1dabb8; /* Old browsers */
+    background: -moz-linear-gradient(top,  #1dabb8 0%, #1dabb8 75%, #0c8a9b 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #1dabb8 0%,#1dabb8 75%,#0c8a9b 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #1dabb8 0%,#1dabb8 75%,#0c8a9b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1dabb8', endColorstr='#1dabb8',GradientType=0 ); /* IE6-9 */
+
+}
+
+#login-form>fieldset input[type="submit"]:hover {
+    background: #198d98;
+}
+
+.info {
+    float: left;
+    margin-top: 30px;
+    display: block;
+}
+
+/* ---------- ERROR ---------- */
+.error {
+    color: red;
+    margin: -140px auto;
+    width: 300px;
+    font-size: 14px;
+}
+
+/* ---------INFO-------- */
+
+.information {
+    color: green;
+    margin: -140px auto;
+    width: 300px;
+    font-size: 12px;
+}

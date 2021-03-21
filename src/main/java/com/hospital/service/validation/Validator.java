@@ -35,6 +35,10 @@ public class Validator {
         return  String.valueOf(id).matches(ID_REGEX);
     }
 
+    public static boolean isIdValid(String id){
+        return  id.matches(ID_REGEX);
+    }
+
     public static boolean isAgeValid(String age) {
         boolean isValid = age.matches(AGE_REGEX);
        try {

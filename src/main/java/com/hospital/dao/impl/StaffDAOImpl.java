@@ -18,6 +18,7 @@ public class StaffDAOImpl implements StaffDAO {
             "staff_pic = ?, department_id = ?, type_id = ? WHERE id = ?";
 
     private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
+    private static final String SELECT_STAFF_BY_ID = "SELECT * FROM hospital.staff WHERE id =?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -68,6 +69,7 @@ public class StaffDAOImpl implements StaffDAO {
                 patient.setFirstname(set.getString(2));
                 patient.setLastname(set.getString(3));
                 patient.setAge(set.getInt(4));
+                if(set.getDate(5)!=null)
                 patient.setReceiptDate(new Date(set.getDate(5).getTime()).toLocalDate());
                 patient.setDepartmentID(set.getInt(6));
                 patient.setAttendingDoctorID(set.getInt(7));
@@ -88,5 +90,41 @@ public class StaffDAOImpl implements StaffDAO {
             }
         }
         return patients;
+    }
+
+    @Override
+    public Staff getStaffById(Long id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Staff staff = null;
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_STAFF_BY_ID);
+            preparedStatement.setLong(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                staff = new Staff();
+                staff.setId(resultSet.getLong(1));
+                staff.setFirstname(resultSet.getString(2));
+                staff.setLastname(resultSet.getString(3));
+                staff.setPicture(resultSet.getString(4));
+                staff.setStaffTypeID(resultSet.getLong(5));
+                staff.setDepartmentID(resultSet.getLong(6));
+                staff.setAccountID(resultSet.getLong(7));
+
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return staff;
     }
 }
