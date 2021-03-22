@@ -1,4 +1,4 @@
-package com.hospital.dao.connection.resource;
+package com.hospital.connection.data;
 
 public final class DBParameter {
 

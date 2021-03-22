@@ -36,7 +36,6 @@ public class AccountDAOImpl implements AccountDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         Visitor visitor;
-
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
