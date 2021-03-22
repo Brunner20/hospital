@@ -2,7 +2,7 @@ package com.hospital.dao.connection.resource;
 
 import java.util.ResourceBundle;
 
-public class DBResourceManager {
+public final class DBResourceManager {
 
     private final static DBResourceManager instance = new DBResourceManager();
 

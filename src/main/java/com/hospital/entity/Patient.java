@@ -10,22 +10,23 @@ public class Patient implements Visitor{
     private String Lastname;
     private int age;
     private LocalDate receiptDate;
-    private long departmentID;
+    private Department department;
     private long attendingDoctorID;
     private long statusID;
     private long accountID;
 
+
     public Patient() {
     }
 
-    public Patient(long id, String firstname, String lastname, int age, LocalDate receiptDate, long departmentID,
+    public Patient(long id, String firstname, String lastname, int age, LocalDate receiptDate, Department department,
                    long attendingDoctorID, long statusID, long accountID) {
         this.id = id;
         this.firstname = firstname;
         Lastname = lastname;
         this.age = age;
         this.receiptDate = receiptDate;
-        this.departmentID = departmentID;
+        this.department = department;
         this.attendingDoctorID = attendingDoctorID;
         this.statusID = statusID;
         this.accountID = accountID;
@@ -72,14 +73,6 @@ public class Patient implements Visitor{
         this.receiptDate = receiptDate;
     }
 
-    public long getDepartmentID() {
-        return departmentID;
-    }
-
-    public void setDepartmentID(long departmentID) {
-        this.departmentID = departmentID;
-    }
-
     public long getAttendingDoctorID() {
         return attendingDoctorID;
     }
@@ -104,17 +97,25 @@ public class Patient implements Visitor{
         this.accountID = accountID;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(int departmentId) {
+        this.department = Department.getDepartmentById(departmentId);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return id == patient.id && age == patient.age && departmentID == patient.departmentID && attendingDoctorID == patient.attendingDoctorID && statusID == patient.statusID && accountID == patient.accountID && Objects.equals(firstname, patient.firstname) && Objects.equals(Lastname, patient.Lastname) && receiptDate.equals(patient.receiptDate);
+        return id == patient.id && age == patient.age && attendingDoctorID == patient.attendingDoctorID && statusID == patient.statusID && accountID == patient.accountID && Objects.equals(firstname, patient.firstname) && Objects.equals(Lastname, patient.Lastname) && Objects.equals(receiptDate, patient.receiptDate) && department == patient.department;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, Lastname, age, receiptDate, departmentID, attendingDoctorID, statusID, accountID);
+        return Objects.hash(id, firstname, Lastname, age, receiptDate, department, attendingDoctorID, statusID, accountID);
     }
 
     @Override
@@ -125,7 +126,7 @@ public class Patient implements Visitor{
                 ", Lastname='" + Lastname + '\'' +
                 ", age=" + age +
                 ", receiptDate=" + receiptDate +
-                ", departmentID=" + departmentID +
+                ", department=" + department +
                 ", attendingDoctorID=" + attendingDoctorID +
                 ", statusID=" + statusID +
                 ", accountID=" + accountID +

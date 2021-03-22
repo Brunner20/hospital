@@ -18,14 +18,13 @@
 </head>
 <body>
 
-<form align = "center" action="Controller" method="post">
-    <input type="hidden" name="command" value="addadditionalinfopage" />
-    ${pic}<br />
-    <input type="image" name="pic" value="" /><br />
-    ${age}<br />
-    <input type="number" name="age" value="" /><br />
-    <input type="submit" value=  ${submit} /><br />
-</form>
+
+    <form action="Controller" method="post" >
+        <input type="hidden" name="command" value="addadditionalinfopage" />
+        ${pic}<input type="file" name="file" value="select images..."  /><br/>
+        ${age}<input type="number" name="age" /><br/>
+        <input type="submit" value="Ok" />
+    </form>
 
 </body>
 </body>

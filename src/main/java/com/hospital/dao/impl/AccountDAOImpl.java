@@ -157,7 +157,7 @@ public class AccountDAOImpl implements AccountDAO {
             staff.setLastname(resultSet.getString(3));
             staff.setPicture(resultSet.getString(4));
             staff.setStaffTypeID(resultSet.getInt(5));
-            staff.setDepartmentID(resultSet.getInt(6));
+            staff.setDepartment(resultSet.getInt(6));
             staff.setAccountID(resultSet.getInt(7));
 
         }
@@ -181,7 +181,7 @@ public class AccountDAOImpl implements AccountDAO {
             patient.setAge(resultSet.getInt(4));
             if(resultSet.getDate(5)!=null)
             patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
-            patient.setDepartmentID(resultSet.getInt(6));
+            patient.setDepartment(resultSet.getInt(6));
             patient.setAttendingDoctorID(resultSet.getInt(7));
             patient.setStatusID(resultSet.getInt(8));
             patient.setAccountID(resultSet.getInt(9));

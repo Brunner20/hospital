@@ -9,19 +9,19 @@ public class Staff implements Visitor {
     private String Lastname;
     private String picture;
     private long StaffTypeID;
-    private long departmentID;
+    private Department department;
     private long accountID;
 
     public Staff() {
     }
 
-    public Staff(long id, String firstname, String lastname, String picture, long staffTypeID, long departmentID, long accountID) {
+    public Staff(long id, String firstname, String lastname, String picture, long staffTypeID, Department department, long accountID) {
         this.id = id;
         this.firstname = firstname;
         Lastname = lastname;
         this.picture = picture;
         StaffTypeID = staffTypeID;
-        this.departmentID = departmentID;
+        this.department = department;
         this.accountID = accountID;
     }
 
@@ -65,12 +65,12 @@ public class Staff implements Visitor {
         StaffTypeID = staffTypeID;
     }
 
-    public long getDepartmentID() {
-        return departmentID;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentID(long departmentID) {
-        this.departmentID = departmentID;
+    public void setDepartment(int departmentId) {
+        this.department = Department.getDepartmentById(departmentId);
     }
 
     public long getAccountID() {
@@ -86,12 +86,12 @@ public class Staff implements Visitor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Staff staff = (Staff) o;
-        return id == staff.id && StaffTypeID == staff.StaffTypeID && departmentID == staff.departmentID && accountID == staff.accountID && firstname.equals(staff.firstname) && Lastname.equals(staff.Lastname) && Objects.equals(picture, staff.picture);
+        return id == staff.id && StaffTypeID == staff.StaffTypeID && accountID == staff.accountID && Objects.equals(firstname, staff.firstname) && Objects.equals(Lastname, staff.Lastname) && Objects.equals(picture, staff.picture) && department == staff.department;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, Lastname, picture, StaffTypeID, departmentID, accountID);
+        return Objects.hash(id, firstname, Lastname, picture, StaffTypeID, department, accountID);
     }
 
     @Override
@@ -100,8 +100,9 @@ public class Staff implements Visitor {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", Lastname='" + Lastname + '\'' +
+                ", picture='" + picture + '\'' +
                 ", StaffTypeID=" + StaffTypeID +
-                ", departmentID=" + departmentID +
+                ", department=" + department +
                 ", accountID=" + accountID +
                 '}';
     }

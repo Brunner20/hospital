@@ -54,6 +54,7 @@ public class AddAccount implements Command {
                response.sendRedirect(GO_TO_INDEX_PAGE);
                return;
            }
+
            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,REGISTRATION_ERROR);
            response.sendRedirect(GO_TO_INDEX_PAGE);
 

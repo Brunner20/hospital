@@ -38,9 +38,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean registration(RegistrationInfo regInfo) throws ServiceException {
 
-        if(Validator.isRegistrationInfoValid(regInfo))
+        if(!Validator.isRegistrationInfoValid(regInfo))
         {
-            throw new ServiceException(WRONG_REG_INFO);
+          return true;
         }
 
         DAOProvider provider = DAOProvider.getInstance();

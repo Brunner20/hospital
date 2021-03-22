@@ -32,7 +32,7 @@ public class StaffDAOImpl implements StaffDAO {
             preparedStatement.setString(1, staff.getFirstname());
             preparedStatement.setString(2,staff.getLastname());
             preparedStatement.setString(3,staff.getPicture());
-            preparedStatement.setLong(4,staff.getDepartmentID());
+            preparedStatement.setLong(4,staff.getDepartment().getId());
             preparedStatement.setLong(5,staff.getStaffTypeID());
             preparedStatement.setLong(6,staff.getId());
             preparedStatement.executeUpdate();
@@ -71,7 +71,7 @@ public class StaffDAOImpl implements StaffDAO {
                 patient.setAge(set.getInt(4));
                 if(set.getDate(5)!=null)
                 patient.setReceiptDate(new Date(set.getDate(5).getTime()).toLocalDate());
-                patient.setDepartmentID(set.getInt(6));
+                patient.setDepartment(set.getInt(6));
                 patient.setAttendingDoctorID(set.getInt(7));
                 patient.setStatusID(set.getInt(8));
                 patients.add(patient);
@@ -109,7 +109,7 @@ public class StaffDAOImpl implements StaffDAO {
                 staff.setLastname(resultSet.getString(3));
                 staff.setPicture(resultSet.getString(4));
                 staff.setStaffTypeID(resultSet.getLong(5));
-                staff.setDepartmentID(resultSet.getLong(6));
+                staff.setDepartment(resultSet.getInt(6));
                 staff.setAccountID(resultSet.getLong(7));
 
             }

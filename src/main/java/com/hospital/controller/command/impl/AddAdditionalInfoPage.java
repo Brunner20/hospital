@@ -33,6 +33,10 @@ public class AddAdditionalInfoPage implements Command {
         String age;
 
         age = request.getParameter(AGE);
+        if(request.getPart("file")!=null)
+        {
+            System.out.println("dfg");
+        }
 
         ServiceProvider provider = ServiceProvider.getInstance();
         PatientService patientService = provider.getPatientService();

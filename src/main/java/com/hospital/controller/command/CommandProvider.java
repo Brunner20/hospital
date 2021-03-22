@@ -23,10 +23,11 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOFREEPATIENTSPAGE, new GoToFreePatientsPage());
         commands.put(CommandName.ADDPATIENTSTODOCTOR, new AddPatientsToDoctor());
         commands.put(CommandName.GOTOPROFILEPAGE, new GoToProfilePage());
+        commands.put(CommandName.ADDAPPOINTMENT, new AddAppointment());
+        commands.put(CommandName.GOTOADDAPPOINTMENTPAGE, new GoToAddAppointmentPage());
     }
 
     public Command takeCommand(String name){
-
        CommandName commandName = CommandName.valueOf(name.toUpperCase());
        return commands.get(commandName);
 

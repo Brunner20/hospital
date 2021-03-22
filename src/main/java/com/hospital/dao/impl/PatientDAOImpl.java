@@ -37,7 +37,7 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement.setString(2,patient.getLastname());
             preparedStatement.setInt(3,patient.getAge());
             preparedStatement.setDate(4,java.sql.Date.valueOf(patient.getReceiptDate()));
-            preparedStatement.setLong(5,patient.getDepartmentID());
+            preparedStatement.setLong(5,patient.getDepartment().getId());
             preparedStatement.setLong(6,patient.getAttendingDoctorID());
             preparedStatement.setLong(7,patient.getStatusID());
             preparedStatement.setLong(8,patient.getAccountID());
@@ -103,7 +103,7 @@ public class PatientDAOImpl implements PatientDAO {
                 patient.setAge(resultSet.getInt(4));
                 if(resultSet.getDate(5)!=null)
                     patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
-                patient.setDepartmentID(resultSet.getInt(6));
+                patient.setDepartment(resultSet.getInt(6));
                 patient.setAttendingDoctorID(resultSet.getInt(7));
                 patient.setStatusID(resultSet.getInt(8));
                 patient.setAccountID(resultSet.getInt(9));
@@ -170,7 +170,7 @@ public class PatientDAOImpl implements PatientDAO {
                 patient.setAge(resultSet.getInt(4));
                 if(resultSet.getDate(5)!=null)
                     patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
-                patient.setDepartmentID(resultSet.getInt(6));
+                patient.setDepartment(resultSet.getInt(6));
                 patient.setAttendingDoctorID(resultSet.getInt(7));
                 patient.setStatusID(resultSet.getInt(8));
                 patient.setAccountID(resultSet.getInt(9));
