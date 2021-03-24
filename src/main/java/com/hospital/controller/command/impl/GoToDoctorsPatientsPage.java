@@ -13,12 +13,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+import static com.hospital.controller.command.CommandParameter.*;
+
 public class GoToDoctorsPatientsPage implements Command {
 
-    private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
+
     private static final String PATH_TO_PATIENTS = "/WEB-INF/jsp/patients.jsp";
-    private static final String ATTRIBUTE_URL = "url";
-    private static final String ATTRIBUTE_ID = "id";
     private static final String ATTRIBUTE_PATIENT = "patientList";
 
     @Override
@@ -38,7 +38,7 @@ public class GoToDoctorsPatientsPage implements Command {
 
         List<Patient> patients = null;
         try {
-            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_ID));
+            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
             request.setAttribute(ATTRIBUTE_PATIENT, patients);
             request.getRequestDispatcher(PATH_TO_PATIENTS).forward(request,response);
         }catch (ServiceException e){

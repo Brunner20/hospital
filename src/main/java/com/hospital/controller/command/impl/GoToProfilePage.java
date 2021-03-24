@@ -8,26 +8,23 @@ import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.hospital.controller.command.CommandParameter.*;
+
 public class GoToProfilePage implements Command {
 
-    private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
+
     private static final String GO_TO_PROFILE_PAGE = "Controller?command=gotoprofilepage";
     private static final String PATH_TO_PROFILE = "/WEB-INF/jsp/profile.jsp";
-
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
     private static final String WRONG_AUTH ="wrong auth";
-
-    private static final String ATTRIBUTE_AUTH = "auth";
-    private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_ROLE = "role";
-    private static final String ATTRIBUTE_ID = "id";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -46,7 +43,7 @@ public class GoToProfilePage implements Command {
             return;
         }
 
-        Long id = (Long) session.getAttribute(ATTRIBUTE_ID);
+        Long id = (Long) session.getAttribute(ATTRIBUTE_VISITOR_ID);
         String role = (String)session.getAttribute(ATTRIBUTE_ROLE);
 
         ServiceProvider serviceProvider = ServiceProvider.getInstance();

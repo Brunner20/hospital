@@ -1,6 +1,7 @@
 package com.hospital.dao;
 
 import com.hospital.dao.impl.AccountDAOImpl;
+import com.hospital.dao.impl.DocumentationDAOImpl;
 import com.hospital.dao.impl.PatientDAOImpl;
 import com.hospital.dao.impl.StaffDAOImpl;
 
@@ -16,6 +17,8 @@ public final class DAOProvider {
 
     private StaffDAO staffDAO = new StaffDAOImpl();
 
+    private DocumentationDAO documentationDAO = new DocumentationDAOImpl();
+
     public static DAOProvider getInstance(){
         return instance;
     }
@@ -27,4 +30,6 @@ public final class DAOProvider {
     public PatientDAO getPatientDAO() { return  patientDAO; }
 
     public StaffDAO getStaffDAO(){ return  staffDAO ;}
+
+    public DocumentationDAO getDocumentationDAO() {return documentationDAO;}
 }

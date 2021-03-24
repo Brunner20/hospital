@@ -19,7 +19,7 @@
 <body>
 
 
-    <form action="Controller" method="post" >
+    <form action="Controller" method="post" enctype="multipart/form-data">
         <input type="hidden" name="command" value="addadditionalinfopage" />
         ${pic}<input type="file" name="file" value="select images..."  /><br/>
         ${age}<input type="number" name="age" /><br/>

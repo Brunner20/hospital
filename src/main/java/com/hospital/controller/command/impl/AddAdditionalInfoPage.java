@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
+import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_VISITOR_ID;
+
+
 public class AddAdditionalInfoPage implements Command {
     private static final String PIC = "pic_path";
     private static final String AGE = "age";
 
-    private static final String ATTRIBUTE_ID = "id";
-    private static final String ATTRIBUTE_URL = "url";
     private static final String GO_TO_PATIENT_PAGE = "Controller?command=gotomainpatientpage";
     private static final String PATH_TO_MAIN_PATIENT = "/WEB-INF/jsp/main_patient.jsp";
     private static final String PATH_TO_ADDITIONAL_INFO_PAGE = "/WEB-INF/jsp/additional_info.jsp";
@@ -44,7 +46,7 @@ public class AddAdditionalInfoPage implements Command {
         HttpSession session = request.getSession(true);
 
             try {
-                patientService.updateAge((Long) session.getAttribute(ATTRIBUTE_ID),age);
+                patientService.updateAge((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID),age);
                 session.setAttribute(ATTRIBUTE_URL,PATH_TO_MAIN_PATIENT);
                 response.sendRedirect(GO_TO_PATIENT_PAGE);
             } catch (ServiceException e) {

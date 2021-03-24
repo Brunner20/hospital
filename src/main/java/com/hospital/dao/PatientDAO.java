@@ -15,4 +15,6 @@ public interface PatientDAO {
     void updateDoctor(List<String> selectedPatientsIds, Long doctorId) throws DAOException;
 
     Patient getPatientById(Long id)throws DAOException;
+
+    List<Patient> getAll() throws DAOException;
 }

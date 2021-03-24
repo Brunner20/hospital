@@ -10,4 +10,6 @@ public interface StaffDAO {
     List<Patient> getAllPatientsByStaff(long id) throws DAOException;
 
     Staff getStaffById(Long id)throws DAOException;
+
+    List<Staff> getAll() throws DAOException;
 }

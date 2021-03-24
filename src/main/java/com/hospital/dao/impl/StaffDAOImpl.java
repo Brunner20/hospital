@@ -19,6 +19,8 @@ public class StaffDAOImpl implements StaffDAO {
 
     private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
     private static final String SELECT_STAFF_BY_ID = "SELECT * FROM hospital.staff WHERE id =?";
+    private static final String GET_ALL_STAFF ="select * from hospital.staff ";
+
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -126,5 +128,44 @@ public class StaffDAOImpl implements StaffDAO {
             }
         }
         return staff;
+    }
+
+
+
+    @Override
+    public List<Staff> getAll() throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Staff> allStaff = new ArrayList<>();
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_STAFF);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Staff staff = new Staff();
+                staff.setId(resultSet.getLong(1));
+                staff.setFirstname(resultSet.getString(2));
+                staff.setLastname(resultSet.getString(3));
+                staff.setPicture(resultSet.getString(4));
+                staff.setStaffTypeID(resultSet.getLong(5));
+                staff.setDepartment(resultSet.getInt(6));
+                staff.setAccountID(resultSet.getLong(7));
+                allStaff.add(staff);
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return allStaff;
     }
 }

@@ -27,7 +27,7 @@
 				<c:if test="${sessionScope.role == 'doctor'}">
 					<div class ="doctor">
 						<form action="Controller" method="post">
-							<input type="hidden" name="command" value="gotoaddapointmentpage"/>
+							<input type="hidden" name="command" value="gotoaddappointmentpage"/>
 							<input type="hidden" name="page" value=""/>
 							<input type="submit" value="Дать назначение пациенту"/>
 						</form>

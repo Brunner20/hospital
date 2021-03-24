@@ -5,10 +5,15 @@ import java.util.Objects;
 public class AppointmentInfo {
     private long id;
     private String info;
+    private AppointmentType type;
 
-    public AppointmentInfo(long id, String info) {
+    public AppointmentInfo(long id, String info, AppointmentType type) {
         this.id = id;
         this.info = info;
+        this.type = type;
+    }
+
+    public AppointmentInfo() {
     }
 
     public long getId() {
@@ -25,6 +30,14 @@ public class AppointmentInfo {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public AppointmentType getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = AppointmentType.getAppointmentTypeById(type);
     }
 
     @Override

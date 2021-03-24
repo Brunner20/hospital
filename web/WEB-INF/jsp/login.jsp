@@ -24,22 +24,16 @@
 <div class="login-form">
 
     <c:if test="${requestScope.errorMessage != null}">
-        <c:forEach var="error" items="${requestScope.errorMessage}">
             <div class="error">
-                <h4>${error}</h4>
+                <h4><c:out value="${requestScope.errorMessage}"/></h4>
             </div>
-        </c:forEach>
-        <c:remove var="errorMessage"/>
     </c:if>
 
 
     <c:if test="${requestScope.informationMessage != null}">
-        <c:forEach var="info" items="${requestScope.informationMessage}">
             <div class="information">
-                <h4>${info}</h4>
+                <h4><c:out value="${requestScope.informationMessage}"/></h4>
             </div>
-        </c:forEach>
-        <c:remove var="info"/>
     </c:if>
 
     <div class="login-s">

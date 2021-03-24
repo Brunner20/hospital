@@ -15,26 +15,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.hospital.controller.command.CommandParameter.*;
+
 
 public class Login implements Command {
 
 
-    private static final String GO_TO_INDEX_PAGE ="Controller?command=gotoindexpage";
+
     private static final String GO_TO_MAIN_STAFF_PAGE ="Controller?command=gotomainstaffpage";
     private static final String GO_TO_MAIN_PATIENT_PAGE ="Controller?command=gotomainpatientpage";
     private static final String PATH_TO_ADDITIONAL_INFO_PAGE = "/WEB-INF/jsp/additional_info.jsp";
 
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
     private static final String WRONG_IN_CATCH = "wrong in catch";
+    private static final String ATTRIBUTE_INFO_MESSAGE = "informationMessage";
     private static final String WRONG_LOGIN_OR_PASSWORD = "wrong login  or password";
-
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
-
-    private static final String ATTRIBUTE_AUTH = "auth";
-    private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_ROLE = "role";
-    private static final String ATTRIBUTE_VISITOR_ID = "id";
+
 
 
 
@@ -55,7 +54,7 @@ public class Login implements Command {
             visitor = userService.authorization(login, password);
 
             if (visitor == null) {
-                request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_LOGIN_OR_PASSWORD);
+                request.setAttribute(ATTRIBUTE_INFO_MESSAGE,WRONG_LOGIN_OR_PASSWORD);
                 response.sendRedirect(GO_TO_INDEX_PAGE);
                 return;
             }

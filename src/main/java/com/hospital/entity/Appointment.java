@@ -1,12 +1,12 @@
 package com.hospital.entity;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 public class Appointment {
     private long id;
-    private LocalDate dateOfAppointment;
-    private LocalDate dateOfCompletion;
+    private Date dateOfAppointment;
+    private Date dateOfCompletion;
     private long patientId;
     private long appointingDoctorId;
     private long executeStaffId;
@@ -15,7 +15,7 @@ public class Appointment {
     private String title;
 
 
-    public Appointment(long id, LocalDate dateOfAppointment, LocalDate dateOfCompletion, long patientId,
+    public Appointment(long id, Date dateOfAppointment, Date dateOfCompletion, long patientId,
                        long appointingDoctorId, long executeStaffId, long infoId, AppointmentStatus status, String title) {
         this.id = id;
         this.dateOfAppointment = dateOfAppointment;
@@ -39,19 +39,19 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDate getDateOfAppointment() {
+    public Date getDateOfAppointment() {
         return dateOfAppointment;
     }
 
-    public void setDateOfAppointment(LocalDate dateOfAppointment) {
+    public void setDateOfAppointment(Date dateOfAppointment) {
         this.dateOfAppointment = dateOfAppointment;
     }
 
-    public LocalDate getDateOfCompletion() {
+    public Date getDateOfCompletion() {
         return dateOfCompletion;
     }
 
-    public void setDateOfCompletion(LocalDate dateOfCompletion) {
+    public void setDateOfCompletion(Date dateOfCompletion) {
         this.dateOfCompletion = dateOfCompletion;
     }
 
@@ -93,6 +93,10 @@ public class Appointment {
 
     public void setStatus(int status) {
         this.status = AppointmentStatus.getStatusById(status);
+    }
+
+    public void setStatus(AppointmentStatus status) {
+        this.status = status;
     }
 
     public String getTitle() {

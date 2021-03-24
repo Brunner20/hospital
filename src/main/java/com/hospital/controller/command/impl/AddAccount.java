@@ -11,16 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.hospital.controller.command.CommandParameter.GO_TO_INDEX_PAGE;
+
 public class AddAccount implements Command {
 
-    private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
+
 
     private static final String ATTRIBUTE_INFO_MESSAGE = "informationMessage";
     private static final String REGISTRATION_OK = "registration successful";
     private static final String REGISTRATION_ERROR = "registration unsuccessful";
 
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
-    private static final String WRONG_IN_CATCH = "wrong in catch";
+    private static final String WRONG_IN_CATCH = "login already exist";
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";

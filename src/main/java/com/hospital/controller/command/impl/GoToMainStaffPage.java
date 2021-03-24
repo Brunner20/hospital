@@ -14,21 +14,17 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+import static com.hospital.controller.command.CommandParameter.*;
+
 public class GoToMainStaffPage implements Command {
 
 
 
-    private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
-    private static final String GO_TO_STAFF_PAGE = "Controller?command=gotomainstaffpage";
+
 
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
     private static final String WRONG_AUTH ="wrong auth";
-
     private static final String PATH_TO_MAIN = "/WEB-INF/jsp/main_staff.jsp";
-    private static final String ATTRIBUTE_AUTH = "auth";
-    private static final String ATTRIBUTE_URL = "url";
-    private static final String ATTRIBUTE_ID = "id";
-
     private static final String ATTRIBUTE_PATIENT = "patientList";
 
     @Override
@@ -54,7 +50,7 @@ public class GoToMainStaffPage implements Command {
 
         List<Patient> patients = null;
         try {
-            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_ID));
+            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
             request.setAttribute(ATTRIBUTE_PATIENT,patients);
             session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN);

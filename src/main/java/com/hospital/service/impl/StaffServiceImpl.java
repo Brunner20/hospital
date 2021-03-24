@@ -9,6 +9,7 @@ import com.hospital.service.ServiceException;
 import com.hospital.service.StaffService;
 import com.hospital.service.validation.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StaffServiceImpl implements StaffService {
@@ -56,5 +57,19 @@ public class StaffServiceImpl implements StaffService {
 
         return staff;
 
+    }
+
+
+    @Override
+    public List<Staff> getAll() throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        StaffDAO staffDAO = daoProvider.getStaffDAO();
+        List<Staff> allStaff = new ArrayList<>();
+        try {
+            allStaff = staffDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return allStaff;
     }
 }

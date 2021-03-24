@@ -43,6 +43,19 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public List<Patient> getAll() throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        List<Patient> patients = new ArrayList<>();
+        try {
+            patients = patientDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return patients;
+    }
+
+    @Override
     public void updateDoctor(List<String> selectedPatientsIds, Long doctorId) throws ServiceException {
 
         if(!Validator.isIdValid(doctorId)){
@@ -78,4 +91,5 @@ public class PatientServiceImpl implements PatientService {
         }
         return patient;
     }
+
 }

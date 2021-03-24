@@ -22,6 +22,8 @@ public class PatientDAOImpl implements PatientDAO {
 
     private static final String GET_FREE_PATIENTS ="select * from hospital.patients where attending_doctor is null";
 
+    private static final String GET_ALL_PATIENTS ="select * from hospital.patients where age is not null";
+
     private static final String SELECT_PATIENT_BY_ID = "SELECT * FROM hospital.patients WHERE id =?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
@@ -188,5 +190,44 @@ public class PatientDAOImpl implements PatientDAO {
             }
         }
         return patient;
+    }
+
+    @Override
+    public List<Patient> getAll() throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Patient> patients = new ArrayList<>();
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_PATIENTS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Patient patient = new Patient();
+                patient.setId(resultSet.getLong(1));
+                patient.setFirstname(resultSet.getString(2));
+                patient.setLastname(resultSet.getString(3));
+                patient.setAge(resultSet.getInt(4));
+                if(resultSet.getDate(5)!=null)
+                    patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
+                patient.setDepartment(resultSet.getInt(6));
+                patient.setAttendingDoctorID(resultSet.getInt(7));
+                patient.setStatusID(resultSet.getInt(8));
+                patient.setAccountID(resultSet.getInt(9));
+                patients.add(patient);
+            }
+        } catch (SQLException | ConnectionPoolException throwables) {
+            throw new DAOException(throwables);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return patients;
     }
 }

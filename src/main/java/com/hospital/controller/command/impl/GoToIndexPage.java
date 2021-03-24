@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
+import static com.hospital.controller.command.CommandParameter.GO_TO_INDEX_PAGE;
+
 public class GoToIndexPage implements Command {
 
 	private static final String PATH_TO_INDEX = "/WEB-INF/jsp/login.jsp";
-	private static final String GO_TO_INDEX_PAGE = "Controller?command=gotoindexpage";
-	private static final String ATTRIBUTE_URL = "url";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -25,6 +25,8 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOPROFILEPAGE, new GoToProfilePage());
         commands.put(CommandName.ADDAPPOINTMENT, new AddAppointment());
         commands.put(CommandName.GOTOADDAPPOINTMENTPAGE, new GoToAddAppointmentPage());
+        commands.put(CommandName.GOTOADDAPPOINTMENTNEXTPAGE , new GoToAddAppointmentNextPage());
+        commands.put(CommandName.GOTOAPPOINTMENTLISTPAGE, new GoToAppointmentListPage());
     }
 
     public Command takeCommand(String name){
