@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
-import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_VISITOR_ID;
+import static com.hospital.controller.command.CommandParameter.*;
 
 
 public class AddAdditionalInfoPage implements Command {
@@ -31,6 +30,24 @@ public class AddAdditionalInfoPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        HttpSession session = request.getSession(true);
+        if(session == null) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
+            return;
+        }
+
+        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
+
+        if (isAuth == null || !isAuth || !role.equals(ROLE_PATIENT)) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
+            return;
+        }
+
         String pic_patch;//????????????????
         String age;
 
@@ -43,7 +60,7 @@ public class AddAdditionalInfoPage implements Command {
         ServiceProvider provider = ServiceProvider.getInstance();
         PatientService patientService = provider.getPatientService();
 
-        HttpSession session = request.getSession(true);
+
 
             try {
                 patientService.updateAge((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID),age);

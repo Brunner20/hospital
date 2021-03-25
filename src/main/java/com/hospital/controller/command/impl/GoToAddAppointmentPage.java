@@ -7,7 +7,6 @@ import com.hospital.service.PatientService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,13 +26,22 @@ public class GoToAddAppointmentPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-
         if(session == null) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-        session.setAttribute(ATTRIBUTE_URL,GO_TO_APPOINT_PAGE);
+
+        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
+
+        if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
+            return;
+        }
+
 
         PatientService patientService = ServiceProvider.getInstance().getPatientService();
         List<Patient> patients = new ArrayList<>();
@@ -45,9 +53,9 @@ public class GoToAddAppointmentPage implements Command {
             response.sendRedirect(GO_TO_STAFF_PAGE);
         }
 
+        session.setAttribute(ATTRIBUTE_URL,GO_TO_APPOINT_PAGE);
         request.setAttribute(ATTRIBUTE_APPOINTMENT_TYPES, Arrays.asList(AppointmentType.values()));
         request.setAttribute(ATTRIBUTE_PATIENTS, patients);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_APPOINTMENT);
-        requestDispatcher.forward(request, response);
+        request.getRequestDispatcher(PATH_TO_APPOINTMENT).forward(request, response);
     }
 }

@@ -6,7 +6,6 @@ import com.hospital.service.PatientService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +34,9 @@ public class GoToMainStaffPage implements Command {
         }
 
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
-        if (isAuth == null || !isAuth) {
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
+
+        if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
            response.sendRedirect(GO_TO_INDEX_PAGE);
@@ -50,8 +51,7 @@ public class GoToMainStaffPage implements Command {
             patients = patientService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
             request.setAttribute(ATTRIBUTE_PATIENT,patients);
             session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN);
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PATH_TO_MAIN).forward(request, response);
         } catch (ServiceException e) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);

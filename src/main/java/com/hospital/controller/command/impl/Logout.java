@@ -27,6 +27,7 @@ public class Logout implements Command {
         if(session != null) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             session.removeAttribute(ATTRIBUTE_AUTH);
+            session.removeAttribute(ATTRIBUTE_ROLE);
         }
         request.setAttribute(ATTRIBUTE_INFO_MESSAGE,LOGOUT_OK);
         response.sendRedirect(GO_TO_INDEX_PAGE);

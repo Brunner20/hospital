@@ -8,7 +8,6 @@ import com.hospital.service.AccountService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,9 +67,13 @@ public class Login implements Command {
                 Staff staff = (Staff) visitor;
                 session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_STAFF_PAGE);
                 if(staff.getStaffTypeID()==1)
-                session.setAttribute(ATTRIBUTE_ROLE,ROLE_DOCTOR);
+                {
+                    session.setAttribute(ATTRIBUTE_ROLE,ROLE_DOCTOR);
+                }
                 else
+                {
                     session.setAttribute(ATTRIBUTE_ROLE,ROLE_NURSE);
+                }
                 session.setAttribute(ATTRIBUTE_VISITOR_ID,((Staff) visitor).getId());
                 response.sendRedirect(GO_TO_MAIN_STAFF_PAGE);
             }
@@ -82,15 +85,12 @@ public class Login implements Command {
                 if(patient.getAge()==0)
                 {
                     session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_ADDITIONAL_INFO_PAGE);
-                    requestDispatcher.forward(request, response);
+                    request.getRequestDispatcher(PATH_TO_ADDITIONAL_INFO_PAGE).forward(request, response);
                 }else {
                     session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PATIENT_PAGE);
                     response.sendRedirect(GO_TO_MAIN_PATIENT_PAGE);
                 }
-
             }
-
         } catch (ServiceException e) {
 
             request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_IN_CATCH);

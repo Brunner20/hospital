@@ -9,7 +9,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Welcome Patient</title>
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.date_of_completion" var="date_comp"/>
@@ -19,6 +18,8 @@
     <fmt:message bundle="${loc}" key="local.staff" var="st"/>
     <fmt:message bundle="${loc}" key="local.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="local.nurse" var="nurse"/>
+    <fmt:message bundle="${loc}" key="local.page.appointment" var="title"/>
+    <title>${title}</title>
 
 </head>
 <body>

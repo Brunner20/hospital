@@ -2,6 +2,7 @@ package com.hospital.dao;
 
 import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
+import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface DocumentationDAO {
     List<Appointment> getAllAppointmentsByPatientId(long patientId) throws DAOException;
 
     AppointmentInfo getAppointmentInfoById(long infoId) throws DAOException;
+
+    List<Appointment> getAllAppointmentsByStaffId(long staffId) throws DAOException;
+
+    void updateAppointmentStatus(Long appointmentId, AppointmentStatus appointmentStatus) throws DAOException;
 }

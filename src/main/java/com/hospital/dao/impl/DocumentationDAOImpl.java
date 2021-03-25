@@ -7,6 +7,7 @@ import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
 import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
+import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
 
 import java.sql.Connection;
@@ -22,9 +23,11 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             "id_patient,id_appointment,id_executor,status,id_staff_appoint ) VALUES (?,?,?,?,?,?,?)";
 
     private static final String SELECT_APPOINTMENT_INFO = "select * from hospital.appointments WHERE title = ? and type = ? ";
-    private static final String SELECT_APPOINTMENT_INFO_BY_ID = "select * from hospital.appointments WHERE id = ? ";
+    private static final String SELECT_APPOINTMENT_INFO_BY_ID = "select * from hospital.appointments WHERE id = ?  ";
     private static final String INSERT_APPOINTMENT_INFO = "insert into hospital.appointments(title ,type) values (?,?)";
     private static final String SELECT_APPOINTMENT_BY_PATIENT = "select * from hospital.patient_appointments where id_patient =?";
+    private static final String SELECT_APPOINTMENT_BY_STAFF = "select * from hospital.patient_appointments where id_executor =? and status = 1";
+    private static final String UPDATE_APPOINTMENT_STATUS = "update hospital.patient_appointments set status = ? where id = ? ";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -111,9 +114,9 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             while (resultSet.next()) {
                 Appointment appointment = new Appointment();
                 appointment.setId(resultSet.getLong(1));
-                appointment.setDateOfAppointment(resultSet.getDate(2));
+                appointment.setDateOfCompletion(resultSet.getDate(2));
                 appointment.setDateOfAppointment(resultSet.getDate(3));
-                appointment.setInfoId(resultSet.getLong(4));
+                appointment.setPatientId(resultSet.getLong(4));
                 appointment.setInfoId(resultSet.getLong(5));
                 appointment.setExecuteStaffId(resultSet.getLong(6));
                 appointment.setStatus(resultSet.getInt(7));
@@ -166,6 +169,69 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             }
         }
         return appointmentInfo;
+    }
+
+    @Override
+    public List<Appointment> getAllAppointmentsByStaffId(long staffId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Appointment> appointmentsByStaff = new ArrayList<>();
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_BY_STAFF);
+            preparedStatement.setLong(1,staffId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Appointment appointment = new Appointment();
+                appointment.setId(resultSet.getLong(1));
+                appointment.setDateOfCompletion(resultSet.getDate(2));
+                appointment.setDateOfAppointment(resultSet.getDate(3));
+                appointment.setPatientId(resultSet.getLong(4));
+                appointment.setInfoId(resultSet.getLong(5));
+                appointment.setExecuteStaffId(resultSet.getLong(6));
+                appointment.setStatus(resultSet.getInt(7));
+                appointment.setAppointingDoctorId(resultSet.getInt(8));
+                appointmentsByStaff.add(appointment);
+            }
+        } catch (SQLException | ConnectionPoolException throwables) {
+            throw new DAOException(throwables);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return appointmentsByStaff;
+    }
+
+    @Override
+    public void updateAppointmentStatus(Long appointmentId, AppointmentStatus appointmentStatus) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT_STATUS);
+            preparedStatement.setLong(2,appointmentId);
+            preparedStatement.setLong(1,appointmentStatus.getId());
+            preparedStatement.execute();
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
     }
 
     private AppointmentInfo insertAppointmentInfo(String title, AppointmentType type) throws DAOException {

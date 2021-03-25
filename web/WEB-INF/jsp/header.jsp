@@ -19,7 +19,7 @@
 
 <header >
 
-<h1 align="center">${home}</h1>
+    <h1 align="center" >${home}</h1>
 
     <ul>
          <li>

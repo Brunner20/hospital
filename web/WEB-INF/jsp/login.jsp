@@ -9,13 +9,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Login page</title>
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.login" var="login"/>
     <fmt:message bundle="${loc}" key="local.password" var="password"/>
-    <fmt:message bundle="${loc}" key="local.submit" var="submit"/>
+    <fmt:message bundle="${loc}" key="local.btn.enter" var="submit"/>
     <fmt:message bundle="${loc}" key="local.registration" var="registration"/>
+    <fmt:message bundle="${loc}" key="local.page.login" var="title"/>
+    <title>${title}</title>
 </head>
 
 <link rel="stylesheet" href="../../css/login.css">

@@ -9,7 +9,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Profile page</title>
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.firstname" var="first"/>
@@ -21,6 +20,8 @@
     <fmt:message bundle="${loc}" key="profile.attending_doctor" var="attending_doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.nurse" var="nurse"/>
+    <fmt:message bundle="${loc}" key="local.page.profile" var="title"/>
+    <title>${title}</title>
 </head>
 <body>
 <div class="profile">

@@ -19,6 +19,7 @@ public class GoToDoctorsPatientsPage implements Command {
 
 
     private static final String PATH_TO_PATIENTS = "/WEB-INF/jsp/patients.jsp";
+    private static final String GO_TO_DOCTORS_PATIENTS = "Controller?command=gotodoctorspatientspage";
     private static final String ATTRIBUTE_PATIENT = "patientList";
 
     @Override
@@ -26,9 +27,18 @@ public class GoToDoctorsPatientsPage implements Command {
 
 
         HttpSession session = request.getSession(true);
-
         if(session == null) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
+            return;
+        }
+
+        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
+
+        if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -39,6 +49,7 @@ public class GoToDoctorsPatientsPage implements Command {
         List<Patient> patients = null;
         try {
             patients = patientService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_DOCTORS_PATIENTS);
             request.setAttribute(ATTRIBUTE_PATIENT, patients);
             request.getRequestDispatcher(PATH_TO_PATIENTS).forward(request,response);
         }catch (ServiceException e){

@@ -9,11 +9,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>My Patients</title>
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.firstname" var="name"/>
-
+    <fmt:message bundle="${loc}" key="local.page.my_patients" var="title"/>
+    <title>${title}</title>
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>

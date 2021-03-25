@@ -6,7 +6,6 @@ import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,15 +27,23 @@ public class GoToAddAppointmentNextPage implements Command {
 
         @Override
         public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            HttpSession session = request.getSession(true);
-            session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);
 
+            HttpSession session = request.getSession(true);
             if(session == null) {
                 session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
                 response.sendRedirect(GO_TO_INDEX_PAGE);
                 return;
             }
 
+            Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+            String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
+
+            if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
+                session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+                request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
+                response.sendRedirect(GO_TO_INDEX_PAGE);
+                return;
+            }
 
             StaffService staffService = ServiceProvider.getInstance().getStaffService();
             List<Staff> allStaff = new ArrayList<>();
@@ -48,12 +55,11 @@ public class GoToAddAppointmentNextPage implements Command {
                 response.sendRedirect(GO_TO_APPOINT_PAGE);
             }
 
+            session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);
             request.setAttribute(SELECTED_TYPE, request.getParameter(SELECTED_TYPE));
             request.setAttribute(ATTRIBUTE_APPOINT_DATE, request.getParameter(ATTRIBUTE_APPOINT_DATE));
             request.setAttribute(SELECTED_PATIENT, request.getParameter(SELECTED_PATIENT));
             request.setAttribute(PATIENT_ALL_STAFF, allStaff);
-
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_APPOINTMENT_NEXT_PAGE);
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher(PATH_TO_APPOINTMENT_NEXT_PAGE).forward(request, response);
         }
 }

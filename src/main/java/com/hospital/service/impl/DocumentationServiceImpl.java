@@ -5,10 +5,12 @@ import com.hospital.dao.DAOProvider;
 import com.hospital.dao.DocumentationDAO;
 import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
+import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
 import com.hospital.entity.dto.AppointmentDTO;
 import com.hospital.service.DocumentationService;
 import com.hospital.service.ServiceException;
+import com.hospital.service.validation.Validator;
 import com.hospital.util.MappingUtil;
 import com.hospital.util.UtilException;
 
@@ -61,5 +63,42 @@ public class DocumentationServiceImpl implements DocumentationService {
         }
 
         return dtoList;
+    }
+
+    @Override
+    public List<AppointmentDTO> getAllAppointmentsByStaffId(long staffId) throws ServiceException {
+
+        if(!Validator.isIdValid(staffId)){
+            throw new ServiceException("wrong id");
+        }
+
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        List<Appointment> appointmentsByPatient = new ArrayList<>();
+        List<AppointmentDTO> dtoList = new ArrayList<>();
+        try {
+            appointmentsByPatient = documentationDAO.getAllAppointmentsByStaffId(staffId);
+            dtoList = appointmentsByPatient.stream().map(MappingUtil::mapToAppointmentDTO)
+                    .collect(Collectors.toList());
+        } catch (DAOException | UtilException e) {
+            throw new ServiceException(e);
+        }
+
+        return dtoList;
+    }
+
+    @Override
+    public void updateAppointmentStatus(Long appointmentId, AppointmentStatus appointmentStatus) throws ServiceException {
+        if(!Validator.isIdValid(appointmentId)){
+            throw new ServiceException("wrong id");
+        }
+
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        try {
+            documentationDAO.updateAppointmentStatus(appointmentId,appointmentStatus);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }

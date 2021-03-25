@@ -9,11 +9,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Welcome Patient</title>
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.welcome" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.logout" var="logout"/>
+    <fmt:message bundle="${loc}" key="local.my_appointment" var="my_appoint"/>
+    <fmt:message bundle="${loc}" key="local.page.patient" var="title"/>
+    <title>${title}</title>
 </head>
 <body>
 
@@ -26,10 +28,9 @@
     <section>
         <c:if test="${sessionScope.role == 'patient'}">
             <div class ="doctor">
-                <form action="/" method="post">
-                    <input type="hidden" name="command" value=""/>
-                    <input type="hidden" name="page" value=""/>
-                    <input type="submit" value="Мои назначения"/>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="gotopatientappointmentlistpage"/>
+                    <input type="submit" value="${my_appoint}"/>
                 </form>
 
                 <form action="medical.history.html" method="post">

@@ -31,6 +31,16 @@ public class AddPatientsToDoctor implements Command {
             return;
         }
 
+        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
+
+        if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
+            return;
+        }
+
         List<String> selectedPatientsIds = Arrays.asList(request.getParameterValues("selected"));
         Long doctorId = (Long)session.getAttribute(ATTRIBUTE_VISITOR_ID);
         ServiceProvider serviceProvider = ServiceProvider.getInstance();

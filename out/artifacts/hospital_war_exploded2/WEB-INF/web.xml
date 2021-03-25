@@ -18,15 +18,6 @@
 		<url-pattern>/Controller</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>Appointment</servlet-name>
-		<jsp-file>/WEB-INF/jsp/appointment_nextpage.jsp</jsp-file>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>Appointment</servlet-name>
-		<url-pattern>/AppointmentNextPage</url-pattern>
-	</servlet-mapping>
 
 	<listener>
 		<listener-class>com.hospital.controller.listener.AppContextListener</listener-class>
@@ -47,4 +38,9 @@
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404error.html</location>
+	</error-page>
 </web-app>

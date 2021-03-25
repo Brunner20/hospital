@@ -17,7 +17,7 @@ public class PatientDAOImpl implements PatientDAO {
             "receipt_date = ?, department_id = ?, attending_doctor = ?, status =?, account_id = ?  WHERE id = ?";
 
     private static final String UPDATE_AGE = "UPDATE hospital.patients SET age = ? where id = ?";
-    private static final String UPDATE_DOCTOR= "UPDATE hospital.patients SET attending_doctor = ? where id = ?";
+    private static final String UPDATE_DOCTOR= "UPDATE hospital.patients SET attending_doctor = ? and status = 1 where id = ?";
     private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
     private static final String GET_FREE_PATIENTS ="select * from hospital.patients where attending_doctor is null";
     private static final String GET_ALL_PATIENTS ="select * from hospital.patients where age is not null";

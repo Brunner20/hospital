@@ -9,7 +9,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Welcome Patient</title>
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.date_of_appointmen" var="date_app"/>
@@ -25,6 +24,8 @@
     <fmt:message bundle="${loc}" key="local.surgery" var="surgery"/>
     <fmt:message bundle="${loc}" key="local.type" var="type"/>
     <fmt:message bundle="${loc}" key="local.patient" var="patient"/>
+    <fmt:message bundle="${loc}" key="local.page.appointment" var="title"/>
+    <title>${title}</title>
 </head>
 <body>
 
@@ -50,13 +51,13 @@
                <td>
                <select name = "select_type" >
                 <c:forEach var="type" items="${requestScope.types}">
-                    <c:if test="${type.name().equalsIgnoreCase('PREPARATION')}">
+                    <c:if test="${type.name.equalsIgnoreCase('PREPARATION')}">
                      <option value="${type.id}">${prep}</option>
                     </c:if>
-                    <c:if test="${type.name().equalsIgnoreCase('PROCEDURE')}">
+                    <c:if test="${type.name.equalsIgnoreCase('PROCEDURE')}">
                     <option value="${type.id}">${procedure}</option>
                     </c:if>
-                    <c:if test="${type.name().equalsIgnoreCase('SURGERY')}">
+                    <c:if test="${type.name.equalsIgnoreCase('SURGERY')}">
                     <option value="${type.id}">${surgery}</option>
                     </c:if>
                 </c:forEach>

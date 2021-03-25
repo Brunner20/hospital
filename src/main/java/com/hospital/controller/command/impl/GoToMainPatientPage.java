@@ -2,7 +2,6 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +14,7 @@ public class GoToMainPatientPage implements Command {
 
 
 
-    private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
-    private static final String WRONG_AUTH ="wrong auth";
+
     private static final String PATH_TO_MAIN_PATIENT ="/WEB-INF/jsp/main_patient.jsp";
 
 
@@ -30,8 +28,9 @@ public class GoToMainPatientPage implements Command {
         }
 
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
 
-        if (isAuth == null || !isAuth) {
+        if (isAuth == null || !isAuth || !role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
             request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
@@ -40,7 +39,6 @@ public class GoToMainPatientPage implements Command {
 
         request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
         session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN_PATIENT);
-        requestDispatcher.forward(request, response);
+        request.getRequestDispatcher(PATH_TO_MAIN_PATIENT).forward(request, response);
     }
 }
