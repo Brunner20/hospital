@@ -17,13 +17,10 @@ public class PatientDAOImpl implements PatientDAO {
             "receipt_date = ?, department_id = ?, attending_doctor = ?, status =?, account_id = ?  WHERE id = ?";
 
     private static final String UPDATE_AGE = "UPDATE hospital.patients SET age = ? where id = ?";
-
     private static final String UPDATE_DOCTOR= "UPDATE hospital.patients SET attending_doctor = ? where id = ?";
-
+    private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
     private static final String GET_FREE_PATIENTS ="select * from hospital.patients where attending_doctor is null";
-
     private static final String GET_ALL_PATIENTS ="select * from hospital.patients where age is not null";
-
     private static final String SELECT_PATIENT_BY_ID = "SELECT * FROM hospital.patients WHERE id =?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
@@ -113,6 +110,46 @@ public class PatientDAOImpl implements PatientDAO {
             }
         } catch (SQLException | ConnectionPoolException throwables) {
             throw new DAOException(throwables);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return patients;
+    }
+
+    @Override
+    public List<Patient> getAllPatientsByStaff(long attendingDoctorId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Patient> patients = new ArrayList<>();
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_PATIENTS);
+            preparedStatement.setString(1, String.valueOf(attendingDoctorId));
+            ResultSet set = preparedStatement.executeQuery();
+
+            while (set.next()) {
+                Patient patient = new Patient();
+                patient.setId(set.getLong(1));
+                patient.setFirstname(set.getString(2));
+                patient.setLastname(set.getString(3));
+                patient.setAge(set.getInt(4));
+                if(set.getDate(5)!=null)
+                    patient.setReceiptDate(new Date(set.getDate(5).getTime()).toLocalDate());
+                patient.setDepartment(set.getInt(6));
+                patient.setAttendingDoctorID(set.getInt(7));
+                patient.setStatusID(set.getInt(8));
+                patients.add(patient);
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
             try {

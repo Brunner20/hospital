@@ -14,7 +14,7 @@ import static com.hospital.controller.command.CommandParameter.*;
 public class GoToMainPatientPage implements Command {
 
 
-    private static final String GO_TO_PATIENT_PAGE = "Controller?command=gotomainpatientpage";
+
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
     private static final String WRONG_AUTH ="wrong auth";
     private static final String PATH_TO_MAIN_PATIENT ="/WEB-INF/jsp/main_patient.jsp";

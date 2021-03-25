@@ -10,6 +10,8 @@ public interface PatientDAO {
 
     void updateAge(long id,int age) throws DAOException;
 
+    List<Patient> getAllPatientsByStaff(long id) throws DAOException;
+
     List<Patient> getFreePatients() throws DAOException;
 
     void updateDoctor(List<String> selectedPatientsIds, Long doctorId) throws DAOException;

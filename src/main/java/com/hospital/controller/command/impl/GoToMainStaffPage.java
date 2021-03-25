@@ -2,9 +2,9 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 import com.hospital.entity.Patient;
+import com.hospital.service.PatientService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
-import com.hospital.service.StaffService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,9 +17,6 @@ import java.util.List;
 import static com.hospital.controller.command.CommandParameter.*;
 
 public class GoToMainStaffPage implements Command {
-
-
-
 
 
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
@@ -46,11 +43,11 @@ public class GoToMainStaffPage implements Command {
         }
 
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        StaffService staffService = serviceProvider.getStaffService();
+        PatientService patientService = serviceProvider.getPatientService();
 
         List<Patient> patients = null;
         try {
-            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
+            patients = patientService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
             request.setAttribute(ATTRIBUTE_PATIENT,patients);
             session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN);

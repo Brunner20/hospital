@@ -31,6 +31,11 @@ public class GoToAddAppointmentNextPage implements Command {
             HttpSession session = request.getSession(true);
             session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);
 
+            if(session == null) {
+                session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+                response.sendRedirect(GO_TO_INDEX_PAGE);
+                return;
+            }
 
 
             StaffService staffService = ServiceProvider.getInstance().getStaffService();

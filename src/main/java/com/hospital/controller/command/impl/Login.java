@@ -32,7 +32,7 @@ public class Login implements Command {
     private static final String WRONG_LOGIN_OR_PASSWORD = "wrong login  or password";
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
-    private static final String ATTRIBUTE_ROLE = "role";
+
 
 
 
@@ -68,15 +68,15 @@ public class Login implements Command {
                 Staff staff = (Staff) visitor;
                 session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_STAFF_PAGE);
                 if(staff.getStaffTypeID()==1)
-                session.setAttribute(ATTRIBUTE_ROLE,"doctor");
+                session.setAttribute(ATTRIBUTE_ROLE,ROLE_DOCTOR);
                 else
-                    session.setAttribute(ATTRIBUTE_ROLE,"nurse");
+                    session.setAttribute(ATTRIBUTE_ROLE,ROLE_NURSE);
                 session.setAttribute(ATTRIBUTE_VISITOR_ID,((Staff) visitor).getId());
                 response.sendRedirect(GO_TO_MAIN_STAFF_PAGE);
             }
             else if (visitor instanceof Patient)
             {
-                session.setAttribute(ATTRIBUTE_ROLE,"patient");
+                session.setAttribute(ATTRIBUTE_ROLE,ROLE_PATIENT);
                 session.setAttribute(ATTRIBUTE_VISITOR_ID,((Patient)visitor).getId());
                 Patient patient = (Patient) visitor;
                 if(patient.getAge()==0)

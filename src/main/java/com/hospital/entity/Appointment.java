@@ -12,7 +12,7 @@ public class Appointment {
     private long executeStaffId;
     private long infoId;
     private AppointmentStatus status;
-    private String title;
+
 
 
     public Appointment(long id, Date dateOfAppointment, Date dateOfCompletion, long patientId,
@@ -25,7 +25,7 @@ public class Appointment {
         this.executeStaffId = executeStaffId;
         this.infoId = infoId;
         this.status = status;
-        this.title = title;
+
     }
 
     public Appointment() {
@@ -99,25 +99,18 @@ public class Appointment {
         this.status = status;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Appointment that = (Appointment) o;
-        return id == that.id && patientId == that.patientId && appointingDoctorId == that.appointingDoctorId && executeStaffId == that.executeStaffId && infoId == that.infoId && Objects.equals(dateOfAppointment, that.dateOfAppointment) && Objects.equals(dateOfCompletion, that.dateOfCompletion) && status == that.status && Objects.equals(title, that.title);
+        return id == that.id && patientId == that.patientId && appointingDoctorId == that.appointingDoctorId && executeStaffId == that.executeStaffId && infoId == that.infoId && Objects.equals(dateOfAppointment, that.dateOfAppointment) && Objects.equals(dateOfCompletion, that.dateOfCompletion) && status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateOfAppointment, dateOfCompletion, patientId, appointingDoctorId, executeStaffId, infoId, status, title);
+        return Objects.hash(id, dateOfAppointment, dateOfCompletion, patientId, appointingDoctorId, executeStaffId, infoId, status);
     }
 
     @Override
@@ -130,8 +123,7 @@ public class Appointment {
                 ", appointingDoctorId=" + appointingDoctorId +
                 ", executeStaffId=" + executeStaffId +
                 ", infoId=" + infoId +
-                ", status=" + status +
-                ", title='" + title + '\'' +
+                ", status=" + status + '\'' +
                 '}';
     }
 }

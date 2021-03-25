@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientServiceImpl implements PatientService {
+
+    private static final String WRONG_ID = "wrong id";
+
     @Override
     public void updateAge(long id, String age) throws ServiceException {
 
@@ -40,6 +43,28 @@ public class PatientServiceImpl implements PatientService {
             throw new ServiceException(e);
         }
         return patients;
+    }
+
+    @Override
+    public List<Patient> getAllPatientsByStaff(long id) throws ServiceException {
+        if (!Validator.isIdValid(id)) {
+            throw new ServiceException(WRONG_ID);
+        }
+
+        DAOProvider daoProvider = DAOProvider.getInstance();
+
+        PatientDAO patientDAO = daoProvider.getPatientDAO();
+
+        List<Patient> patients;
+        try {
+            patients = patientDAO.getAllPatientsByStaff(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return patients;
+
+
     }
 
     @Override

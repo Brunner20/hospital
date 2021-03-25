@@ -14,6 +14,7 @@
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.welcome" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.logout" var="logout"/>
+    <fmt:message bundle="${loc}" key="local.my_appointment" var="my_appoint"/>
 </head>
 <body>
 
@@ -26,10 +27,9 @@
     <section>
         <c:if test="${sessionScope.role == 'patient'}">
             <div class ="doctor">
-                <form action="/" method="post">
-                    <input type="hidden" name="command" value=""/>
-                    <input type="hidden" name="page" value=""/>
-                    <input type="submit" value="Мои назначения"/>
+                <form action="/Controller" method="post">
+                    <input type="hidden" name="command" value="gotoappointmentlistpage"/>
+                    <input type="submit" value="${my_appoint}"/>
                 </form>
 
                 <form action="medical.history.html" method="post">

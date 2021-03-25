@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DocumentationDAOImpl implements DocumentationDAO {
 
@@ -20,7 +22,9 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             "id_patient,id_appointment,id_executor,status,id_staff_appoint ) VALUES (?,?,?,?,?,?,?)";
 
     private static final String SELECT_APPOINTMENT_INFO = "select * from hospital.appointments WHERE title = ? and type = ? ";
+    private static final String SELECT_APPOINTMENT_INFO_BY_ID = "select * from hospital.appointments WHERE id = ? ";
     private static final String INSERT_APPOINTMENT_INFO = "insert into hospital.appointments(title ,type) values (?,?)";
+    private static final String SELECT_APPOINTMENT_BY_PATIENT = "select * from hospital.patient_appointments where id_patient =?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -76,6 +80,77 @@ public class DocumentationDAOImpl implements DocumentationDAO {
                 appointmentInfo.setType(resultSet.getInt(3));
             }else{
                  appointmentInfo = insertAppointmentInfo(title,type);
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return appointmentInfo;
+    }
+
+    @Override
+    public List<Appointment> getAllAppointmentsByPatientId(long patientId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Appointment> appointmentsByPatient = new ArrayList<>();
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_BY_PATIENT);
+            preparedStatement.setLong(1,patientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Appointment appointment = new Appointment();
+                appointment.setId(resultSet.getLong(1));
+                appointment.setDateOfAppointment(resultSet.getDate(2));
+                appointment.setDateOfAppointment(resultSet.getDate(3));
+                appointment.setInfoId(resultSet.getLong(4));
+                appointment.setInfoId(resultSet.getLong(5));
+                appointment.setExecuteStaffId(resultSet.getLong(6));
+                appointment.setStatus(resultSet.getInt(7));
+                appointment.setAppointingDoctorId(resultSet.getInt(8));
+                appointmentsByPatient.add(appointment);
+            }
+        } catch (SQLException | ConnectionPoolException throwables) {
+            throw new DAOException(throwables);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return appointmentsByPatient;
+    }
+
+    @Override
+    public AppointmentInfo getAppointmentInfoById(long infoId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        AppointmentInfo appointmentInfo = null;
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_INFO_BY_ID);
+            preparedStatement.setLong(1,infoId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                appointmentInfo = new AppointmentInfo();
+                appointmentInfo.setId(resultSet.getLong(1));
+                appointmentInfo.setInfo(resultSet.getString(2));
+                appointmentInfo.setType(resultSet.getInt(3));
             }
 
         } catch (ConnectionPoolException | SQLException e) {

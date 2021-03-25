@@ -10,6 +10,8 @@ public interface PatientService {
 
     List<Patient> getFreePatients() throws ServiceException;
 
+    List<Patient> getAllPatientsByStaff(long id) throws ServiceException;
+
     List<Patient> getAll() throws ServiceException;
 
     void updateDoctor(List<String> selectedPatientsIds, Long doctorId) throws ServiceException;

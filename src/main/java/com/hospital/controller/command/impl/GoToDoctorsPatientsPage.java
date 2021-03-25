@@ -2,9 +2,9 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 import com.hospital.entity.Patient;
+import com.hospital.service.PatientService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
-import com.hospital.service.StaffService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +34,11 @@ public class GoToDoctorsPatientsPage implements Command {
         }
 
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        StaffService staffService = serviceProvider.getStaffService();
+        PatientService patientService = serviceProvider.getPatientService();
 
         List<Patient> patients = null;
         try {
-            patients = staffService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
+            patients = patientService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
             request.setAttribute(ATTRIBUTE_PATIENT, patients);
             request.getRequestDispatcher(PATH_TO_PATIENTS).forward(request,response);
         }catch (ServiceException e){

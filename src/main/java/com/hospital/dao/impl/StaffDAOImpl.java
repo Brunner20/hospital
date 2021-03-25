@@ -5,10 +5,12 @@ import com.hospital.dao.StaffDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
-import com.hospital.entity.Patient;
 import com.hospital.entity.Staff;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,6 @@ public class StaffDAOImpl implements StaffDAO {
     private static final String UPDATE_STAFF ="UPDATE hospital.staff SET firstname= ?, lastname = ?,  " +
             "staff_pic = ?, department_id = ?, type_id = ? WHERE id = ?";
 
-    private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
     private static final String SELECT_STAFF_BY_ID = "SELECT * FROM hospital.staff WHERE id =?";
     private static final String GET_ALL_STAFF ="select * from hospital.staff ";
 
@@ -54,45 +55,7 @@ public class StaffDAOImpl implements StaffDAO {
 
     }
 
-    @Override
-    public List<Patient> getAllPatientsByStaff(long id) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        List<Patient> patients = new ArrayList<>();
-        try {
-            connection = connectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(SELECT_PATIENTS);
-            preparedStatement.setString(1, String.valueOf(id));
-            ResultSet set = preparedStatement.executeQuery();
 
-            while (set.next()) {
-                Patient patient = new Patient();
-                patient.setId(set.getLong(1));
-                patient.setFirstname(set.getString(2));
-                patient.setLastname(set.getString(3));
-                patient.setAge(set.getInt(4));
-                if(set.getDate(5)!=null)
-                patient.setReceiptDate(new Date(set.getDate(5).getTime()).toLocalDate());
-                patient.setDepartment(set.getInt(6));
-                patient.setAttendingDoctorID(set.getInt(7));
-                patient.setStatusID(set.getInt(8));
-                patients.add(patient);
-            }
-
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DAOException(e);
-        }finally {
-            connectionPool.releaseConnection(connection);
-            try {
-                if (preparedStatement != null && !preparedStatement.isClosed()) {
-                    preparedStatement.close();
-                }
-            }catch (SQLException e){
-                throw new DAOException("Close preparedStatement error ", e);
-            }
-        }
-        return patients;
-    }
 
     @Override
     public Staff getStaffById(Long id) throws DAOException {

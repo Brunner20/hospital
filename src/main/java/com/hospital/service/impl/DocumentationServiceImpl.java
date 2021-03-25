@@ -6,8 +6,15 @@ import com.hospital.dao.DocumentationDAO;
 import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentType;
+import com.hospital.entity.dto.AppointmentDTO;
 import com.hospital.service.DocumentationService;
 import com.hospital.service.ServiceException;
+import com.hospital.util.MappingUtil;
+import com.hospital.util.UtilException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DocumentationServiceImpl implements DocumentationService {
 
@@ -37,5 +44,22 @@ public class DocumentationServiceImpl implements DocumentationService {
             throw new ServiceException(e);
         }
         return appointmentInfo;
+    }
+
+    @Override
+    public List<AppointmentDTO> getAllAppointmentsByPatientId(long patientId) throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        List<Appointment> appointmentsByPatient = new ArrayList<>();
+        List<AppointmentDTO> dtoList = new ArrayList<>();
+        try {
+            appointmentsByPatient = documentationDAO.getAllAppointmentsByPatientId(patientId);
+            dtoList = appointmentsByPatient.stream().map(MappingUtil::mapToAppointmentDTO)
+                    .collect(Collectors.toList());
+        } catch (DAOException | UtilException e) {
+           throw new ServiceException(e);
+        }
+
+        return dtoList;
     }
 }
