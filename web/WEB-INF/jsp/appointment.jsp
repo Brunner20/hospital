@@ -50,15 +50,15 @@
                <td>${type}</td>
                <td>
                <select name = "select_type" >
-                <c:forEach var="type" items="${requestScope.types}">
-                    <c:if test="${type.name.equalsIgnoreCase('PREPARATION')}">
-                     <option value="${type.id}">${prep}</option>
+                <c:forEach var="AppType" items="${requestScope.types}">
+                    <c:if test="${AppType.toString().equals('PREPARATION')}">
+                     <option value="${AppType.id}">${prep}</option>
                     </c:if>
-                    <c:if test="${type.name.equalsIgnoreCase('PROCEDURE')}">
-                    <option value="${type.id}">${procedure}</option>
+                    <c:if test="${AppType.toString().equals('PROCEDURE')}">
+                    <option value="${AppType.id}">${procedure}</option>
                     </c:if>
-                    <c:if test="${type.name.equalsIgnoreCase('SURGERY')}">
-                    <option value="${type.id}">${surgery}</option>
+                    <c:if test="${AppType.toString().equals('SURGERY')}">
+                    <option value="${AppType.id}">${surgery}</option>
                     </c:if>
                 </c:forEach>
             </select>

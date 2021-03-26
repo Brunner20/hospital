@@ -9,7 +9,6 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Registration page</title>
 	<fmt:setLocale value="${sessionScope.locale}"/>
 	<fmt:setBundle basename="localization.local" var="loc"/>
 	<fmt:message bundle="${loc}" key="local.login" var="login"/>
@@ -18,6 +17,8 @@
 	<fmt:message bundle="${loc}" key="local.lastname" var="last"/>
 	<fmt:message bundle="${loc}" key="registration.btn" var="registration"/>
 	<fmt:message bundle="${loc}" key="local.back" var="back"/>
+	<fmt:message bundle="${loc}" key="local.page.registration" var="title"/>
+	<title>${title}</title>
 </head>
 <body>
 
@@ -32,7 +33,7 @@
 	   ${login}<br />
 	   <input type="text" name="login" value="" /><br />
 	   ${password}<br />
-	   <input type="password" name="password" value="" /><br />
+	   <input type="password" name="password" minlength="6" /><br />
 
 	   <input type="submit" value=  ${registration} /><br />
 	<a href="Controller?command=gotoindexpage">${back} </a>

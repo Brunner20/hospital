@@ -1,9 +1,6 @@
 package com.hospital.service;
 
-import com.hospital.service.impl.AccountServiceImpl;
-import com.hospital.service.impl.DocumentationServiceImpl;
-import com.hospital.service.impl.PatientServiceImpl;
-import com.hospital.service.impl.StaffServiceImpl;
+import com.hospital.service.impl.*;
 
 public final class ServiceProvider {
 
@@ -17,7 +14,9 @@ public final class ServiceProvider {
 
     private final PatientService patientService = new PatientServiceImpl();
 
-    private final DocumentationService documentationService = new DocumentationServiceImpl();
+    private final AppointmentService appointmentService = new AppointmentServiceImpl();
+
+    private final EpicrisisService epicrisisService = new EpicrisisServiceImpl();
 
     public static ServiceProvider getInstance(){return instance;}
 
@@ -29,5 +28,7 @@ public final class ServiceProvider {
 
     public PatientService getPatientService() {return patientService;}
 
-    public DocumentationService getDocumentationService() {return documentationService;}
+    public AppointmentService getAppointmentService() {return appointmentService;}
+
+    public EpicrisisService getEpicrisisService() {return epicrisisService;}
 }

@@ -84,7 +84,7 @@ public class Login implements Command {
                 Patient patient = (Patient) visitor;
                 if(patient.getAge()==0)
                 {
-                    session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+                    session.setAttribute(ATTRIBUTE_URL,PATH_TO_ADDITIONAL_INFO_PAGE);
                     request.getRequestDispatcher(PATH_TO_ADDITIONAL_INFO_PAGE).forward(request, response);
                 }else {
                     session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PATIENT_PAGE);

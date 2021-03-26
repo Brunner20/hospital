@@ -18,4 +18,5 @@ public interface PatientService {
 
     Patient getPatientById(Long id) throws ServiceException;
 
+    void update(Patient patient) throws ServiceException;
 }

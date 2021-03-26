@@ -24,7 +24,7 @@ public class AccountDAOImpl implements AccountDAO {
             " WHERE hospital.staff.account = ?";
 
     private static final String INSERT_ACCOUNT = "insert into hospital.accounts(login,password,id_role) VALUES (?,?,?)";
-    private static final String INSERT_PATIENT = "insert into hospital.patients(firstname,lastname,account_id) VALUES (?,?,?)";
+    private static final String INSERT_PATIENT = "insert into hospital.patients(firstname,lastname,account_id,status) VALUES (?,?,?,2)";
 
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
@@ -180,11 +180,12 @@ public class AccountDAOImpl implements AccountDAO {
             patient.setLastname(resultSet.getString(3));
             patient.setAge(resultSet.getInt(4));
             if(resultSet.getDate(5)!=null)
-            patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
-            patient.setDepartment(resultSet.getInt(6));
-            patient.setAttendingDoctorID(resultSet.getInt(7));
-            patient.setStatusID(resultSet.getInt(8));
-            patient.setAccountID(resultSet.getInt(9));
+            patient.setReceiptDate(resultSet.getDate(5));
+            patient.setPatientPic(resultSet.getString(6));
+            patient.setDepartment(resultSet.getInt(7));
+            patient.setAttendingDoctorID(resultSet.getLong(8));
+            patient.setStatusID(resultSet.getInt(9));
+            patient.setAccountID(resultSet.getInt(10));
         }
         connectionPool.releaseConnection(connection);
         preparedStatement.close();

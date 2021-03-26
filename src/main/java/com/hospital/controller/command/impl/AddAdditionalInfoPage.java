@@ -48,30 +48,26 @@ public class AddAdditionalInfoPage implements Command {
             return;
         }
 
-        String pic_patch;//????????????????
+
         String age;
 
         age = request.getParameter(AGE);
-        if(request.getPart("file")!=null)
-        {
-            System.out.println("dfg");
-        }
+
 
         ServiceProvider provider = ServiceProvider.getInstance();
         PatientService patientService = provider.getPatientService();
 
 
-
-            try {
+        try {
                 patientService.updateAge((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID),age);
                 session.setAttribute(ATTRIBUTE_URL,PATH_TO_MAIN_PATIENT);
                 response.sendRedirect(GO_TO_PATIENT_PAGE);
+
             } catch (ServiceException e) {
                 request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AGE);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_ADDITIONAL_INFO_PAGE);
                 requestDispatcher.forward(request, response);
             }
-
 
     }
 }

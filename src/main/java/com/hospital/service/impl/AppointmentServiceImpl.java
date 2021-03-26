@@ -1,31 +1,32 @@
 package com.hospital.service.impl;
 
+import com.hospital.dao.AppointmentDAO;
 import com.hospital.dao.DAOException;
 import com.hospital.dao.DAOProvider;
-import com.hospital.dao.DocumentationDAO;
 import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
 import com.hospital.entity.dto.AppointmentDTO;
-import com.hospital.service.DocumentationService;
+import com.hospital.service.AppointmentService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.validation.Validator;
 import com.hospital.util.MappingUtil;
 import com.hospital.util.UtilException;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DocumentationServiceImpl implements DocumentationService {
+public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public void addAppointment(Appointment appointment) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
-        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         try {
-            documentationDAO.addAppointment(appointment);
+            appointmentDAO.addAppointment(appointment);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -38,10 +39,10 @@ public class DocumentationServiceImpl implements DocumentationService {
             throw new ServiceException("title is wrong");
         }
         DAOProvider daoProvider = DAOProvider.getInstance();
-        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         AppointmentInfo appointmentInfo = null;
         try {
-          appointmentInfo = documentationDAO.getAppointmentInfo(title,type);
+          appointmentInfo = appointmentDAO.getAppointmentInfo(title,type);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -51,11 +52,11 @@ public class DocumentationServiceImpl implements DocumentationService {
     @Override
     public List<AppointmentDTO> getAllAppointmentsByPatientId(long patientId) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
-        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         List<Appointment> appointmentsByPatient = new ArrayList<>();
         List<AppointmentDTO> dtoList = new ArrayList<>();
         try {
-            appointmentsByPatient = documentationDAO.getAllAppointmentsByPatientId(patientId);
+            appointmentsByPatient = appointmentDAO.getAllAppointmentsByPatientId(patientId);
             dtoList = appointmentsByPatient.stream().map(MappingUtil::mapToAppointmentDTO)
                     .collect(Collectors.toList());
         } catch (DAOException | UtilException e) {
@@ -73,11 +74,11 @@ public class DocumentationServiceImpl implements DocumentationService {
         }
 
         DAOProvider daoProvider = DAOProvider.getInstance();
-        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         List<Appointment> appointmentsByPatient = new ArrayList<>();
         List<AppointmentDTO> dtoList = new ArrayList<>();
         try {
-            appointmentsByPatient = documentationDAO.getAllAppointmentsByStaffId(staffId);
+            appointmentsByPatient = appointmentDAO.getAllAppointmentsByStaffId(staffId);
             dtoList = appointmentsByPatient.stream().map(MappingUtil::mapToAppointmentDTO)
                     .collect(Collectors.toList());
         } catch (DAOException | UtilException e) {
@@ -94,11 +95,44 @@ public class DocumentationServiceImpl implements DocumentationService {
         }
 
         DAOProvider daoProvider = DAOProvider.getInstance();
-        DocumentationDAO documentationDAO = daoProvider.getDocumentationDAO();
+        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         try {
-            documentationDAO.updateAppointmentStatus(appointmentId,appointmentStatus);
+            appointmentDAO.updateAppointmentStatus(appointmentId,appointmentStatus);
         } catch (DAOException e) {
             throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo) throws ServiceException {
+        if(dateFrom==null || dateTo == null){
+            throw new ServiceException("wrong date");
+        }
+
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        List<Appointment> appointments = new ArrayList<>();
+
+        try {
+            appointments = appointmentDAO.getAllAppointmentBetweenDate(dateFrom,dateTo);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return appointments;
+    }
+
+    @Override
+    public void updateAppointmentEpirisis(List<Appointment> appointmentList, long epicrisisId) throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+
+        for(Appointment appointment:appointmentList){
+            appointment.setEpicrisisID(epicrisisId);
+            try {
+                appointmentDAO.update(appointment);
+            } catch (DAOException e) {
+                throw new ServiceException(e);
+            }
         }
     }
 }

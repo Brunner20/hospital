@@ -5,7 +5,7 @@ import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
-import com.hospital.service.DocumentationService;
+import com.hospital.service.AppointmentService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 
@@ -67,7 +67,7 @@ public class AddAppointment implements Command {
             dateOfCompletion = Date.valueOf(request.getParameter(ATTRIBUTE_COMPLETION_DATE));
         }
 
-        DocumentationService docService = ServiceProvider.getInstance().getDocumentationService();
+        AppointmentService docService = ServiceProvider.getInstance().getAppointmentService();
         AppointmentInfo appointmentInfo = null;
         try {
              appointmentInfo = docService.getAppointmentInfo(information,type);
@@ -88,9 +88,9 @@ public class AddAppointment implements Command {
             appointment.setDateOfCompletion(dateOfCompletion);
         }
 
-        DocumentationService documentationService = ServiceProvider.getInstance().getDocumentationService();
+        AppointmentService appointmentService = ServiceProvider.getInstance().getAppointmentService();
         try {
-            documentationService.addAppointment(appointment);
+            appointmentService.addAppointment(appointment);
         } catch (ServiceException e) {
             request.setAttribute("error","");
             session.setAttribute(ATTRIBUTE_URL, GO_TO_ADD_APPOINTMENT_PAGE);

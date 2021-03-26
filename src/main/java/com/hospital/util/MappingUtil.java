@@ -23,7 +23,7 @@ public class MappingUtil {
             StaffDAO staffDAO = DAOProvider.getInstance().getStaffDAO();
             appointStaff = staffDAO.getStaffById(appointment.getAppointingDoctorId());
             execStaff = staffDAO.getStaffById(appointment.getExecuteStaffId());
-            appointmentInfo = DAOProvider.getInstance().getDocumentationDAO().getAppointmentInfoById(appointment.getInfoId());
+            appointmentInfo = DAOProvider.getInstance().getAppointmentDAO().getAppointmentInfoById(appointment.getInfoId());
         } catch (DAOException e) {
             throw new UtilException(e);
         }

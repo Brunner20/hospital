@@ -42,7 +42,7 @@ public class UpdateAppointmentStatus implements Command {
         Long appointmentId = Long.parseLong(request.getParameter(ATTRIBUTE_APPOINTMENT_ID));
 
         try {
-            ServiceProvider.getInstance().getDocumentationService()
+            ServiceProvider.getInstance().getAppointmentService()
                     .updateAppointmentStatus(appointmentId, AppointmentStatus.valueOf(appointmentNewStatus.toUpperCase()));
             
         } catch (ServiceException e) {

@@ -20,16 +20,43 @@
     <fmt:message bundle="${loc}" key="profile.attending_doctor" var="attending_doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.nurse" var="nurse"/>
+    <fmt:message bundle="${loc}" key="local.btn.update" var="update"/>
     <fmt:message bundle="${loc}" key="local.page.profile" var="title"/>
     <title>${title}</title>
 </head>
 <body>
 <div class="profile">
     <c:if test="${sessionScope.role=='patient'}">
-    <table cellspacing="0" id="maket" border="0">
+        <table cellspacing="0" id="maket" border="0">
 
+        <c:if test="${sessionScope.role.equalsIgnoreCase('patient')}">
+          <tr>
+              <td>
+                  <img src="<c:url value="${requestScope.patient.patientPic}"></c:url>" width="100" height="80"  alt=""/>
+              </td>
+              <td>
+                  <form action="UploadFileController" method="post" enctype="multipart/form-data">
+                      <input type="file" name="file"/><br/>
+                      <input type="submit" value="${update}" />
+                  </form>
+              </td>
+          </tr>
+        </c:if>
+        <c:if test="${sessionScope.role.equalsIgnoreCase('doctor')||sessionScope.role.equalsIgnoreCase('nurse')}">
         <tr>
-            <td>${first}<td>
+            <td>
+                <img src="<c:url value="${requestScope.staff.patientPic}"></c:url>" width="100" height="80"  alt=""/>
+            </td>
+            <td>
+                <form action="UploadFileController" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file"/><br/>
+                    <input type="submit" value="${update}" />
+                </form>
+            </td>
+        </tr>
+        </c:if>
+        <tr>
+        <td>${first}<td>
             <td>${requestScope.patient.firstname}</td>
         </tr>
         <tr>

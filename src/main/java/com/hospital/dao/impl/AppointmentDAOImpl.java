@@ -1,7 +1,7 @@
 package com.hospital.dao.impl;
 
+import com.hospital.dao.AppointmentDAO;
 import com.hospital.dao.DAOException;
-import com.hospital.dao.DocumentationDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
@@ -10,17 +10,16 @@ import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocumentationDAOImpl implements DocumentationDAO {
+public class AppointmentDAOImpl implements AppointmentDAO {
 
     private static final String INSERT_APPOINTMENT = "insert into hospital.patient_appointments(date_of_completion,date_of_appointment," +
             "id_patient,id_appointment,id_executor,status,id_staff_appoint ) VALUES (?,?,?,?,?,?,?)";
+    private static final String UPDATE_APPOINTMENT = "update hospital.patient_appointments SET date_of_completion =?,date_of_appointment = ?" +
+            ",id_patient = ?,id_appointment = ?,id_executor = ?,status = ?,id_staff_appoint = ?, id_epicrisis = ? where id = ?";
 
     private static final String SELECT_APPOINTMENT_INFO = "select * from hospital.appointments WHERE title = ? and type = ? ";
     private static final String SELECT_APPOINTMENT_INFO_BY_ID = "select * from hospital.appointments WHERE id = ?  ";
@@ -28,6 +27,7 @@ public class DocumentationDAOImpl implements DocumentationDAO {
     private static final String SELECT_APPOINTMENT_BY_PATIENT = "select * from hospital.patient_appointments where id_patient =?";
     private static final String SELECT_APPOINTMENT_BY_STAFF = "select * from hospital.patient_appointments where id_executor =? and status = 1";
     private static final String UPDATE_APPOINTMENT_STATUS = "update hospital.patient_appointments set status = ? where id = ? ";
+    private static final String SELECT_APPOINTMENT_BETWEEN_DATES = "select * from hospital.patient_appointments where date_of_appointment  BETWEEN ? and ?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -48,7 +48,7 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             preparedStatement.setLong(7,appointment.getAppointingDoctorId());
             preparedStatement.execute();
 
-                //TODO внести назначение в историю болезней(транзакция?)
+                //TODO внести назначение в историю болезней(транзакция)
         }  catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         }finally {
@@ -112,15 +112,7 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Appointment appointment = new Appointment();
-                appointment.setId(resultSet.getLong(1));
-                appointment.setDateOfCompletion(resultSet.getDate(2));
-                appointment.setDateOfAppointment(resultSet.getDate(3));
-                appointment.setPatientId(resultSet.getLong(4));
-                appointment.setInfoId(resultSet.getLong(5));
-                appointment.setExecuteStaffId(resultSet.getLong(6));
-                appointment.setStatus(resultSet.getInt(7));
-                appointment.setAppointingDoctorId(resultSet.getInt(8));
+                Appointment appointment = appointmentMapping(resultSet);
                 appointmentsByPatient.add(appointment);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
@@ -183,15 +175,7 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Appointment appointment = new Appointment();
-                appointment.setId(resultSet.getLong(1));
-                appointment.setDateOfCompletion(resultSet.getDate(2));
-                appointment.setDateOfAppointment(resultSet.getDate(3));
-                appointment.setPatientId(resultSet.getLong(4));
-                appointment.setInfoId(resultSet.getLong(5));
-                appointment.setExecuteStaffId(resultSet.getLong(6));
-                appointment.setStatus(resultSet.getInt(7));
-                appointment.setAppointingDoctorId(resultSet.getInt(8));
+                Appointment appointment = appointmentMapping(resultSet);
                 appointmentsByStaff.add(appointment);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
@@ -232,6 +216,71 @@ public class DocumentationDAOImpl implements DocumentationDAO {
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
+    }
+
+    @Override
+    public List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Appointment> selectedAppointments = new ArrayList<>();
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_BETWEEN_DATES);
+            preparedStatement.setDate(1,dateFrom);
+            preparedStatement.setDate(2,dateTo);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Appointment appointment = appointmentMapping(resultSet);
+                selectedAppointments.add(appointment);
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return selectedAppointments;
+    }
+
+    @Override
+    public void update(Appointment appointment) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT);
+            preparedStatement.setDate(1,appointment.getDateOfCompletion());
+            preparedStatement.setDate(2,appointment.getDateOfAppointment());
+            preparedStatement.setLong(3,appointment.getPatientId());
+            preparedStatement.setLong(4,appointment.getInfoId());
+            preparedStatement.setLong(5,appointment.getExecuteStaffId());
+            preparedStatement.setLong(6,appointment.getStatus().getId());
+            preparedStatement.setLong(7,appointment.getAppointingDoctorId());
+            preparedStatement.setLong(8,appointment.getEpicrisisID());
+            preparedStatement.setLong(9,appointment.getId());
+            preparedStatement.execute();
+
+        }  catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+
     }
 
     private AppointmentInfo insertAppointmentInfo(String title, AppointmentType type) throws DAOException {
@@ -277,6 +326,20 @@ public class DocumentationDAOImpl implements DocumentationDAO {
             }
         }
         return appointmentInfo;
+    }
+
+    private Appointment appointmentMapping(ResultSet resultSet) throws SQLException {
+        Appointment appointment = new Appointment();
+        appointment.setId(resultSet.getLong(1));
+        appointment.setDateOfCompletion(resultSet.getDate(2));
+        appointment.setDateOfAppointment(resultSet.getDate(3));
+        appointment.setPatientId(resultSet.getLong(4));
+        appointment.setInfoId(resultSet.getLong(5));
+        appointment.setExecuteStaffId(resultSet.getLong(6));
+        appointment.setStatus(resultSet.getInt(7));
+        appointment.setAppointingDoctorId(resultSet.getInt(8));
+        appointment.setEpicrisisID(resultSet.getLong(9));
+        return appointment;
     }
 
 

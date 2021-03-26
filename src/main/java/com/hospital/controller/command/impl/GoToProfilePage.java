@@ -52,7 +52,7 @@ public class GoToProfilePage implements Command {
 
         session.setAttribute(ATTRIBUTE_URL,GO_TO_PROFILE_PAGE);
         try {
-            if (role.contains("doctor") || role.contains("nurse")) {
+            if (role.contains(ROLE_DOCTOR) || role.contains(ROLE_NURSE)) {
 
                 Staff staff = staffService.getStaffById(id);
                 request.setAttribute("staff",staff);

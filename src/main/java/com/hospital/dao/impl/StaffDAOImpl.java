@@ -68,15 +68,7 @@ public class StaffDAOImpl implements StaffDAO {
             preparedStatement.setLong(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                staff = new Staff();
-                staff.setId(resultSet.getLong(1));
-                staff.setFirstname(resultSet.getString(2));
-                staff.setLastname(resultSet.getString(3));
-                staff.setPicture(resultSet.getString(4));
-                staff.setStaffTypeID(resultSet.getLong(5));
-                staff.setDepartment(resultSet.getInt(6));
-                staff.setAccountID(resultSet.getLong(7));
-
+                staff = staffMapping(resultSet);
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -106,14 +98,7 @@ public class StaffDAOImpl implements StaffDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Staff staff = new Staff();
-                staff.setId(resultSet.getLong(1));
-                staff.setFirstname(resultSet.getString(2));
-                staff.setLastname(resultSet.getString(3));
-                staff.setPicture(resultSet.getString(4));
-                staff.setStaffTypeID(resultSet.getLong(5));
-                staff.setDepartment(resultSet.getInt(6));
-                staff.setAccountID(resultSet.getLong(7));
+                Staff staff = staffMapping(resultSet);
                 allStaff.add(staff);
             }
 
@@ -130,5 +115,17 @@ public class StaffDAOImpl implements StaffDAO {
             }
         }
         return allStaff;
+    }
+
+    private Staff staffMapping(ResultSet resultSet) throws SQLException {
+        Staff staff = new Staff() ;
+        staff.setId(resultSet.getLong(1));
+        staff.setFirstname(resultSet.getString(2));
+        staff.setLastname(resultSet.getString(3));
+        staff.setPicture(resultSet.getString(4));
+        staff.setStaffTypeID(resultSet.getLong(5));
+        staff.setDepartment(resultSet.getInt(6));
+        staff.setAccountID(resultSet.getLong(7));
+        return staff;
     }
 }

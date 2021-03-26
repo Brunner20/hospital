@@ -2,7 +2,7 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 import com.hospital.entity.dto.AppointmentDTO;
-import com.hospital.service.DocumentationService;
+import com.hospital.service.AppointmentService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 
@@ -41,12 +41,12 @@ public class GoToPatientAppointmentListPage implements Command {
 
         long visitorId = (long) session.getAttribute(ATTRIBUTE_VISITOR_ID);
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        DocumentationService documentationService = serviceProvider.getDocumentationService();
+        AppointmentService appointmentService = serviceProvider.getAppointmentService();
         List<AppointmentDTO> allAppointments = new ArrayList<>();
         if(session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_PATIENT))
         {
             try {
-                allAppointments = documentationService.getAllAppointmentsByPatientId(visitorId);
+                allAppointments = appointmentService.getAllAppointmentsByPatientId(visitorId);
             } catch (ServiceException e) {
                 session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
                 response.sendRedirect(GO_TO_PATIENT_PAGE);

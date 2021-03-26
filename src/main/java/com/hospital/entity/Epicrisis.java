@@ -1,6 +1,7 @@
 package com.hospital.entity;
 
-import java.time.LocalDate;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,16 +9,23 @@ public class Epicrisis {
 
     private long id;
     private String definitiveDiagnosis;
-    private LocalDate issueDate;
+    private String preliminaryDiagnosis;
+    private Date dischargeDate;
     private long patientId;
     private List<Long> appointmentsId;
 
-    public Epicrisis(long id, String definitiveDiagnosis, LocalDate issueDate, long patientId, List<Long> appointmentsId) {
+
+
+    public Epicrisis(long id, String definitiveDiagnosis, String preliminaryDiagnosis, Date dischargeDate, long patientId, List<Long> appointmentsId) {
         this.id = id;
         this.definitiveDiagnosis = definitiveDiagnosis;
-        this.issueDate = issueDate;
+        this.preliminaryDiagnosis = preliminaryDiagnosis;
+        this.dischargeDate = dischargeDate;
         this.patientId = patientId;
         this.appointmentsId = appointmentsId;
+    }
+
+    public Epicrisis() {
     }
 
     public long getId() {
@@ -36,12 +44,12 @@ public class Epicrisis {
         this.definitiveDiagnosis = definitiveDiagnosis;
     }
 
-    public LocalDate getIssueDate() {
-        return issueDate;
+    public Date getDischargeDate() {
+        return dischargeDate;
     }
 
-    public void setIssueDate(LocalDate issueDate) {
-        this.issueDate = issueDate;
+    public void setDischargeDate(Date dischargeDate) {
+        this.dischargeDate = dischargeDate;
     }
 
     public long getPatientId() {
@@ -64,17 +72,25 @@ public class Epicrisis {
         this.appointmentsId.add(appointmentsId);
     }
 
+    public String getPreliminaryDiagnosis() {
+        return preliminaryDiagnosis;
+    }
+
+    public void setPreliminaryDiagnosis(String preliminaryDiagnosis) {
+        this.preliminaryDiagnosis = preliminaryDiagnosis;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Epicrisis epicrisis = (Epicrisis) o;
-        return id == epicrisis.id && patientId == epicrisis.patientId && Objects.equals(definitiveDiagnosis, epicrisis.definitiveDiagnosis) && Objects.equals(issueDate, epicrisis.issueDate) && Objects.equals(appointmentsId, epicrisis.appointmentsId);
+        return id == epicrisis.id && patientId == epicrisis.patientId && Objects.equals(definitiveDiagnosis, epicrisis.definitiveDiagnosis) && Objects.equals(preliminaryDiagnosis, epicrisis.preliminaryDiagnosis) && Objects.equals(dischargeDate, epicrisis.dischargeDate) && Objects.equals(appointmentsId, epicrisis.appointmentsId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, definitiveDiagnosis, issueDate, patientId, appointmentsId);
+        return Objects.hash(id, definitiveDiagnosis, preliminaryDiagnosis, dischargeDate, patientId, appointmentsId);
     }
 
     @Override
@@ -82,7 +98,8 @@ public class Epicrisis {
         return "Epicrisis{" +
                 "id=" + id +
                 ", definitiveDiagnosis='" + definitiveDiagnosis + '\'' +
-                ", issueDate=" + issueDate +
+                ", preliminaryDiagnosis='" + preliminaryDiagnosis + '\'' +
+                ", dischargeDate=" + dischargeDate +
                 ", patientId=" + patientId +
                 ", appointmentsId=" + appointmentsId +
                 '}';

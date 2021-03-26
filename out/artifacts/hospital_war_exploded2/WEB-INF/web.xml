@@ -18,6 +18,16 @@
 		<url-pattern>/Controller</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>UploadController</servlet-name>
+		<servlet-class>com.hospital.controller.UploadFileController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UploadController</servlet-name>
+		<url-pattern>/UploadFileController</url-pattern>
+	</servlet-mapping>
+
 
 	<listener>
 		<listener-class>com.hospital.controller.listener.AppContextListener</listener-class>

@@ -12,7 +12,7 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.firstname" var="name"/>
-    <fmt:message bundle="${loc}" key="local.select" var="select"/>
+    <fmt:message bundle="${loc}" key="local.btn.next" var="select"/>
     <fmt:message bundle="${loc}" key="local.page.free_patients" var="title"/>
     <title>${title}</title>
 
@@ -22,19 +22,27 @@
 <form action="Controller" method="post">
     <table cellspacing="0" id="maket">
         <tr>
-            <td id="leftcol">Выбрать<td><td id="rightcol">${name}</td>
+           <td>${name}</td>
         </tr>
-        <c:forEach var="patient" items="${requestScope.patientList}">
-            <tr>
-                <td id="box">
-                    <input type="checkbox" name="selected" id = "cb1" value="${patient.id}"/>
-                <td>
-                <td id="name">${patient.firstname} ${patient.lastname}</td>
-            </tr>
-        </c:forEach>
+        <tr>
+            <td>
+                <select name = "free_patient_id" size="3" >
+                <c:forEach var="patient" items="${requestScope.patientList}">
+    <%--            <tr>--%>
+    <%--                <td>--%>
+    <%--                    <input type="checkbox" name="selected" id = "cb1" value="${patient.id}"/>--%>
+    <%--                <td>--%>
+    <%--                <td id="name">${patient.firstname} ${patient.lastname}</td>--%>
+    <%--            </tr>--%>
+
+                        <option value="${patient.id}">${patient.firstname} ${patient.lastname} </option>
+                </c:forEach>
+                </select>
+            </td>
+        </tr>
     </table>
 
-    <input type="hidden" name="command" value="addpatientstodoctor"/>
+    <input type="hidden" name="command" value="gotoreceiptdatepage"/>
     <input type="submit" value="${select}"/>
 </form>
 

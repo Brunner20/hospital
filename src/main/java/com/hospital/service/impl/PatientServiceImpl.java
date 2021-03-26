@@ -117,4 +117,17 @@ public class PatientServiceImpl implements PatientService {
         return patient;
     }
 
+    @Override
+    public void update(Patient patient) throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        PatientDAO patientDAO = daoProvider.getPatientDAO();
+
+        try {
+            patientDAO.update(patient);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+    }
+
 }

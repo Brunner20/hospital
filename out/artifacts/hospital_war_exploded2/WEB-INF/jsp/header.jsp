@@ -19,7 +19,7 @@
 
 <header >
 
-<h1 align="center">${home}</h1>
+    <h1 align="center" >${home}</h1>
 
     <ul>
          <li>
@@ -46,6 +46,7 @@
             <li><a href="Controller?command=gotoindexpage"><fmt:message bundle="${loc}" key="header.login"/></a></li>
         </c:if>
     </ul>
+
 </header>
 
 

@@ -32,11 +32,14 @@ public class Controller extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         String name;
         Command command;
-
+    try {
         name = request.getParameter("command");
         command = provider.takeCommand(name);
-
         command.execute(request, response);
+    }catch (NullPointerException e){
+        request.getRequestDispatcher("/WEB-INF/jsp/404error.html").forward(request,response); ;
+    }
+
     }
 
 }

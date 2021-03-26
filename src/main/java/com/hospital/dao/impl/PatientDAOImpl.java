@@ -7,14 +7,17 @@ import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
 import com.hospital.entity.Patient;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PatientDAOImpl implements PatientDAO {
 
     private static final String UPDATE_PATIENT ="UPDATE hospital.patients SET firstname= ?, lastname = ?, age = ?, " +
-            "receipt_date = ?, department_id = ?, attending_doctor = ?, status =?, account_id = ?  WHERE id = ?";
+            "receipt_date = ?, department_id = ?, attending_doctor = ?, status =?, account_id = ?, patient_pic = ? WHERE id = ?";
 
     private static final String UPDATE_AGE = "UPDATE hospital.patients SET age = ? where id = ?";
     private static final String UPDATE_DOCTOR= "UPDATE hospital.patients SET attending_doctor = ? and status = 1 where id = ?";
@@ -35,12 +38,25 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement.setString(1,patient.getFirstname());
             preparedStatement.setString(2,patient.getLastname());
             preparedStatement.setInt(3,patient.getAge());
-            preparedStatement.setDate(4,java.sql.Date.valueOf(patient.getReceiptDate()));
+            if(patient.getReceiptDate()!=null)
+            {
+                preparedStatement.setDate(4,patient.getReceiptDate());
+            }
+            else {
+                preparedStatement.setDate(4,null);
+            }
             preparedStatement.setLong(5,patient.getDepartment().getId());
-            preparedStatement.setLong(6,patient.getAttendingDoctorID());
+            if(patient.getAttendingDoctorID()==null) {
+                preparedStatement.setString(6,null);
+            }
+            else {
+                preparedStatement.setLong(6,patient.getAttendingDoctorID());
+            }
             preparedStatement.setLong(7,patient.getStatusID());
             preparedStatement.setLong(8,patient.getAccountID());
-            preparedStatement.setLong(9,patient.getId());
+            preparedStatement.setString(9,patient.getPatientPic());
+            preparedStatement.setLong(10,patient.getId());
+
             preparedStatement.executeUpdate();
 
         } catch (ConnectionPoolException | SQLException e) {
@@ -95,17 +111,7 @@ public class PatientDAOImpl implements PatientDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Patient patient = new Patient();
-                patient.setId(resultSet.getLong(1));
-                patient.setFirstname(resultSet.getString(2));
-                patient.setLastname(resultSet.getString(3));
-                patient.setAge(resultSet.getInt(4));
-                if(resultSet.getDate(5)!=null)
-                    patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
-                patient.setDepartment(resultSet.getInt(6));
-                patient.setAttendingDoctorID(resultSet.getInt(7));
-                patient.setStatusID(resultSet.getInt(8));
-                patient.setAccountID(resultSet.getInt(9));
+                Patient patient = patientMapping(resultSet);
                 patients.add(patient);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
@@ -135,16 +141,7 @@ public class PatientDAOImpl implements PatientDAO {
             ResultSet set = preparedStatement.executeQuery();
 
             while (set.next()) {
-                Patient patient = new Patient();
-                patient.setId(set.getLong(1));
-                patient.setFirstname(set.getString(2));
-                patient.setLastname(set.getString(3));
-                patient.setAge(set.getInt(4));
-                if(set.getDate(5)!=null)
-                    patient.setReceiptDate(new Date(set.getDate(5).getTime()).toLocalDate());
-                patient.setDepartment(set.getInt(6));
-                patient.setAttendingDoctorID(set.getInt(7));
-                patient.setStatusID(set.getInt(8));
+                Patient patient = patientMapping(set);
                 patients.add(patient);
             }
 
@@ -202,17 +199,7 @@ public class PatientDAOImpl implements PatientDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                patient = new Patient();
-                patient.setId(resultSet.getLong(1));
-                patient.setFirstname(resultSet.getString(2));
-                patient.setLastname(resultSet.getString(3));
-                patient.setAge(resultSet.getInt(4));
-                if(resultSet.getDate(5)!=null)
-                    patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
-                patient.setDepartment(resultSet.getInt(6));
-                patient.setAttendingDoctorID(resultSet.getInt(7));
-                patient.setStatusID(resultSet.getInt(8));
-                patient.setAccountID(resultSet.getInt(9));
+                patient = patientMapping(resultSet);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
             throw new DAOException(throwables);
@@ -240,17 +227,7 @@ public class PatientDAOImpl implements PatientDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Patient patient = new Patient();
-                patient.setId(resultSet.getLong(1));
-                patient.setFirstname(resultSet.getString(2));
-                patient.setLastname(resultSet.getString(3));
-                patient.setAge(resultSet.getInt(4));
-                if(resultSet.getDate(5)!=null)
-                    patient.setReceiptDate(new Date(resultSet.getDate(5).getTime()).toLocalDate());
-                patient.setDepartment(resultSet.getInt(6));
-                patient.setAttendingDoctorID(resultSet.getInt(7));
-                patient.setStatusID(resultSet.getInt(8));
-                patient.setAccountID(resultSet.getInt(9));
+                Patient patient = patientMapping(resultSet);
                 patients.add(patient);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
@@ -266,5 +243,21 @@ public class PatientDAOImpl implements PatientDAO {
             }
         }
         return patients;
+    }
+
+    private Patient patientMapping(ResultSet resultSet) throws SQLException {
+        Patient patient = new Patient();
+        patient.setId(resultSet.getLong(1));
+        patient.setFirstname(resultSet.getString(2));
+        patient.setLastname(resultSet.getString(3));
+        patient.setAge(resultSet.getInt(4));
+        if(resultSet.getDate(5)!=null)
+            patient.setReceiptDate(resultSet.getDate(5));
+        patient.setPatientPic(resultSet.getString(6));
+        patient.setDepartment(resultSet.getInt(7));
+        patient.setAttendingDoctorID(resultSet.getLong(8));
+        patient.setStatusID(resultSet.getInt(9));
+        patient.setAccountID(resultSet.getInt(10));
+        return patient;
     }
 }

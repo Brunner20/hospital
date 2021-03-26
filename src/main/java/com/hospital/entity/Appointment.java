@@ -11,12 +11,12 @@ public class Appointment {
     private long appointingDoctorId;
     private long executeStaffId;
     private long infoId;
+    private long epicrisisID;
     private AppointmentStatus status;
 
 
-
-    public Appointment(long id, Date dateOfAppointment, Date dateOfCompletion, long patientId,
-                       long appointingDoctorId, long executeStaffId, long infoId, AppointmentStatus status, String title) {
+    public Appointment(long id, Date dateOfAppointment, Date dateOfCompletion, long patientId, long appointingDoctorId,
+                       long executeStaffId, long infoId, long epicrisisID, AppointmentStatus status) {
         this.id = id;
         this.dateOfAppointment = dateOfAppointment;
         this.dateOfCompletion = dateOfCompletion;
@@ -24,8 +24,8 @@ public class Appointment {
         this.appointingDoctorId = appointingDoctorId;
         this.executeStaffId = executeStaffId;
         this.infoId = infoId;
+        this.epicrisisID = epicrisisID;
         this.status = status;
-
     }
 
     public Appointment() {
@@ -99,18 +99,25 @@ public class Appointment {
         this.status = status;
     }
 
+    public long getEpicrisisID() {
+        return epicrisisID;
+    }
+
+    public void setEpicrisisID(long epicrisisID) {
+        this.epicrisisID = epicrisisID;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Appointment that = (Appointment) o;
-        return id == that.id && patientId == that.patientId && appointingDoctorId == that.appointingDoctorId && executeStaffId == that.executeStaffId && infoId == that.infoId && Objects.equals(dateOfAppointment, that.dateOfAppointment) && Objects.equals(dateOfCompletion, that.dateOfCompletion) && status == that.status;
+        return id == that.id && patientId == that.patientId && appointingDoctorId == that.appointingDoctorId && executeStaffId == that.executeStaffId && infoId == that.infoId && epicrisisID == that.epicrisisID && Objects.equals(dateOfAppointment, that.dateOfAppointment) && Objects.equals(dateOfCompletion, that.dateOfCompletion) && status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateOfAppointment, dateOfCompletion, patientId, appointingDoctorId, executeStaffId, infoId, status);
+        return Objects.hash(id, dateOfAppointment, dateOfCompletion, patientId, appointingDoctorId, executeStaffId, infoId, epicrisisID, status);
     }
 
     @Override
@@ -123,7 +130,8 @@ public class Appointment {
                 ", appointingDoctorId=" + appointingDoctorId +
                 ", executeStaffId=" + executeStaffId +
                 ", infoId=" + infoId +
-                ", status=" + status + '\'' +
+                ", epicrisisID=" + epicrisisID +
+                ", status=" + status +
                 '}';
     }
 }

@@ -33,7 +33,7 @@
 	   ${login}<br />
 	   <input type="text" name="login" value="" /><br />
 	   ${password}<br />
-	   <input type="password" name="password" value="" /><br />
+	   <input type="password" name="password" minlength="6" /><br />
 
 	   <input type="submit" value=  ${registration} /><br />
 	<a href="Controller?command=gotoindexpage">${back} </a>

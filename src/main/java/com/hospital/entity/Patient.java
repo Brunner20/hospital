@@ -1,37 +1,37 @@
 package com.hospital.entity;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 public class Patient implements Visitor{
 
     private long id;
     private String firstname;
-    private String Lastname;
+    private String lastname;
     private int age;
-    private LocalDate receiptDate;
+    private Date receiptDate;
     private Department department;
-    private long attendingDoctorID;
-    private long statusID;
+    private Long attendingDoctorID;
+    private Long statusID;
     private long accountID;
-
+    private String patientPic;
 
     public Patient() {
     }
 
-    public Patient(long id, String firstname, String lastname, int age, LocalDate receiptDate, Department department,
-                   long attendingDoctorID, long statusID, long accountID) {
+    public Patient(long id, String firstname, String lastname, int age, Date receiptDate,
+                   Department department, long attendingDoctorID, long statusID, long accountID, String patientPic) {
         this.id = id;
         this.firstname = firstname;
-        Lastname = lastname;
+        this.lastname = lastname;
         this.age = age;
         this.receiptDate = receiptDate;
         this.department = department;
         this.attendingDoctorID = attendingDoctorID;
         this.statusID = statusID;
         this.accountID = accountID;
+        this.patientPic = patientPic;
     }
-
 
     public long getId() {
         return id;
@@ -50,11 +50,11 @@ public class Patient implements Visitor{
     }
 
     public String getLastname() {
-        return Lastname;
+        return lastname;
     }
 
     public void setLastname(String lastname) {
-        Lastname = lastname;
+        this.lastname = lastname;
     }
 
     public int getAge() {
@@ -65,19 +65,19 @@ public class Patient implements Visitor{
         this.age = age;
     }
 
-    public LocalDate getReceiptDate() {
+    public Date getReceiptDate() {
         return receiptDate;
     }
 
-    public void setReceiptDate(LocalDate receiptDate) {
+    public void setReceiptDate(Date receiptDate) {
         this.receiptDate = receiptDate;
     }
 
-    public long getAttendingDoctorID() {
+    public Long getAttendingDoctorID() {
         return attendingDoctorID;
     }
 
-    public void setAttendingDoctorID(long attendingDoctorID) {
+    public void setAttendingDoctorID(Long attendingDoctorID) {
         this.attendingDoctorID = attendingDoctorID;
     }
 
@@ -105,17 +105,25 @@ public class Patient implements Visitor{
         this.department = Department.getDepartmentById(departmentId);
     }
 
+    public String getPatientPic() {
+        return patientPic;
+    }
+
+    public void setPatientPic(String patientPic) {
+        this.patientPic = patientPic;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return id == patient.id && age == patient.age && attendingDoctorID == patient.attendingDoctorID && statusID == patient.statusID && accountID == patient.accountID && Objects.equals(firstname, patient.firstname) && Objects.equals(Lastname, patient.Lastname) && Objects.equals(receiptDate, patient.receiptDate) && department == patient.department;
+        return id == patient.id && age == patient.age && attendingDoctorID == patient.attendingDoctorID && statusID == patient.statusID && accountID == patient.accountID && Objects.equals(firstname, patient.firstname) && Objects.equals(lastname, patient.lastname) && Objects.equals(receiptDate, patient.receiptDate) && department == patient.department;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, Lastname, age, receiptDate, department, attendingDoctorID, statusID, accountID);
+        return Objects.hash(id, firstname, lastname, age, receiptDate, department, attendingDoctorID, statusID, accountID);
     }
 
     @Override
@@ -123,7 +131,7 @@ public class Patient implements Visitor{
         return "Patient{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
-                ", Lastname='" + Lastname + '\'' +
+                ", Lastname='" + lastname + '\'' +
                 ", age=" + age +
                 ", receiptDate=" + receiptDate +
                 ", department=" + department +

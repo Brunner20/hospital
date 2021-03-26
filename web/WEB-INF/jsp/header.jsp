@@ -46,6 +46,7 @@
             <li><a href="Controller?command=gotoindexpage"><fmt:message bundle="${loc}" key="header.login"/></a></li>
         </c:if>
     </ul>
+
 </header>
 
 
