@@ -3,6 +3,7 @@ package com.hospital.controller.command.impl;
 import com.hospital.controller.command.Command;
 import com.hospital.entity.Appointment;
 import com.hospital.entity.Epicrisis;
+import com.hospital.entity.MedicalHistory;
 import com.hospital.entity.Patient;
 import com.hospital.service.*;
 
@@ -47,25 +48,31 @@ public class AddEpicrisis implements Command {
         String  definitiveDiagnosis = request.getParameter(DEFINITIVE_DIAGNOSIS);
         long patientID = Long.parseLong(request.getParameter(PATIENT_ID));
 
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        EpicrisisService epicrisisService = serviceProvider.getEpicrisisService();
-        AppointmentService appointmentService = serviceProvider.getAppointmentService();
-        PatientService patientService = serviceProvider.getPatientService();
-       //TODO убрать у пациетна лечащего вра и статус на лечении
+        ServiceProvider provider = ServiceProvider.getInstance();
+        EpicrisisService epicrisisService = provider.getEpicrisisService();
+        AppointmentService appointmentService = provider.getAppointmentService();
+        PatientService patientService = provider.getPatientService();
+        MedicalHistoryService medicalHistoryService = provider.getMedicalHistoryService();
 
         try {
+            MedicalHistory medicalHistory = medicalHistoryService.getByPatientId(patientID);
+
             Epicrisis epicrisis = epicrisisService.getEpicrisisByPatientId(patientID);
             epicrisis.setDefinitiveDiagnosis(definitiveDiagnosis);
             epicrisis.setDischargeDate(dischargeDate);
+            epicrisis.setMedicalHistoryId(medicalHistory.getId());
             epicrisisService.update(epicrisis);
 
+
             Patient patient = patientService.getPatientById(patientID);
-            patient.setAttendingDoctorID(null);
+            patient.setAttendingDoctorID(0L);
             patient.setStatusID(2);
             patientService.update(patient);
 
-            List<Appointment> appointmentList = appointmentService.getAllAppointmentBetweenDate(patient.getReceiptDate(),dischargeDate);
+            List<Appointment> appointmentList = appointmentService.getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate());
             appointmentService.updateAppointmentEpirisis(appointmentList,epicrisis.getId());
+
+
 
             session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
             response.sendRedirect(GO_TO_STAFF_PAGE);

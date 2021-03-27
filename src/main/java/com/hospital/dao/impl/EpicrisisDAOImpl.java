@@ -16,8 +16,8 @@ import java.sql.SQLException;
 public class EpicrisisDAOImpl implements EpicrisisDAO {
 
 
-    private static final String INSERT_EPICRISIS = "insert into hospital.epicrisis(definitive_diagnosis,date_of_issue,patient,preliminary_diagnosis) values(?,?,?,?)";
-    private static final String UPDATE_EPICRISIS = "update hospital.epicrisis set definitive_diagnosis = ?, date_of_issue = ? where id = ?";
+    private static final String INSERT_EPICRISIS = "insert into hospital.epicrisis(definitive_diagnosis,date_of_receip,date_of_issue,patient,preliminary_diagnosis,history_id) values(?,?,?,?,?,?)";
+    private static final String UPDATE_EPICRISIS = "update hospital.epicrisis set definitive_diagnosis = ?, date_of_issue = ?, history_id = ? where id = ?";
     private static final String SELECT_BY_PATIENT = "select * from hospital.epicrisis where patient = ?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
@@ -32,13 +32,18 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
             preparedStatement = connection.prepareStatement(INSERT_EPICRISIS);
 
             preparedStatement.setString(1,epicrisis.getDefinitiveDiagnosis());
-            preparedStatement.setDate(2,epicrisis.getDischargeDate());
-            preparedStatement.setLong(3,epicrisis.getPatientId());
-            preparedStatement.setString(4,epicrisis.getPreliminaryDiagnosis());
+            preparedStatement.setDate(2,epicrisis.getReceiptDate());
+            preparedStatement.setDate(3,epicrisis.getDischargeDate());
+            preparedStatement.setLong(4,epicrisis.getPatientId());
+            preparedStatement.setString(5,epicrisis.getPreliminaryDiagnosis());
+            if(epicrisis.getMedicalHistoryId()==0)
+                preparedStatement.setString(6,null);
+            else
+                preparedStatement.setLong(6,epicrisis.getMedicalHistoryId());
             preparedStatement.execute();
 
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DAOException("find error ",e);
+            throw new DAOException("insert error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
             if(preparedStatement!=null){
@@ -92,7 +97,11 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
 
             preparedStatement.setString(1,epicrisis.getDefinitiveDiagnosis());
             preparedStatement.setDate(2,epicrisis.getDischargeDate());
-            preparedStatement.setLong(3,epicrisis.getId());
+            if(epicrisis.getMedicalHistoryId() == 0)
+                preparedStatement.setString(3,null);
+            else
+                preparedStatement.setLong(3,epicrisis.getMedicalHistoryId());
+            preparedStatement.setLong(4,epicrisis.getId());
             preparedStatement.execute();
 
         } catch (SQLException | ConnectionPoolException e) {
@@ -114,8 +123,9 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
         epicrisis.setId(resultSet.getInt(1));
         epicrisis.setPreliminaryDiagnosis(resultSet.getString(2));
         epicrisis.setDefinitiveDiagnosis(resultSet.getString(3));
-        epicrisis.setDischargeDate(resultSet.getDate(4));
-        epicrisis.setPatientId(resultSet.getLong(5));
+        epicrisis.setReceiptDate(resultSet.getDate(4));
+        epicrisis.setDischargeDate(resultSet.getDate(5));
+        epicrisis.setPatientId(resultSet.getLong(6));
         return epicrisis;
 
     }

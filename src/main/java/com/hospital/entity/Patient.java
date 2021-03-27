@@ -1,6 +1,5 @@
 package com.hospital.entity;
 
-import java.sql.Date;
 import java.util.Objects;
 
 public class Patient implements Visitor{
@@ -9,7 +8,6 @@ public class Patient implements Visitor{
     private String firstname;
     private String lastname;
     private int age;
-    private Date receiptDate;
     private Department department;
     private Long attendingDoctorID;
     private Long statusID;
@@ -19,13 +17,12 @@ public class Patient implements Visitor{
     public Patient() {
     }
 
-    public Patient(long id, String firstname, String lastname, int age, Date receiptDate,
-                   Department department, long attendingDoctorID, long statusID, long accountID, String patientPic) {
+    public Patient(long id, String firstname, String lastname, int age, Department department, Long attendingDoctorID,
+                   Long statusID, long accountID, String patientPic) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
-        this.receiptDate = receiptDate;
         this.department = department;
         this.attendingDoctorID = attendingDoctorID;
         this.statusID = statusID;
@@ -63,14 +60,6 @@ public class Patient implements Visitor{
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public Date getReceiptDate() {
-        return receiptDate;
-    }
-
-    public void setReceiptDate(Date receiptDate) {
-        this.receiptDate = receiptDate;
     }
 
     public Long getAttendingDoctorID() {
@@ -113,31 +102,37 @@ public class Patient implements Visitor{
         this.patientPic = patientPic;
     }
 
+    public void setStatusID(Long statusID) {
+        this.statusID = statusID;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return id == patient.id && age == patient.age && attendingDoctorID == patient.attendingDoctorID && statusID == patient.statusID && accountID == patient.accountID && Objects.equals(firstname, patient.firstname) && Objects.equals(lastname, patient.lastname) && Objects.equals(receiptDate, patient.receiptDate) && department == patient.department;
+        return id == patient.id && age == patient.age && accountID == patient.accountID && Objects.equals(firstname, patient.firstname) && Objects.equals(lastname, patient.lastname) && department == patient.department && Objects.equals(attendingDoctorID, patient.attendingDoctorID) && Objects.equals(statusID, patient.statusID) && Objects.equals(patientPic, patient.patientPic);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, age, receiptDate, department, attendingDoctorID, statusID, accountID);
+        return Objects.hash(id, firstname, lastname, age, department, attendingDoctorID, statusID, accountID, patientPic);
     }
+
 
     @Override
     public String toString() {
         return "Patient{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
-                ", Lastname='" + lastname + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", age=" + age +
-                ", receiptDate=" + receiptDate +
                 ", department=" + department +
                 ", attendingDoctorID=" + attendingDoctorID +
                 ", statusID=" + statusID +
                 ", accountID=" + accountID +
+                ", patientPic='" + patientPic + '\'' +
                 '}';
     }
 }

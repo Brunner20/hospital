@@ -48,22 +48,24 @@ public class AddPatientsToDoctor implements Command {
         String preliminaryDiagnosis = request.getParameter("preliminaryDiagnosis");
         Long doctorId = (Long)session.getAttribute(ATTRIBUTE_VISITOR_ID);
         Date receiptDate = Date.valueOf(request.getParameter("receiptDate"));
-        Epicrisis epicrisis  = new Epicrisis();
-        epicrisis.setPatientId(selectedPatientsId);
-        epicrisis.setPreliminaryDiagnosis(preliminaryDiagnosis);
+
 
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         PatientService patientService = serviceProvider.getPatientService();
         EpicrisisService epicrisisService = serviceProvider.getEpicrisisService();
 
         try {
+            Epicrisis epicrisis  = new Epicrisis();
+            epicrisis.setPatientId(selectedPatientsId);
+            epicrisis.setPreliminaryDiagnosis(preliminaryDiagnosis);
+            epicrisis.setReceiptDate(receiptDate);
             epicrisisService.addEpicrisis(epicrisis);
 
             Patient patient = patientService.getPatientById(selectedPatientsId);
             patient.setAttendingDoctorID(doctorId);
-            patient.setReceiptDate(receiptDate);
             patientService.update(patient);
 
+            //TODO  опоыещеие о успешном добавлении
             session.setAttribute(ATTRIBUTE_URL,PATH_TO_FREE_PATIENTS);
             response.sendRedirect(GO_TO_STAFF_PAGE);
         } catch (ServiceException e) {

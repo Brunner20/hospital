@@ -26,6 +26,7 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOMAINPATIENTPAGE, new GoToMainPatientPage());
         commands.put(CommandName.GOTOFREEPATIENTSPAGE, new GoToFreePatientsPage());
         commands.put(CommandName.ADDADDITIONALINFOPAGE, new AddAdditionalInfoPage());
+        commands.put(CommandName.GOTOMEDICALHISTORYPAGE,new GoToMedicalHistoryPage());
         commands.put(CommandName.GOTOADDAPPOINTMENTPAGE, new GoToAddAppointmentPage());
         commands.put(CommandName.UPDATEAPPOINTMENTSTATUS, new UpdateAppointmentStatus());
         commands.put(CommandName.GOTODOCTORSPATIENTSPAGE, new GoToDoctorsPatientsPage());

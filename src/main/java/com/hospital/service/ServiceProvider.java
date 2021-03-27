@@ -18,6 +18,8 @@ public final class ServiceProvider {
 
     private final EpicrisisService epicrisisService = new EpicrisisServiceImpl();
 
+    private final MedicalHistoryService medicalHistoryService = new MedicalHistoryServiceImpl();
+
     public static ServiceProvider getInstance(){return instance;}
 
     public AccountService getAccountService(){
@@ -31,4 +33,6 @@ public final class ServiceProvider {
     public AppointmentService getAppointmentService() {return appointmentService;}
 
     public EpicrisisService getEpicrisisService() {return epicrisisService;}
+
+    public MedicalHistoryService getMedicalHistoryService() {return medicalHistoryService;}
 }

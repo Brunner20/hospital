@@ -17,7 +17,7 @@ import java.util.List;
 public class PatientDAOImpl implements PatientDAO {
 
     private static final String UPDATE_PATIENT ="UPDATE hospital.patients SET firstname= ?, lastname = ?, age = ?, " +
-            "receipt_date = ?, department_id = ?, attending_doctor = ?, status =?, account_id = ?, patient_pic = ? WHERE id = ?";
+            " department_id = ?, attending_doctor = ?, status =?, account_id = ?, patient_pic = ? WHERE id = ?";
 
     private static final String UPDATE_AGE = "UPDATE hospital.patients SET age = ? where id = ?";
     private static final String UPDATE_DOCTOR= "UPDATE hospital.patients SET attending_doctor = ? and status = 1 where id = ?";
@@ -38,24 +38,15 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement.setString(1,patient.getFirstname());
             preparedStatement.setString(2,patient.getLastname());
             preparedStatement.setInt(3,patient.getAge());
-            if(patient.getReceiptDate()!=null)
-            {
-                preparedStatement.setDate(4,patient.getReceiptDate());
-            }
-            else {
-                preparedStatement.setDate(4,null);
-            }
-            preparedStatement.setLong(5,patient.getDepartment().getId());
-            if(patient.getAttendingDoctorID()==null) {
-                preparedStatement.setString(6,null);
-            }
-            else {
-                preparedStatement.setLong(6,patient.getAttendingDoctorID());
-            }
-            preparedStatement.setLong(7,patient.getStatusID());
-            preparedStatement.setLong(8,patient.getAccountID());
-            preparedStatement.setString(9,patient.getPatientPic());
-            preparedStatement.setLong(10,patient.getId());
+            preparedStatement.setLong(4,patient.getDepartment().getId());
+            if(patient.getAttendingDoctorID()==0)
+                preparedStatement.setString(5,null);
+            else
+                preparedStatement.setLong(5,patient.getAttendingDoctorID());
+            preparedStatement.setLong(6,patient.getStatusID());
+            preparedStatement.setLong(7,patient.getAccountID());
+            preparedStatement.setString(8,patient.getPatientPic());
+            preparedStatement.setLong(9,patient.getId());
 
             preparedStatement.executeUpdate();
 
@@ -251,13 +242,11 @@ public class PatientDAOImpl implements PatientDAO {
         patient.setFirstname(resultSet.getString(2));
         patient.setLastname(resultSet.getString(3));
         patient.setAge(resultSet.getInt(4));
-        if(resultSet.getDate(5)!=null)
-            patient.setReceiptDate(resultSet.getDate(5));
-        patient.setPatientPic(resultSet.getString(6));
-        patient.setDepartment(resultSet.getInt(7));
-        patient.setAttendingDoctorID(resultSet.getLong(8));
-        patient.setStatusID(resultSet.getInt(9));
-        patient.setAccountID(resultSet.getInt(10));
+        patient.setPatientPic(resultSet.getString(5));
+        patient.setDepartment(resultSet.getInt(6));
+        patient.setAttendingDoctorID(resultSet.getLong(7));
+        patient.setStatusID(resultSet.getInt(8));
+        patient.setAccountID(resultSet.getInt(9));
         return patient;
     }
 }

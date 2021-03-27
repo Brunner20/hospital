@@ -67,10 +67,8 @@ public class UploadFileController extends HttpServlet {
         }
         if(session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_PATIENT)) {
             PatientService patientService = ServiceProvider.getInstance().getPatientService();
-
-            Patient patient = null;
             try {
-                patient = patientService.getPatientById((long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
+                Patient patient = patientService.getPatientById((long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
                 patient.setAge(Integer.parseInt(age));
                 patient.setPatientPic(PATH_TO_STORAGE_IN_DB + fileName);
                 patientService.update(patient);

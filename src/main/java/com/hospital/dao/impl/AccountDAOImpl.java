@@ -179,13 +179,11 @@ public class AccountDAOImpl implements AccountDAO {
             patient.setFirstname(resultSet.getString(2));
             patient.setLastname(resultSet.getString(3));
             patient.setAge(resultSet.getInt(4));
-            if(resultSet.getDate(5)!=null)
-            patient.setReceiptDate(resultSet.getDate(5));
-            patient.setPatientPic(resultSet.getString(6));
-            patient.setDepartment(resultSet.getInt(7));
-            patient.setAttendingDoctorID(resultSet.getLong(8));
-            patient.setStatusID(resultSet.getInt(9));
-            patient.setAccountID(resultSet.getInt(10));
+            patient.setPatientPic(resultSet.getString(5));
+            patient.setDepartment(resultSet.getInt(6));
+            patient.setAttendingDoctorID(resultSet.getLong(7));
+            patient.setStatusID(resultSet.getInt(8));
+            patient.setAccountID(resultSet.getInt(9));
         }
         connectionPool.releaseConnection(connection);
         preparedStatement.close();

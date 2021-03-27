@@ -1,8 +1,12 @@
 package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
+import com.hospital.entity.MedicalHistory;
+import com.hospital.entity.Patient;
 import com.hospital.entity.RegistrationInfo;
+import com.hospital.entity.Visitor;
 import com.hospital.service.AccountService;
+import com.hospital.service.MedicalHistoryService;
 import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 
@@ -50,13 +54,21 @@ public class AddAccount implements Command {
 
         ServiceProvider provider = ServiceProvider.getInstance();
         AccountService userService = provider.getAccountService();
+        MedicalHistoryService medicalHistoryService = provider.getMedicalHistoryService();;
         try {
            if(!userService.registration(registrationInfo)){
+               Visitor visitor =userService.authorization(login,password);
+               if(visitor instanceof Patient);
+               {
+                   Patient patient = (Patient) visitor;
+                   MedicalHistory medicalHistory = new MedicalHistory();
+                   medicalHistory.setPatientId(patient.getId());
+                   medicalHistoryService.add(medicalHistory);
+               }
                request.setAttribute(ATTRIBUTE_INFO_MESSAGE,REGISTRATION_OK);
                response.sendRedirect(GO_TO_INDEX_PAGE);
                return;
            }
-
            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,REGISTRATION_ERROR);
            response.sendRedirect(GO_TO_INDEX_PAGE);
 

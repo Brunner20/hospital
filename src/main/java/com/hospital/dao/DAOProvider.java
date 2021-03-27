@@ -18,6 +18,8 @@ public final class DAOProvider {
 
     private EpicrisisDAO epicrisisDAO = new EpicrisisDAOImpl();
 
+    private MedicalHistoryDAO medicalHistoryDAO = new MedicalHistoryDAOImpl();
+
     public static DAOProvider getInstance(){
         return instance;
     }
@@ -33,4 +35,6 @@ public final class DAOProvider {
     public AppointmentDAO getAppointmentDAO() {return appointmentDAO;}
 
     public EpicrisisDAO getEpicrisisDAO() {return epicrisisDAO;}
+
+    public MedicalHistoryDAO getMedicalHistoryDAO() {return medicalHistoryDAO;}
 }
