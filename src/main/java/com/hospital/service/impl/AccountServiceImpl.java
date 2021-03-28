@@ -25,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
         DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
 
-        Visitor visitor ;
+        Visitor visitor = null;
         try {
           visitor = userDAO.authorization(login,password);
         } catch (DAOException e) {
@@ -54,5 +54,21 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return isRegistered;
+    }
+
+    @Override
+    public void updatePassword(long accountId, String oldPass, String newPass) throws ServiceException {
+        if(!Validator.isIdValid(accountId)||!Validator.isPasswordValid(oldPass)||!Validator.isPasswordValid(newPass)){
+            throw new ServiceException("wrong password");
+        }
+
+        DAOProvider provider = DAOProvider.getInstance();
+        AccountDAO userDAO = provider.getAccountDAO();
+        try {
+           userDAO.updatePassword(accountId,oldPass,newPass);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
     }
 }

@@ -20,7 +20,7 @@
     <fmt:message bundle="${loc}" key="profile.attending_doctor" var="attending_doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.nurse" var="nurse"/>
-    <fmt:message bundle="${loc}" key="local.btn.update" var="update"/>
+    <fmt:message bundle="${loc}" key="local.btn.update_password" var="update"/>
     <fmt:message bundle="${loc}" key="local.page.profile" var="title"/>
     <title>${title}</title>
 </head>

@@ -17,6 +17,7 @@ public final class CommandProvider {
         commands.put(CommandName.CHANGELOCALE, new ChangeLocale());
         commands.put(CommandName.REGISTRATION, new Registration());
         commands.put(CommandName.GOTOINDEXPAGE, new GoToIndexPage());
+        commands.put(CommandName.UPDATEPASSWORD,new UpdatePassword());
         commands.put(CommandName.ADDAPPOINTMENT, new AddAppointment());
         commands.put(CommandName.GOTOPROFILEPAGE, new GoToProfilePage());
         commands.put(CommandName.GOTOADDSTAFFPAGE, new GoToAddStaffPage());
@@ -29,6 +30,7 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOFREEPATIENTSPAGE, new GoToFreePatientsPage());
         commands.put(CommandName.ADDADDITIONALINFOPAGE, new AddAdditionalInfoPage());
         commands.put(CommandName.GOTOMEDICALHISTORYPAGE,new GoToMedicalHistoryPage());
+        commands.put(CommandName.GOTOPASSWORDUPDATEPAGE, new GoToPasswordUpdatePage());
         commands.put(CommandName.GOTOADDAPPOINTMENTPAGE, new GoToAddAppointmentPage());
         commands.put(CommandName.UPDATEAPPOINTMENTSTATUS, new UpdateAppointmentStatus());
         commands.put(CommandName.GOTODOCTORSPATIENTSPAGE, new GoToDoctorsPatientsPage());

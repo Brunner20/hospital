@@ -48,7 +48,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             preparedStatement.setLong(7,appointment.getAppointingDoctorId());
             preparedStatement.execute();
 
-                //TODO внести назначение в историю болезней(транзакция)
+
         }  catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         }finally {

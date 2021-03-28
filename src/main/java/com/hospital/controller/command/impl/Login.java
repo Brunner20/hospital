@@ -45,12 +45,12 @@ public class Login implements Command {
         password = request.getParameter(PASSWORD);
 
         ServiceProvider provider = ServiceProvider.getInstance();
-        AccountService userService = provider.getAccountService();
+        AccountService accountService = provider.getAccountService();
 
         Visitor visitor;
         try {
 
-            visitor = userService.authorization(login, password);
+            visitor = accountService.authorization(login, password);
 
             if (visitor == null) {
                 request.setAttribute(ATTRIBUTE_INFO_MESSAGE,WRONG_LOGIN_OR_PASSWORD);
@@ -76,6 +76,7 @@ public class Login implements Command {
                 }
                 session.setAttribute(ATTRIBUTE_VISITOR_ID,((Staff) visitor).getId());
                 response.sendRedirect(GO_TO_STAFF_PAGE);
+                return;
             }
             else if (visitor.getRoleID()==3)
             {

@@ -20,7 +20,7 @@
     <fmt:message bundle="${loc}" key="profile.attending_doctor" var="attending_doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.nurse" var="nurse"/>
-    <fmt:message bundle="${loc}" key="local.btn.update" var="update"/>
+    <fmt:message bundle="${loc}" key="local.btn.update_password" var="update"/>
     <fmt:message bundle="${loc}" key="local.page.profile" var="title"/>
     <title>${title}</title>
 </head>
@@ -80,6 +80,13 @@
             <td>${attending_doctor}<td>
             <td>${requestScope.attendingDoctor.firstname} ${requestScope.attendingDoctor.lastname}</td>
         </tr>
+            <tr>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="gotopasswordupdatepage"/>
+                    <input type="submit" value="${update}"/>
+                </form>
+            </tr>
+        </table>
     </c:if>
     <c:if test="${sessionScope.role=='doctor'|| sessionScope.role=='nurse'}">
         <table cellspacing="0" id="maket" border="0">
@@ -101,7 +108,14 @@
                     <td>${nurse}</td>
                 </c:if>
             </tr>
+            <tr>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="gotopasswordupdatepage"/>
+                    <input type="submit" value="${update}"/>
+                </form>
+            </tr>
             </c:if>
+        </table>
 </div >
 </body>
 </html>

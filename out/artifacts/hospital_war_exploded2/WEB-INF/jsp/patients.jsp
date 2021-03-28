@@ -25,7 +25,7 @@
     <c:forEach var="patient" items="${requestScope.patientList}">
         <tr>
             <td>
-                <a href="Controller?command=gotomedicalhistorypage">${patient.firstname} ${patient.lastname}</a>
+                <a href="Controller?command=gotomedicalhistorypage&patientId=${patient.id}">${patient.firstname} ${patient.lastname}</a>
             <td>
             <td>
                 <form action="Controller" method="post">
