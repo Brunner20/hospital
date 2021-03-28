@@ -13,9 +13,8 @@
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.welcome" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.logout" var="logout"/>
-    <fmt:message bundle="${loc}" key="local.my_appointment" var="my_appoint"/>
-    <fmt:message bundle="${loc}" key="local.btn.medical_hsitory" var="hist"/>
-    <fmt:message bundle="${loc}" key="local.page.patient" var="title"/>
+    <fmt:message bundle="${loc}" key="local.add_staff" var="add"/>
+    <fmt:message bundle="${loc}" key="local.page.administrator" var="title"/>
     <title>${title}</title>
 </head>
 <body>
@@ -27,19 +26,15 @@
 <div class="content">
 
     <section>
-        <c:if test="${sessionScope.role == 'patient'}">
+        <c:if test="${sessionScope.role == 'admin'}">
             <div class ="doctor">
                 <form action="Controller" method="post">
-                    <input type="hidden" name="command" value="gotopatientappointmentlistpage"/>
-                    <input type="submit" value="${my_appoint}"/>
+                    <input type="hidden" name="command" value="gotoaddstaffpage"/>
+                    <input type="submit" value="${add}"/>
                 </form>
 
-                <form action="Controller" method="post">
-                    <input type="hidden" name="command" value="gotomedicalhistorypage"/>
-                    <input type="submit" value="${hist}"/>
-                </form>
 
-        </div>
+            </div>
         </c:if>
     </section>
 

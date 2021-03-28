@@ -29,19 +29,41 @@
 </head>
 <body>
 
-    <table cellspacing="0" id="maket">
+    <table cellspacing="0" id="maket" BORDER="1">
 
         <tr>
             <td rowspan="2">${preliminary}</td>
             <td rowspan="2">${definitive}</td>
             <td rowspan="2">${receip}</td>
             <td rowspan="2">${discharge}</td>
-            <tr>
-                 <td>${appointment}</td>
-            </tr>
-
+            <td colspan="5" style="text-align:center">${appointment}</td>
         </tr>
-        <
+        <tr>
+            <td>${appoited}</td>
+            <td>${performed}</td>
+            <td>${appointment_date}</td>
+            <td>${completion_date}</td>
+            <td>${appointment}</td>
+        </tr>
+
+        <c:forEach var="epicrisis" items="${requestScope.medicalHistory}">
+            <tr>
+                <td rowspan="${epicrisis.appointmentList.size()+1}">${epicrisis.preliminaryDiagnosis}</td>
+                <td rowspan="${epicrisis.appointmentList.size()+1}">${epicrisis.definitiveDiagnosis}</td>
+                <td rowspan="${epicrisis.appointmentList.size()+1}">${epicrisis.receiptDate}</td>
+                <td rowspan="${epicrisis.appointmentList.size()+1}">${epicrisis.dischargeDate}</td>
+            </tr>
+            <c:forEach var="item" items="${epicrisis.appointmentList}">
+                <tr>
+                    <td>${item.appointingDoctorFirstname} ${item.appointingDoctorLastname}</td>
+                    <td>${item.executeStaffFirstname} ${item.executeStaffLastname}</td>
+                    <td>${item.dateOfAppointment}</td>
+                    <td>${item.dateOfCompletion}</td>
+                    <td>${item.info}</td>
+                </tr>
+            </c:forEach>
+        </c:forEach>
+
     </table>
 
 

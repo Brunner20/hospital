@@ -57,7 +57,8 @@ public class AddEpicrisis implements Command {
         try {
             MedicalHistory medicalHistory = medicalHistoryService.getByPatientId(patientID);
 
-            Epicrisis epicrisis = epicrisisService.getEpicrisisByPatientId(patientID);
+            //TODO достать последний по дате
+            Epicrisis epicrisis = epicrisisService.getLastEpicrisisByPatientId(patientID);
             epicrisis.setDefinitiveDiagnosis(definitiveDiagnosis);
             epicrisis.setDischargeDate(dischargeDate);
             epicrisis.setMedicalHistoryId(medicalHistory.getId());

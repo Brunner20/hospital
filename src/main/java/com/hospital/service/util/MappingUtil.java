@@ -1,13 +1,14 @@
-package com.hospital.util;
+package com.hospital.service.util;
 
 import com.hospital.dao.DAOException;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.StaffDAO;
-import com.hospital.entity.Appointment;
-import com.hospital.entity.AppointmentInfo;
-import com.hospital.entity.Patient;
-import com.hospital.entity.Staff;
+import com.hospital.entity.*;
 import com.hospital.entity.dto.AppointmentDTO;
+import com.hospital.entity.dto.EpicrisisDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MappingUtil {
 
@@ -41,5 +42,31 @@ public class MappingUtil {
         dto.setPatientLastname(patient.getLastname());
         return dto;
 
+    }
+
+    public static EpicrisisDTO matToEpicrosisDTO(Epicrisis epicrisis) throws UtilException{
+        EpicrisisDTO epicrisisDTO = new EpicrisisDTO();
+        List<AppointmentDTO> appointmentDTOInEpicrisi = new ArrayList<>();
+        Patient patient = null;
+        try {
+            List<Appointment> appointmentsInEpicrisis  = DAOProvider.getInstance()
+                    .getAppointmentDAO().getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate());
+            patient = DAOProvider.getInstance().getPatientDAO().getPatientById(epicrisis.getPatientId());
+            for(Appointment appointment: appointmentsInEpicrisis){
+                appointmentDTOInEpicrisi.add(mapToAppointmentDTO(appointment));
+            }
+        } catch (DAOException e) {
+            throw new UtilException(e);
+        }
+
+        epicrisisDTO.setId(epicrisis.getId());
+        epicrisisDTO.setReceiptDate(epicrisis.getReceiptDate());
+        epicrisisDTO.setDischargeDate(epicrisis.getDischargeDate());
+        epicrisisDTO.setPreliminaryDiagnosis(epicrisis.getPreliminaryDiagnosis());
+        epicrisisDTO.setDefinitiveDiagnosis(epicrisis.getDefinitiveDiagnosis());
+        epicrisisDTO.setPatientFirstname(patient.getFirstname());
+        epicrisisDTO.setPatientLastname(patient.getLastname());
+        epicrisisDTO.setAppointmentList(appointmentDTOInEpicrisi);
+        return epicrisisDTO;
     }
 }

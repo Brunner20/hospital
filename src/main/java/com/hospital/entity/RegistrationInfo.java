@@ -8,16 +8,18 @@ public class RegistrationInfo {
 	private String lastname;
 	private String login;
 	private String password;
+	private long roleId;
 
 
 	public RegistrationInfo() {
 	}
 
-	public RegistrationInfo(String firstname, String lastname, String login, String password) {
+	public RegistrationInfo(String firstname, String lastname, String login, String password, long roleId) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.login = login;
 		this.password = password;
+		this.roleId = roleId;
 	}
 
 	public String getFirstname() {
@@ -52,26 +54,36 @@ public class RegistrationInfo {
 		this.password = password;
 	}
 
+	public long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
+	}
+
 	@Override
 	public boolean equals(Object o) {
+
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		RegistrationInfo that = (RegistrationInfo) o;
-		return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(login, that.login) && Objects.equals(password, that.password);
+		return roleId == that.roleId && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(login, that.login) && Objects.equals(password, that.password);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstname, lastname, login, password);
+		return Objects.hash(firstname, lastname, login, password, roleId);
 	}
 
 	@Override
 	public String toString() {
 		return "RegistrationInfo{" +
-				"name='" + firstname + '\'' +
-				", surname='" + lastname + '\'' +
+				"firstname='" + firstname + '\'' +
+				", lastname='" + lastname + '\'' +
 				", login='" + login + '\'' +
 				", password='" + password + '\'' +
+				", roleId=" + roleId +
 				'}';
 	}
 }

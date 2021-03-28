@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class EpicrisisDAOImpl implements EpicrisisDAO {
@@ -57,10 +59,10 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
     }
 
     @Override
-    public Epicrisis getEpicrisisByPatientId(long patientId) throws DAOException {
+    public List<Epicrisis> getEpicrisisByPatientId(long patientId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Epicrisis epicrisis = null;
+        List<Epicrisis> epicrisisList = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_BY_PATIENT);
@@ -68,7 +70,8 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
             preparedStatement.setLong(1,patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                epicrisis = mappingEpicrisis(resultSet);
+                Epicrisis epicrisis = mappingEpicrisis(resultSet);
+                epicrisisList.add(epicrisis);
             }
 
         } catch (SQLException | ConnectionPoolException e) {
@@ -83,7 +86,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
                 }
             }
         }
-        return epicrisis;
+        return epicrisisList;
     }
 
     @Override

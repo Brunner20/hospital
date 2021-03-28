@@ -1,4 +1,4 @@
-package com.hospital.util;
+package com.hospital.service.util;
 
 public class UtilException extends RuntimeException{
 

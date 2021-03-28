@@ -10,9 +10,9 @@ import com.hospital.entity.AppointmentType;
 import com.hospital.entity.dto.AppointmentDTO;
 import com.hospital.service.AppointmentService;
 import com.hospital.service.ServiceException;
+import com.hospital.service.util.MappingUtil;
+import com.hospital.service.util.UtilException;
 import com.hospital.service.validation.Validator;
-import com.hospital.util.MappingUtil;
-import com.hospital.util.UtilException;
 
 import java.sql.Date;
 import java.util.ArrayList;

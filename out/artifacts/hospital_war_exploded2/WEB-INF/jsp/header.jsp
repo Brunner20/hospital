@@ -38,9 +38,11 @@
         </li>
     </ul>
     <ul>
-        <c:if test="${sessionScope.auth == true}">
-        <li><a href="Controller?command=logout">${logout}</a></li>
+        <c:if test="${sessionScope.auth == true }">
+            <li><a href="Controller?command=logout">${logout}</a></li>
+            <c:if test="${sessionScope.role != 'admin'}">
             <li><a href="Controller?command=gotoprofilepage">${profile}</a></li>
+            </c:if>
         </c:if>
         <c:if test="${(sessionScope.auth == false || sessionScope.auth == null) && sessionScope.url != 'Controller?command=gotoindexpage'}">
             <li><a href="Controller?command=gotoindexpage"><fmt:message bundle="${loc}" key="header.login"/></a></li>

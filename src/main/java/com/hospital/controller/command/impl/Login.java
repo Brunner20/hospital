@@ -21,8 +21,8 @@ public class Login implements Command {
 
 
 
-    private static final String GO_TO_MAIN_STAFF_PAGE ="Controller?command=gotomainstaffpage";
-    private static final String GO_TO_MAIN_PATIENT_PAGE ="Controller?command=gotomainpatientpage";
+
+    private static final String GO_TO_MAIN_ADMIN_PAGE ="Controller?command=gotomainadminpage";
     private static final String PATH_TO_ADDITIONAL_INFO_PAGE = "/WEB-INF/jsp/additional_info.jsp";
 
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
@@ -62,10 +62,10 @@ public class Login implements Command {
             HttpSession session = request.getSession(true);
             session.setAttribute(ATTRIBUTE_AUTH, true);
 
-            if(visitor instanceof Staff)
+            if(visitor.getRoleID()==2)
             {
                 Staff staff = (Staff) visitor;
-                session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_STAFF_PAGE);
+                session.setAttribute(ATTRIBUTE_URL, GO_TO_STAFF_PAGE);
                 if(staff.getStaffTypeID()==1)
                 {
                     session.setAttribute(ATTRIBUTE_ROLE,ROLE_DOCTOR);
@@ -75,9 +75,9 @@ public class Login implements Command {
                     session.setAttribute(ATTRIBUTE_ROLE,ROLE_NURSE);
                 }
                 session.setAttribute(ATTRIBUTE_VISITOR_ID,((Staff) visitor).getId());
-                response.sendRedirect(GO_TO_MAIN_STAFF_PAGE);
+                response.sendRedirect(GO_TO_STAFF_PAGE);
             }
-            else if (visitor instanceof Patient)
+            else if (visitor.getRoleID()==3)
             {
                 session.setAttribute(ATTRIBUTE_ROLE,ROLE_PATIENT);
                 session.setAttribute(ATTRIBUTE_VISITOR_ID,((Patient)visitor).getId());
@@ -87,12 +87,16 @@ public class Login implements Command {
                     session.setAttribute(ATTRIBUTE_URL,PATH_TO_ADDITIONAL_INFO_PAGE);
                     request.getRequestDispatcher(PATH_TO_ADDITIONAL_INFO_PAGE).forward(request, response);
                 }else {
-                    session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PATIENT_PAGE);
-                    response.sendRedirect(GO_TO_MAIN_PATIENT_PAGE);
+                    session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
+                    response.sendRedirect(GO_TO_PATIENT_PAGE);
                 }
+            }else if(visitor.getRoleID()==1){
+
+                session.setAttribute(ATTRIBUTE_ROLE,ROLE_ADMIN);
+                session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_ADMIN_PAGE);
+                response.sendRedirect(GO_TO_MAIN_ADMIN_PAGE);
             }
         } catch (ServiceException e) {
-
             request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_IN_CATCH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
         }

@@ -2,7 +2,6 @@ package com.hospital.entity;
 
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class Epicrisis {
@@ -14,11 +13,10 @@ public class Epicrisis {
     private Date dischargeDate;
     private long patientId;
     private long medicalHistoryId;
-    private List<Long> appointmentsId;
 
 
     public Epicrisis(long id, String definitiveDiagnosis, String preliminaryDiagnosis, Date receiptDate,
-                     Date dischargeDate, long patientId, long medicalHistoryId, List<Long> appointmentsId) {
+                     Date dischargeDate, long patientId, long medicalHistoryId) {
         this.id = id;
         this.definitiveDiagnosis = definitiveDiagnosis;
         this.preliminaryDiagnosis = preliminaryDiagnosis;
@@ -26,7 +24,6 @@ public class Epicrisis {
         this.dischargeDate = dischargeDate;
         this.patientId = patientId;
         this.medicalHistoryId = medicalHistoryId;
-        this.appointmentsId = appointmentsId;
     }
 
     public Epicrisis() {
@@ -64,18 +61,6 @@ public class Epicrisis {
         this.patientId = patientId;
     }
 
-    public List<Long> getAppointmentsId() {
-        return appointmentsId;
-    }
-
-    public void setAppointmentsId(List<Long> appointmentsId) {
-        this.appointmentsId = appointmentsId;
-    }
-
-    public void addAppointmentsId(Long appointmentsId) {
-        this.appointmentsId.add(appointmentsId);
-    }
-
     public String getPreliminaryDiagnosis() {
         return preliminaryDiagnosis;
     }
@@ -105,12 +90,12 @@ public class Epicrisis {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Epicrisis epicrisis = (Epicrisis) o;
-        return id == epicrisis.id && patientId == epicrisis.patientId && medicalHistoryId == epicrisis.medicalHistoryId && Objects.equals(definitiveDiagnosis, epicrisis.definitiveDiagnosis) && Objects.equals(preliminaryDiagnosis, epicrisis.preliminaryDiagnosis) && Objects.equals(receiptDate, epicrisis.receiptDate) && Objects.equals(dischargeDate, epicrisis.dischargeDate) && Objects.equals(appointmentsId, epicrisis.appointmentsId);
+        return id == epicrisis.id && patientId == epicrisis.patientId && medicalHistoryId == epicrisis.medicalHistoryId && Objects.equals(definitiveDiagnosis, epicrisis.definitiveDiagnosis) && Objects.equals(preliminaryDiagnosis, epicrisis.preliminaryDiagnosis) && Objects.equals(receiptDate, epicrisis.receiptDate) && Objects.equals(dischargeDate, epicrisis.dischargeDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, definitiveDiagnosis, preliminaryDiagnosis, receiptDate, dischargeDate, patientId, medicalHistoryId, appointmentsId);
+        return Objects.hash(id, definitiveDiagnosis, preliminaryDiagnosis, receiptDate, dischargeDate, patientId, medicalHistoryId);
     }
 
     @Override
@@ -123,7 +108,6 @@ public class Epicrisis {
                 ", dischargeDate=" + dischargeDate +
                 ", patientId=" + patientId +
                 ", medicalHistoryId=" + medicalHistoryId +
-                ", appointmentsId=" + appointmentsId +
                 '}';
     }
 }

@@ -51,4 +51,15 @@ public class StaffServiceImpl implements StaffService {
         }
         return allStaff;
     }
+
+    @Override
+    public void update(Staff staff) throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        StaffDAO staffDAO = daoProvider.getStaffDAO();
+        try {
+           staffDAO.update(staff);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

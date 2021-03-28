@@ -28,13 +28,6 @@
             <td>
                 <select name = "free_patient_id" size="3" >
                 <c:forEach var="patient" items="${requestScope.patientList}">
-    <%--            <tr>--%>
-    <%--                <td>--%>
-    <%--                    <input type="checkbox" name="selected" id = "cb1" value="${patient.id}"/>--%>
-    <%--                <td>--%>
-    <%--                <td id="name">${patient.firstname} ${patient.lastname}</td>--%>
-    <%--            </tr>--%>
-
                         <option value="${patient.id}">${patient.firstname} ${patient.lastname} </option>
                 </c:forEach>
                 </select>

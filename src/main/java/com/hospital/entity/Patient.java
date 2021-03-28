@@ -2,7 +2,7 @@ package com.hospital.entity;
 
 import java.util.Objects;
 
-public class Patient implements Visitor{
+public class Patient extends Visitor{
 
     private long id;
     private String firstname;

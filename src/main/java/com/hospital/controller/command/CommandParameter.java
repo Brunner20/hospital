@@ -17,6 +17,7 @@ public final class CommandParameter {
     public static final String ATTRIBUTE_AUTH = "auth";
     public static final String ROLE_DOCTOR = "doctor";
     public static final String ROLE_NURSE = "nurse";
+    public static final String ROLE_ADMIN = "admin";
     public static final String ROLE_PATIENT = "patient";
     public static final String ATTRIBUTE_ROLE = "role";
 }

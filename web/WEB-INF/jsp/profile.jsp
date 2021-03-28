@@ -80,6 +80,13 @@
             <td>${attending_doctor}<td>
             <td>${requestScope.attendingDoctor.firstname} ${requestScope.attendingDoctor.lastname}</td>
         </tr>
+            <tr>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="gotopasswordupdatepage"/>
+                    <input type="submit" value="${update}"/>
+                </form>
+            </tr>
+        </table>
     </c:if>
     <c:if test="${sessionScope.role=='doctor'|| sessionScope.role=='nurse'}">
         <table cellspacing="0" id="maket" border="0">
@@ -101,7 +108,14 @@
                     <td>${nurse}</td>
                 </c:if>
             </tr>
+            <tr>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="gotopasswordupdatepage"/>
+                    <input type="submit" value="${update}"/>
+                </form>
+            </tr>
             </c:if>
+        </table>
 </div >
 </body>
 </html>

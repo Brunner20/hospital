@@ -25,7 +25,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     private static final String INSERT_ACCOUNT = "insert into hospital.accounts(login,password,id_role) VALUES (?,?,?)";
     private static final String INSERT_PATIENT = "insert into hospital.patients(firstname,lastname,account_id,status) VALUES (?,?,?,2)";
-
+    private static final String INSERT_STAFF = "insert into hospital.staff(firstname,lastname,account) VALUES (?,?,?)";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -68,16 +68,20 @@ public class AccountDAOImpl implements AccountDAO {
             connection = connectionPool.getConnection();
             connection.setAutoCommit(false);
             savepointOne = connection.setSavepoint("SavepointOne");
-            if(!insertAccount(regInfo.getLogin(),regInfo.getPassword(),connection))
+            if(!insertAccount(regInfo,connection))
             {
                 accountSt = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
                 accountSt.setString(1, regInfo.getLogin());
                 accountSt.setString(2, regInfo.getPassword());
                 ResultSet resultSet = accountSt.executeQuery();
-                if(resultSet.next()){
-                   isInserted = insertPatient(regInfo.getFirstname(),regInfo.getLastname(),
-                           resultSet.getInt(1),connection);
-                   connection.commit();
+                if(resultSet.next()) {
+                    if (regInfo.getRoleId() == 3) {
+
+                        isInserted = insertPatient(regInfo.getFirstname(), regInfo.getLastname(), resultSet.getInt(1), connection);
+                    } else {
+                        isInserted = insertStaff(regInfo.getFirstname(), regInfo.getLastname(), resultSet.getInt(1), connection);
+                    }
+                    connection.commit();
                 }
                 accountSt.close();
             }
@@ -104,6 +108,17 @@ public class AccountDAOImpl implements AccountDAO {
         return isInserted;
     }
 
+    private boolean insertStaff(String firstname, String lastname, int accountId, Connection connection)throws SQLException {
+        boolean isInserted;
+        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STAFF);
+        preparedStatement.setString(1,firstname);
+        preparedStatement.setString(2,lastname);
+        preparedStatement.setInt(3,accountId);
+        isInserted= preparedStatement.execute();
+        preparedStatement.close();
+        return isInserted;
+    }
+
     private boolean insertPatient(String firstname,String lastname, int accountId,Connection connection) throws SQLException, ConnectionPoolException {
         boolean isInserted;
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PATIENT);
@@ -115,12 +130,12 @@ public class AccountDAOImpl implements AccountDAO {
         return isInserted;
     }
 
-    private boolean insertAccount(String login,String password,Connection connection) throws SQLException, ConnectionPoolException {
+    private boolean insertAccount(RegistrationInfo registrationInfo,Connection connection) throws SQLException, ConnectionPoolException {
         boolean isInserted;
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ACCOUNT);
-        preparedStatement.setString(1, login);
-        preparedStatement.setString(2, password);
-        preparedStatement.setInt(3,3);
+        preparedStatement.setString(1, registrationInfo.getLogin());
+        preparedStatement.setString(2, registrationInfo.getPassword());
+        preparedStatement.setLong(3,registrationInfo.getRoleId());
         isInserted= preparedStatement.execute();
         preparedStatement.close();
 
@@ -129,13 +144,15 @@ public class AccountDAOImpl implements AccountDAO {
 
 
     private Visitor getAccount(PreparedStatement preparedStatement) throws SQLException, ConnectionPoolException {
-        Visitor visitor = null;
+        Visitor visitor = new Visitor();
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             if (resultSet.getString("title").equals("patient")) {
                 visitor = getPatientInfo(resultSet.getString(1));
-            } else {
+            } else if(resultSet.getString("title").equals("staff")) {
                 visitor = getStaffInfo(resultSet.getString(1));
+            } else {
+                visitor.setRoleID(1);
             }
         }
         preparedStatement.close();
@@ -159,6 +176,7 @@ public class AccountDAOImpl implements AccountDAO {
             staff.setStaffTypeID(resultSet.getInt(5));
             staff.setDepartment(resultSet.getInt(6));
             staff.setAccountID(resultSet.getInt(7));
+            staff.setRoleID(2L);
 
         }
         connectionPool.releaseConnection(connection);
@@ -184,6 +202,7 @@ public class AccountDAOImpl implements AccountDAO {
             patient.setAttendingDoctorID(resultSet.getLong(7));
             patient.setStatusID(resultSet.getInt(8));
             patient.setAccountID(resultSet.getInt(9));
+            patient.setRoleID(3L);
         }
         connectionPool.releaseConnection(connection);
         preparedStatement.close();
