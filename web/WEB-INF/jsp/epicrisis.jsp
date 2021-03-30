@@ -20,27 +20,24 @@
     <title>${title}</title>
 </head>
 <body>
-
-
-<form action="Controller" method="post" >
-    <input type="hidden" name="command" value="addepicrisis" />
-    <input type="hidden" name="patient_id" value="${requestScope.patient_id}">
-    <table border="0">
-        <tr>
-            <td>
-                ${discharge}
-            </td>
-            <td><input type="date" name="dischargeDate" required/></td>
-        </tr>
-        <tr>
-            <td>${diagnosis}</td>
-            <td><textarea name="definitiveDiagnosis" ></textarea></td>
-        </tr>
-    </table>
-    <input type="submit" value="Ok" />
-
-</form>
-
-</body>
+    <div class="container">
+        <div class="row d-flex w-100 justify-content-center">
+            <div class="col-lg-5 flex">
+                <form action="Controller" method="post" >
+                    <input type="hidden" name="command" value="addepicrisis" />
+                    <input type="hidden" name="patient_id" value="${requestScope.patient_id}">
+                    <div class="form-floating mb-3 m-2">
+                        <input type="date" class="form-control" name="dischargeDate" id="dis" required>
+                        <label for="dis" class="form-label">${discharge}</label>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control m-2" name="definitiveDiagnosis" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                        <label for="floatingTextarea">${diagnosis}</label>
+                    </div>
+                    <button type="submit" class="btn btn-success m-2">Ok</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

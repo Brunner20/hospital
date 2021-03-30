@@ -19,13 +19,19 @@
 </head>
 <body>
 
-
-    <form action="UploadFileController" method="post" enctype="multipart/form-data">
-        ${pic} <input type="file" name="file" required/><br/>
-        ${age} <input type="number" name="age" required /><br/>
-        <input type="submit" value="Ok" />
-
-    </form>
+<div class="container">
+    <div class="row d-flex w-100 justify-content-center">
+        <div class="col-lg-5 flex">
+            <form action="UploadFileController" method="post" enctype="multipart/form-data">
+                <label for="file" class="form-label">${pic}</label>
+                <input type="file" name="file" id="file" required/>
+                <label for="age" class="form-label">${age}</label>
+                <input type="number" name="age" class="form-control" id="age" required /><br/>
+                <button type="submit" class="btn btn-success m-2">Ok</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 </body>
 </body>

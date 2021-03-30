@@ -16,7 +16,8 @@
     <fmt:message bundle="${loc}" key="local.firstname" var="first"/>
     <fmt:message bundle="${loc}" key="local.lastname" var="last"/>
     <fmt:message bundle="${loc}" key="local.btn.add" var="add"/>
-    <fmt:message bundle="${loc}" key="local.doctor" var="staff"/>
+    <fmt:message bundle="${loc}" key="local.doctor" var="doctor"/>
+    <fmt:message bundle="${loc}" key="local.staff" var="staff"/>
     <fmt:message bundle="${loc}" key="local.nurse" var="nurse"/>
     <fmt:message bundle="${loc}" key="local.page.registration" var="title"/>
     <title>${title}</title>
@@ -27,20 +28,28 @@
 
 <form align = "center" action="Controller" method="post">
     <input type="hidden" name="command" value="addaccount" />
-    ${first}<br />
-    <input type="text" name="firstname" value="" /><br />
-    ${last}<br />
-    <input type="text" name="lastname" value="" /><br />
-    ${login}<br />
-    <input type="text" name="login" value="" /><br />
-    ${password}<br />
-    <input type="password" name="password" minlength="6" /><br />
-
-    <select name = "staff_type" >
-        <option value="1">${staff} </option>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="firstname" id="floatingInput" required>
+        <label for="floatingInput">${first}</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="lastname" id="lastname" required>
+        <label for="lastname">${last}</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="login" id="login" required>
+        <label for="login">${login}</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" name="password" id="passIn" required>
+        <label for="passIn">${password}</label>
+    </div>
+    <label for="staff" class="form-label m-2">${staff}</label>
+    <select name = "staff_type"  class="form-select m-2" id="staff" >
+        <option value="1">${doctor} </option>
         <option value="2">${nurse} </option>
     </select><br/>
-    <input type="submit" value=  ${add} /><br />
+    < <button type="submit" class="btn btn-primary m-2">${add}</button>
 </form>
 </body>
 </html>

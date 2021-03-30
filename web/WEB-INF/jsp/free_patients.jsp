@@ -15,30 +15,23 @@
     <fmt:message bundle="${loc}" key="local.btn.next" var="select"/>
     <fmt:message bundle="${loc}" key="local.page.free_patients" var="title"/>
     <title>${title}</title>
-
-    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-<form action="Controller" method="post">
-    <table cellspacing="0" id="maket">
-        <tr>
-           <td>${name}</td>
-        </tr>
-        <tr>
-            <td>
-                <select name = "free_patient_id" size="3" >
-                <c:forEach var="patient" items="${requestScope.patientList}">
-                        <option value="${patient.id}">${patient.firstname} ${patient.lastname} </option>
-                </c:forEach>
-                </select>
-            </td>
-        </tr>
-    </table>
-
-    <input type="hidden" name="command" value="gotoreceiptdatepage"/>
-    <input type="submit" value="${select}"/>
-</form>
-
-
+<div class="container">
+    <div class="row d-flex w-100 justify-content-center">
+        <div class="col-lg-3 flex">
+            <form action="Controller" method="post">
+                <input type="hidden" name="command" value="gotoreceiptdatepage"/>
+                <label for="name" class="form-label m-2">${name}</label>
+                    <select name = "free_patient_id"  class="form-select m-2" id="name" >
+                        <c:forEach var="patient" items="${requestScope.patientList}">
+                            <option value="${patient.id}">${patient.firstname} ${patient.lastname} </option>
+                        </c:forEach>
+                    </select>
+                    <button type="submit" class="btn btn-info m-2">${select}</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

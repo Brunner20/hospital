@@ -18,32 +18,36 @@
     <fmt:message bundle="${loc}" key="local.page.patient" var="title"/>
     <title>${title}</title>
 </head>
-<body>
+<body  class="bg-info">
 
 <h1 align="center">
-    !!! ${welcome}!!!
+     ${welcome}!!!
 </h1>
 
-<div class="content">
 
-    <section>
+    <div class="d-flex flex-row flex-wrap justify-content-center">
         <c:if test="${sessionScope.role == 'patient'}">
-            <div class ="doctor">
-                <form action="Controller" method="post">
-                    <input type="hidden" name="command" value="gotopatientappointmentlistpage"/>
-                    <input type="submit" value="${my_appoint}"/>
-                </form>
-
-                <form action="Controller" method="post">
-                    <input type="hidden" name="command" value="gotomedicalhistorypage"/>
-                    <input type="submit" value="${hist}"/>
-                </form>
-
-        </div>
+            <div class="card m-2" style="width: 18rem;">
+                <div class="card-body m-2">
+                    <h5 class="card-title">${my_appoint}</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <form action="Controller" method="post">
+                        <input type="hidden" name="command" value="gotopatientappointmentlistpage"/>
+                        <button class="btn btn-info card-link">${my_appoint}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card m-2" style="width: 18rem;">
+                <div class="card-body m-2">
+                    <h5 class="card-title">${hist}</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <form action="Controller" method="post">
+                        <input type="hidden" name="command" value="gotomedicalhistorypage"/>
+                        <button class="btn btn-info card-link">${hist}</button>
+                    </form>
+                </div>
+            </div>
         </c:if>
-    </section>
-
 </div>
-
 </body>
 </html>

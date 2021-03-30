@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <meta charset="utf-8">
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
@@ -15,10 +16,9 @@
     <fmt:message bundle="${loc}" key="local.btn.discharge" var="discharge"/>
     <fmt:message bundle="${loc}" key="local.page.my_patients" var="title"/>
     <title>${title}</title>
-    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-<table cellspacing="0" id="maket">
+<table class="d-flex m-5 table table-striped  table-borderless">
     <tr>
         <td> ${name}</td>
     </tr>
@@ -31,7 +31,7 @@
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="gotoepicrisispage"/>
                     <input type="hidden" name="patient_id" value="${patient.id}"/>
-                    <input type="submit" value="${discharge}"/>
+                    <button type="submit" class="btn btn-info btn-sm">${discharge}</button>
                 </form>
             </td>
         </tr>

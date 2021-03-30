@@ -26,70 +26,64 @@
 </head>
 <body>
 <div class="profile">
-    <c:if test="${sessionScope.role=='patient'}">
-        <table cellspacing="0" id="maket" border="0">
-
-        <c:if test="${sessionScope.role.equalsIgnoreCase('patient')}">
+    <c:if test="${sessionScope.role.equalsIgnoreCase('patient')}">
+        <table class="table-borderless">
           <tr>
               <td>
-                  <img src="<c:url value="${requestScope.patient.patientPic}"></c:url>" width="100" height="80"  alt=""/>
+                  <img src="<c:url value="${requestScope.patient.patientPic}"></c:url>" class="rounded-circle" width="100" height="80"  alt=""/>
               </td>
               <td>
                   <form action="UploadFileController" method="post" enctype="multipart/form-data">
-                      <input type="file" name="file"/><br/>
-                      <input type="submit" value="${update}" />
+                      <input type="file" name="file"/>
                   </form>
               </td>
           </tr>
-        </c:if>
-        <c:if test="${sessionScope.role.equalsIgnoreCase('doctor')||sessionScope.role.equalsIgnoreCase('nurse')}">
-        <tr>
-            <td>
-                <img src="<c:url value="${requestScope.staff.patientPic}"></c:url>" width="100" height="80"  alt=""/>
-            </td>
-            <td>
-                <form action="UploadFileController" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file"/><br/>
-                    <input type="submit" value="${update}" />
-                </form>
-            </td>
-        </tr>
-        </c:if>
-        <tr>
-        <td>${first}<td>
-            <td>${requestScope.patient.firstname}</td>
-        </tr>
-        <tr>
-            <td>${last}<td>
-            <td>${requestScope.patient.lastname}</td>
-        </tr>
-        <tr>
-            <td>${age}<td>
-            <td>${requestScope.patient.age}</td>
-        </tr>
-        <tr>
-            <td>${status}<td>
-            <c:if test="${requestScope.patient.statusID == 1}">
-                <td>${treatment}</td>
-            </c:if>
-            <c:if test="${requestScope.patient.statusID == 2}">
-                <td>${dis}</td>
-            </c:if>
-        </tr>
-        <tr>
-            <td>${attending_doctor}<td>
-            <td>${requestScope.attendingDoctor.firstname} ${requestScope.attendingDoctor.lastname}</td>
-        </tr>
+            <tr>
+            <td>${first}<td>
+                <td>${requestScope.patient.firstname}</td>
+            </tr>
+            <tr>
+                <td>${last}<td>
+                <td>${requestScope.patient.lastname}</td>
+            </tr>
+            <tr>
+                <td>${age}<td>
+                <td>${requestScope.patient.age}</td>
+            </tr>
+            <tr>
+                <td>${status}<td>
+                <c:if test="${requestScope.patient.statusID == 1}">
+                    <td>${treatment}</td>
+                </c:if>
+                <c:if test="${requestScope.patient.statusID == 2}">
+                    <td>${dis}</td>
+                </c:if>
+            </tr>
+            <tr>
+                <td>${attending_doctor}<td>
+                <td>${requestScope.attendingDoctor.firstname} ${requestScope.attendingDoctor.lastname}</td>
+            </tr>
             <tr>
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="gotopasswordupdatepage"/>
-                    <input type="submit" value="${update}"/>
+                    <button type="submit" class="btn btn-primary m-2">${update}</button>
                 </form>
             </tr>
         </table>
     </c:if>
-    <c:if test="${sessionScope.role=='doctor'|| sessionScope.role=='nurse'}">
-        <table cellspacing="0" id="maket" border="0">
+    <c:if test="${sessionScope.role.equalsIgnoreCase('doctor')||sessionScope.role.equalsIgnoreCase('nurse')}">
+        <table class="table-borderless">
+            <tr>
+                <td>
+                    <img src="<c:url value="${requestScope.staff.patientPic}"></c:url>" class="rounded-circle" width="100" height="80"  alt=""/>
+                </td>
+                <td>
+                    <form action="UploadFileController" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file"/><br/>
+                        <input type="submit" value="${update}" />
+                    </form>
+                </td>
+            </tr>
 
             <tr>
                 <td>${first}<td>
@@ -111,7 +105,7 @@
             <tr>
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="gotopasswordupdatepage"/>
-                    <input type="submit" value="${update}"/>
+                    <button type="submit" class="btn btn-primary m-2">${update}</button>
                 </form>
             </tr>
             </c:if>

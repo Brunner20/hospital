@@ -29,44 +29,45 @@
 </head>
 <body>
 
-    <form action="Controller" method="post">
-            <input type="hidden" name="command" value="gotoaddappointmentnextpage" />
-            <table border="0">
-            <tr>
-                <td>${date_app}</td>
-                <td><input type="date" name="dateOfAppointment" required/></td>
-            </tr>
-            <tr>
-                <td>${patient}</td>
-                <td>
-                    <select name = "select_patient_id" >
-                        <c:forEach var="pati" items="${requestScope.allPatients}">
-                        <option value="${pati.id}">${pati.firstname} ${pati.lastname} ${pati.age}</option>
+    <div class="container">
+        <div class="row d-flex w-100 justify-content-center">
+            <div class="col-6">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="gotoaddappointmentnextpage" />
+
+                    <div class="col-md-6">
+                        <label for="inputDate" class="form-label">${date_app}</label>
+                        <input type="date" class="form-control" name="dateOfAppointment" id="inputDate" required/>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPatient" class="form-label">${patient}</label>
+                        <select class="form-select" name = "select_patient_id" id="inputPatient" >
+                            <c:forEach var="pati" items="${requestScope.allPatients}">
+                                <option value="${pati.id}">${pati.firstname} ${pati.lastname} ${pati.age}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                <div class="col-md-8">
+                    <label for="inputApp" class="form-label">${type}</label>
+                    <select class="form-select" name = "select_type" id="inputApp" >
+                        <c:forEach var="AppType" items="${requestScope.types}">
+                            <c:if test="${AppType.toString().equals('PREPARATION')}">
+                                <option value="${AppType.id}">${prep}</option>
+                            </c:if>
+                            <c:if test="${AppType.toString().equals('PROCEDURE')}">
+                                <option value="${AppType.id}">${procedure}</option>
+                            </c:if>
+                            <c:if test="${AppType.toString().equals('SURGERY')}">
+                                <option value="${AppType.id}">${surgery}</option>
+                            </c:if>
                         </c:forEach>
                     </select>
-                </td>
-            </tr>
-           <tr>
-               <td>${type}</td>
-               <td>
-               <select name = "select_type" >
-                <c:forEach var="AppType" items="${requestScope.types}">
-                    <c:if test="${AppType.toString().equals('PREPARATION')}">
-                     <option value="${AppType.id}">${prep}</option>
-                    </c:if>
-                    <c:if test="${AppType.toString().equals('PROCEDURE')}">
-                    <option value="${AppType.id}">${procedure}</option>
-                    </c:if>
-                    <c:if test="${AppType.toString().equals('SURGERY')}">
-                    <option value="${AppType.id}">${surgery}</option>
-                    </c:if>
-                </c:forEach>
-            </select>
-               </td>
-           </tr>
-        </table>
-        <input type="submit" value="${submit}" /><br />
-    </form>
+                </div>
+                <button type="submit" class="btn btn-outline-primary m-2 col-md-3">${submit}</button>
+            </form>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

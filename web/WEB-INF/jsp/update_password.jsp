@@ -21,15 +21,20 @@
 <body>
 
 
+<div class="container">
+    <div class="row d-flex w-100 justify-content-center">
+        <div class="col-lg-5 flex">
+            <form action="Controller" method="post">
+                <input type="hidden" name="command" value="updatepassword" />
+                <label for="old" class="form-label">${old}</label>
+                <input type="password" name="old_password" id="old" minlength="6" />
+                <label for="new" class="form-label">${login}</label>
+                <input type="password" name="new_password" id="new" minlength="6" />
+                <button type="submit" class="btn btn-primary m-2">${update}</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-<form align = "center" action="Controller" method="post">
-    <input type="hidden" name="command" value="updatepassword" />
-    ${old}<br/>
-    <input type="password" name="old_password" minlength="6" /><br/>
-        ${newp}<br/>
-    <input type="password" name="new_password" minlength="6" /><br />
-    <input type="submit" value=  ${update} /><br />
-
-</form>
 </body>
 </html>

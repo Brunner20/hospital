@@ -33,53 +33,58 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-<table cellspacing="0" id="maket" border="1">
-    <tr>
-        <td>${fulfilled}</td>
-        <td>${appointed}</td>
-        <td>${date_app}</td>
-        <td>${date_comp}</td>
-        <td>${appointment}</td>
-        <td>${type}</td>
-        <td>${status}</td>
-    </tr>
-    <c:forEach var="item" items="${requestScope.appointment_list}">
-        <tr>
-            <td>${item.executeStaffFirstname} ${item.executeStaffLastname}</td>
-            <td>${item.appointingDoctorFirstname} ${item.appointingDoctorLastname}</td>
-            <td>${item.dateOfAppointment}</td>
-            <td>${item.dateOfCompletion}</td>
-            <td>${item.info}</td>
-            <td>
-                <c:choose>
-                    <c:when test="${item.type.toString().equals('PREPARATION')}">
-                        ${prep}
-                    </c:when>
-                    <c:when test="${item.type.toString().equals('PROCEDURE')}">
-                        ${procedure}
-                    </c:when>
-                    <c:when test="${item.type.toString().equals('SURGERY')}">
-                        ${surgery}
-                    </c:when>
-                </c:choose>
-            </td>
-            <td>
-                <c:choose>
-                    <c:when test="${item.status.toString().equals('APPOINTED')}">
-                        ${status_app}
-                    </c:when>
-                    <c:when test="${item.status.toString().equals('DONE')}">
-                        ${done}
-                    </c:when>
-                    <c:when test="${item.status.toString().equals('CANCELED')}">
-                        ${canceled}
-                    </c:when>
-                </c:choose>
-            </td>
-
-        </tr>
-    </c:forEach>
-</table>
+<div class="container m-5">
+    <div class="row d-flex">
+        <div class="col-lg-3 flex">
+            <table class="table table-bordered border-primary">
+                <tr class="table-primary">
+                    <td>${fulfilled}</td>
+                    <td>${appointed}</td>
+                    <td>${date_app}</td>
+                    <td>${date_comp}</td>
+                    <td>${appointment}</td>
+                    <td>${type}</td>
+                    <td>${status}</td>
+                </tr>
+                <c:forEach var="item" items="${requestScope.appointment_list}">
+                    <tr>
+                        <td>${item.executeStaffFirstname} ${item.executeStaffLastname}</td>
+                        <td>${item.appointingDoctorFirstname} ${item.appointingDoctorLastname}</td>
+                        <td>${item.dateOfAppointment}</td>
+                        <td>${item.dateOfCompletion}</td>
+                        <td>${item.info}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${item.type.toString().equals('PREPARATION')}">
+                                    ${prep}
+                                </c:when>
+                                <c:when test="${item.type.toString().equals('PROCEDURE')}">
+                                    ${procedure}
+                                </c:when>
+                                <c:when test="${item.type.toString().equals('SURGERY')}">
+                                    ${surgery}
+                                </c:when>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${item.status.toString().equals('APPOINTED')}">
+                                    ${status_app}
+                                </c:when>
+                                <c:when test="${item.status.toString().equals('DONE')}">
+                                    ${done}
+                                </c:when>
+                                <c:when test="${item.status.toString().equals('CANCELED')}">
+                                    ${canceled}
+                                </c:when>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

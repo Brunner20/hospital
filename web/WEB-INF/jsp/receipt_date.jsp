@@ -17,27 +17,22 @@
     <title>${title}</title>
 </head>
 <body>
-<form action="Controller" method="post" >
-    <input type="hidden" name="command" value="addpatientstodoctor" />
-    <input type="hidden" name="free_patient_id" value="${requestScope.free_patient_id}">
-    <table border="0">
-        <tr>
-            <td>
-                ${receipt}
-            </td>
-            <td><input type="date" name="receiptDate" required/></td>
-        </tr>
-        <tr>
-            <td>
-                ${diang}
-            </td>
-            <td>
-                <textarea name="preliminaryDiagnosis" ></textarea>
-            </td>
-        </tr>
-
-    </table>
-    <input type="submit" value="Ok" />
-</form>
+<div class="container">
+    <div class="row d-flex w-100 justify-content-center">
+        <div class="col-lg-5 flex">
+            <form action="Controller" method="post" >
+                <input type="hidden" name="command" value="addpatientstodoctor" />
+                <input type="hidden" name="free_patient_id" value="${requestScope.free_patient_id}">
+                <label for="dat" class="form-label m-2">${receipt}</label>
+                <input type="date" class="form-control m-2" name="receiptDate"  id="dat" required/>
+                <div class="form-floating">
+                    <textarea class="form-control m-2" name="preliminaryDiagnosis" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea">${diang}</label>
+                </div>
+                <button type="submit" class="btn btn-primary m-2 col-md-4">Ok</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

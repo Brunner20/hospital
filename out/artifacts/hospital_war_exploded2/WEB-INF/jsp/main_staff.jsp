@@ -22,43 +22,51 @@
 	<fmt:message bundle="${loc}" key="local.page.staff" var="title"/>
 	<title>${title}</title>
 </head>
-<body>
-
-
-	!!! ${welcome}!!!
-	<div class="content">
-
-		<section>
+<body class="bg-info">
+		<div class="d-flex flex-row flex-wrap justify-content-center">
 				<c:if test="${sessionScope.role == 'doctor'}">
-					<div class ="doctor">
-						<form action="Controller" method="post">
-							<input type="hidden" name="command" value="gotoaddappointmentpage"/>
-							<input type="hidden" name="page" value=""/>
-							<input type="submit" value="${add}"/>
-						</form>
-
-						<form action="Controller" method="post">
-							<input type="hidden" name="command" value="gotodoctorspatientspage"/>
-							<input type="submit" value="${my}"/>
-						</form>
-
-						<form action="Controller" method="post">
-							<input type="hidden" name="command" value="gotofreepatientspage"/>
-							<input type="submit" value="${get}"/>
-						</form>
+					<div class="card m-2" style="width: 18rem;">
+						<div class="card-body m-2">
+							<h5 class="card-title">${add}</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<form action="Controller" method="post">
+								<input type="hidden" name="command" value="gotoaddappointmentpage"/>
+								<button class="btn btn-info card-link">${add}</button>
+							</form>
+						</div>
+					</div>
+					<div class="card m-2" style="width: 18rem;">
+						<div class="card-body m-2">
+							<h5 class="card-title">${my}</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<form action="Controller" method="post">
+								<input type="hidden" name="command" value="gotodoctorspatientspage"/>
+								<button class="btn btn-info card-link">${my}</button>
+							</form>
+						</div>
+					</div>
+					<div class="card m-2" style="width: 18rem;">
+						<div class="card-body m-2">
+							<h5 class="card-title">${get}</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<form action="Controller" method="post">
+								<input type="hidden" name="command" value="gotofreepatientspage"/>
+								<button class="btn btn-info card-link">${get}</button>
+							</form>
+						</div>
 					</div>
 				</c:if>
-					<div>
-						<form action="Controller" method="post">
-							<input type="hidden" name="command" value="gotostaffappointmentlistpage"/>
-							<input type="submit" value="${appoint}"/>
-						</form>
+					<div class="card m-2" style="width: 18rem;">
+						<div class="card-body m-2">
+							<h5 class="card-title">${appoint}</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<form action="Controller" method="post">
+								<input type="hidden" name="command" value="gotostaffappointmentlistpage"/>
+								<button class="btn btn-info card-link">${appoint}</button>
+							</form>
+						</div>
 					</div>
-		</section>
-
-	</div>
-
-
+			</div>
 
 
 </body>

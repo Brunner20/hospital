@@ -17,28 +17,30 @@
     <fmt:message bundle="${loc}" key="local.page.administrator" var="title"/>
     <title>${title}</title>
 </head>
-<body>
+<body  class="bg-info">
 
 <h1 align="center">
     !!! ${welcome}!!!
 </h1>
 
-<div class="content">
 
-    <section>
+
         <c:if test="${sessionScope.role == 'admin'}">
-            <div class ="doctor">
-                <form action="Controller" method="post">
-                    <input type="hidden" name="command" value="gotoaddstaffpage"/>
-                    <input type="submit" value="${add}"/>
-                </form>
-
-
-            </div>
+            <div class="d-flex flex-row flex-wrap">
+                <div class="card m-2" style="width: 18rem;">
+                    <div class="card-body m-2">
+                        <h5 class="card-title">${add}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <form action="Controller" method="post">
+                            <input type="hidden" name="command" value="gotoaddstaffpage"/>
+                            <button class="btn btn-info card-link">${add}</button>
+                        </form>
+                    </div>
+                </div>
         </c:if>
-    </section>
 
-</div>
+
+
 
 </body>
 </html>
