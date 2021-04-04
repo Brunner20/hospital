@@ -4,9 +4,9 @@ import com.hospital.controller.command.Command;
 import com.hospital.entity.Patient;
 import com.hospital.entity.Staff;
 import com.hospital.service.PatientService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,6 @@ public class GoToProfilePage implements Command {
     private static final String PATH_TO_PROFILE = "/WEB-INF/jsp/profile.jsp";
     private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
     private static final String WRONG_AUTH ="wrong auth";
-    private static final String ATTRIBUTE_ROLE = "role";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -4,8 +4,8 @@ import com.hospital.controller.command.Command;
 import com.hospital.entity.AppointmentType;
 import com.hospital.entity.Patient;
 import com.hospital.service.PatientService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -48,9 +48,8 @@ public class GoToAddAppointmentPage implements Command {
         try {
            patients = patientService.getAll();
         } catch (ServiceException e) {
-            request.setAttribute("error","patient not found");
-            session.setAttribute(ATTRIBUTE_URL, GO_TO_STAFF_PAGE);
-            response.sendRedirect(GO_TO_STAFF_PAGE);
+            session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
+            response.sendRedirect(GO_TO_ERROR_PAGE);
         }
 
         session.setAttribute(ATTRIBUTE_URL,GO_TO_APPOINT_PAGE);

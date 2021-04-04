@@ -33,6 +33,26 @@
             </form>
         </div>
     </div>
+
+    <c:if test="${sessionScope.errorMessage != null}">
+        <c:forEach var="errorMessageKey" items="${sessionScope.errorMessage}">
+            <fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageEr"/>
+            <div class="alert alert-danger" role="alert">
+                    ${messageEr}
+            </div>
+        </c:forEach>
+        <c:remove var="sessionScope.errorMessage "/>
+    </c:if>
+
+    <c:if test="${sessionScope.informationMessage != null}">
+        <c:forEach var="errorMessageKey" items="${sessionScope.informationMessage}">
+            <fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageInf"/>
+            <div class="alert alert-info" role="alert">
+                    ${messageInf}
+            </div>
+        </c:forEach>
+        <c:remove var="sessionScope.informationMessage"/>
+    </c:if>
 </div>
 </body>
 </html>

@@ -28,6 +28,10 @@
 		<url-pattern>/UploadFileController</url-pattern>
 	</servlet-mapping>
 
+	<error-page>
+		<exception-type>java.lang.RuntimeException</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
 
 	<listener>
 		<listener-class>com.hospital.controller.listener.AppContextListener</listener-class>
@@ -49,8 +53,5 @@
 		<session-timeout>10</session-timeout>
 	</session-config>
 
-	<error-page>
-		<error-code>404</error-code>
-		<location>/404error.html</location>
-	</error-page>
+
 </web-app>

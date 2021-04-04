@@ -21,23 +21,45 @@
     <fmt:message bundle="${loc}" key="profile.status.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="profile.status.nurse" var="nurse"/>
     <fmt:message bundle="${loc}" key="local.btn.update_password" var="update"/>
+    <fmt:message bundle="${loc}" key="local.btn.update_image" var="image"/>
+    <fmt:message bundle="${loc}" key="local.btn.close" var="close"/>
     <fmt:message bundle="${loc}" key="local.page.profile" var="title"/>
     <title>${title}</title>
 </head>
 <body>
-<div class="profile">
+<div class="d-flex m-2">
     <c:if test="${sessionScope.role.equalsIgnoreCase('patient')}">
         <table class="table-borderless">
           <tr>
+
               <td>
                   <img src="<c:url value="${requestScope.patient.patientPic}"></c:url>" class="rounded-circle" width="100" height="80"  alt=""/>
               </td>
-              <td>
-                  <form action="UploadFileController" method="post" enctype="multipart/form-data">
-                      <input type="file" name="file"/>
-                  </form>
-              </td>
           </tr>
+            <tr>
+              <td>
+
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      ${image}
+                  </button>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form action="UploadFileController" method="post" enctype="multipart/form-data">
+                                      <input type="file" name="file"/>
+                                      <button type="submit" class="btn btn-primary">Ok</button>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+              </td>
+            </tr>
             <tr>
             <td>${first}<td>
                 <td>${requestScope.patient.firstname}</td>
@@ -64,10 +86,14 @@
                 <td>${requestScope.attendingDoctor.firstname} ${requestScope.attendingDoctor.lastname}</td>
             </tr>
             <tr>
-                <form action="Controller" method="post">
-                    <input type="hidden" name="command" value="gotopasswordupdatepage"/>
-                    <button type="submit" class="btn btn-primary m-2">${update}</button>
-                </form>
+                <td>
+                    <div>
+                        <form action="Controller" method="post">
+                            <input type="hidden" name="command" value="gotopasswordupdatepage"/>
+                            <button type="submit" class="btn btn-primary m-2">${update}</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
         </table>
     </c:if>
@@ -75,15 +101,10 @@
         <table class="table-borderless">
             <tr>
                 <td>
-                    <img src="<c:url value="${requestScope.staff.patientPic}"></c:url>" class="rounded-circle" width="100" height="80"  alt=""/>
-                </td>
-                <td>
-                    <form action="UploadFileController" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file"/><br/>
-                        <input type="submit" value="${update}" />
-                    </form>
+                    <img src="<c:url value="${requestScope.staff.picture}"></c:url>" class="rounded-circle" width="100" height="80"  alt=""/>
                 </td>
             </tr>
+
 
             <tr>
                 <td>${first}<td>
@@ -103,13 +124,40 @@
                 </c:if>
             </tr>
             <tr>
-                <form action="Controller" method="post">
-                    <input type="hidden" name="command" value="gotopasswordupdatepage"/>
-                    <button type="submit" class="btn btn-primary m-2">${update}</button>
-                </form>
+                <td>
+                    <div>
+                        <form action="Controller" method="post">
+                            <input type="hidden" name="command" value="gotopasswordupdatepage"/>
+                            <button type="submit" class="btn btn-primary m-2">${update}</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
-            </c:if>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModale">
+                            ${image}
+                    </button>
+                    <div class="modal fade"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="UploadFileController" method="post" enctype="multipart/form-data">
+                                        <input type="file" name="file"/>
+                                        <button type="submit" class="btn btn-primary">Ok</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
         </table>
-</div >
+    </c:if>
+</div>
 </body>
 </html>

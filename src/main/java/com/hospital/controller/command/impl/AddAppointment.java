@@ -6,8 +6,8 @@ import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
 import com.hospital.service.AppointmentService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
@@ -28,13 +29,16 @@ public class AddAppointment implements Command {
     private Long execStaffId;
 
 
-
     private static final String ATTRIBUTE_APPOINT_DATE = "dateOfAppointment";
     private static final String ATTRIBUTE_COMPLETION_DATE = "dateOfCompletion";
     private static final String INFORMATION = "info";
     private static final String SELECTED_TYPE = "select_type";
     private static final String SELECTED_PATIENT = "select_patient_id";
     private static final String SELECTED_EXEC_STAFF_ = "select_staff_id";
+
+
+    private static final String APPOINTMENT_ADDED_OK = "local.info.appointed_added";
+    private static final String APPOINTMENT_ADDED_ERROR = "local.error.appointed_not_added";
 
 
     @Override
@@ -52,7 +56,6 @@ public class AddAppointment implements Command {
 
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -72,7 +75,7 @@ public class AddAppointment implements Command {
         try {
              appointmentInfo = docService.getAppointmentInfo(information,type);
         } catch (ServiceException e) {
-            request.setAttribute("error"," not found");
+            session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(APPOINTMENT_ADDED_ERROR));
             session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_PAGE);
             response.sendRedirect(GO_TO_APPOINT_PAGE);
         }
@@ -91,13 +94,12 @@ public class AddAppointment implements Command {
         AppointmentService appointmentService = ServiceProvider.getInstance().getAppointmentService();
         try {
             appointmentService.addAppointment(appointment);
+            session.setAttribute(ATTRIBUTE_INFO_MESSAGE, Arrays.asList(APPOINTMENT_ADDED_OK));
+            request.getRequestDispatcher(GO_TO_STAFF_PAGE).forward(request,response);
         } catch (ServiceException e) {
-            request.setAttribute("error","");
+            session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(APPOINTMENT_ADDED_ERROR));
             session.setAttribute(ATTRIBUTE_URL, GO_TO_ADD_APPOINTMENT_PAGE);
             response.sendRedirect(GO_TO_ADD_APPOINTMENT_PAGE);
         }
-
-        request.getRequestDispatcher(GO_TO_STAFF_PAGE).forward(request,response);
-
     }
 }

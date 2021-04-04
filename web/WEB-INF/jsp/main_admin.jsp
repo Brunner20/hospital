@@ -14,6 +14,8 @@
     <fmt:message bundle="${loc}" key="local.welcome" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.logout" var="logout"/>
     <fmt:message bundle="${loc}" key="local.add_staff" var="add"/>
+    <fmt:message bundle="${loc}" key="local.card.add_staff" var="card"/>
+
     <fmt:message bundle="${loc}" key="local.page.administrator" var="title"/>
     <title>${title}</title>
 </head>
@@ -30,7 +32,7 @@
                 <div class="card m-2" style="width: 18rem;">
                     <div class="card-body m-2">
                         <h5 class="card-title">${add}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text">${card}</p>
                         <form action="Controller" method="post">
                             <input type="hidden" name="command" value="gotoaddstaffpage"/>
                             <button class="btn btn-info card-link">${add}</button>
@@ -39,7 +41,25 @@
                 </div>
         </c:if>
 
+                <c:if test="${errorMessage != null}">
+                <c:forEach var="errorMessageKey" items="${errorMessage}">
+                    <fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageEr"/>
+                <div class="alert alert-danger" role="alert">
+                        ${messageEr}
+                </div>
+                </c:forEach>
+                    <c:remove var="errorMessage"/>
+                </c:if>
 
+                <c:if test="${informationMessage != null}">
+                <c:forEach var="errorMessageKey" items="${informationMessage}">
+                    <fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageInf"/>
+                <div class="alert alert-info" role="alert">
+                        ${messageInf}
+                </div>
+                </c:forEach>
+                    <c:remove var="informationMessage"/>
+                </c:if>
 
 
 </body>

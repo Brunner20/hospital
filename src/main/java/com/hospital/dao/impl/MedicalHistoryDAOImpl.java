@@ -1,11 +1,14 @@
 package com.hospital.dao.impl;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.MedicalHistoryDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.MedicalHistory;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
+
+    private static final Logger logger = LogManager.getLogger(MedicalHistoryDAOImpl.class);
     
     private static final String INSERT_HISTORY = "insert into hospital.medical_history(patient) values(?)";
     private static final String SELECT_HISTORY = "select * from hospital.medical_history where patient = ?";
@@ -34,6 +39,7 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
             preparedStatement.execute();
 
         } catch (SQLException | ConnectionPoolException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException("find error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -41,6 +47,7 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    logger.log(Level.ERROR,e);
                     throw new DAOException("Close preparedStatement error ", e);
                 }
             }
@@ -65,6 +72,7 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
             }
 
         } catch (SQLException | ConnectionPoolException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException("find error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -72,6 +80,7 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    logger.log(Level.ERROR,e);
                     throw new DAOException("Close preparedStatement error ", e);
                 }
             }
@@ -93,6 +102,7 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
             preparedStatement.execute();
 
         } catch (SQLException | ConnectionPoolException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException("find error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -100,6 +110,7 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    logger.log(Level.ERROR,e);
                     throw new DAOException("Close preparedStatement error ", e);
                 }
             }

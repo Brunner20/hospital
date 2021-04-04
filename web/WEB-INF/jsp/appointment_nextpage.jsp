@@ -56,7 +56,7 @@
                 </select>
 
                 <div class="form-floating">
-                    <textarea class="form-control m-2" name="info" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <textarea class="form-control m-2" name="info" placeholder="Leave a comment here" id="floatingTextarea" required></textarea>
                     <label for="floatingTextarea">${appoint}</label>
                 </div>
                 <button type="submit" class="btn btn-success m-2 col-md-3">${add}</button>

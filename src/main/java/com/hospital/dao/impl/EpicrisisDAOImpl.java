@@ -1,11 +1,14 @@
 package com.hospital.dao.impl;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.EpicrisisDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.Epicrisis;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +20,7 @@ import java.util.List;
 
 public class EpicrisisDAOImpl implements EpicrisisDAO {
 
+   private static final Logger logger = LogManager.getLogger(EpicrisisDAOImpl.class);
 
     private static final String INSERT_EPICRISIS = "insert into hospital.epicrisis(definitive_diagnosis,date_of_receip,date_of_issue,patient,preliminary_diagnosis,history_id) values(?,?,?,?,?,?)";
     private static final String UPDATE_EPICRISIS = "update hospital.epicrisis set definitive_diagnosis = ?, date_of_issue = ?, history_id = ? where id = ?";
@@ -45,6 +49,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
             preparedStatement.execute();
 
         } catch (SQLException | ConnectionPoolException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException("insert error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -52,6 +57,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                  //  logger.log(Level.ERROR,e);
                     throw new DAOException("Close preparedStatement error ", e);
                 }
             }
@@ -75,6 +81,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
             }
 
         } catch (SQLException | ConnectionPoolException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException("select error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -82,6 +89,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    logger.log(Level.ERROR,e);
                     throw new DAOException("Close preparedStatement error ", e);
                 }
             }
@@ -108,6 +116,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
             preparedStatement.execute();
 
         } catch (SQLException | ConnectionPoolException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException("update error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -115,6 +124,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    logger.log(Level.ERROR,e);
                     throw new DAOException("Close preparedStatement error ", e);
                 }
             }

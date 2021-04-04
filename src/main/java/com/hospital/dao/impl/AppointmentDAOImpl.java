@@ -1,20 +1,26 @@
 package com.hospital.dao.impl;
 
 import com.hospital.dao.AppointmentDAO;
-import com.hospital.dao.DAOException;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentDAOImpl implements AppointmentDAO {
+
+
+    private static final Logger logger = LogManager.getLogger(AppointmentDAOImpl.class);
 
     private static final String INSERT_APPOINTMENT = "insert into hospital.patient_appointments(date_of_completion,date_of_appointment," +
             "id_patient,id_appointment,id_executor,status,id_staff_appoint ) VALUES (?,?,?,?,?,?,?)";
@@ -50,6 +56,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
 
 
         }  catch (ConnectionPoolException | SQLException e) {
+           logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -58,6 +65,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                //logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -86,6 +94,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         } finally {
             connectionPool.releaseConnection(connection);
@@ -94,6 +103,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -116,6 +126,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                 appointmentsByPatient.add(appointment);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
+           logger.log(Level.ERROR,throwables);
             throw new DAOException(throwables);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -124,6 +135,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+             //   logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -149,6 +161,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         } finally {
             connectionPool.releaseConnection(connection);
@@ -157,6 +170,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
+              //  logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -179,6 +193,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                 appointmentsByStaff.add(appointment);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
+           logger.log(Level.ERROR,throwables);
             throw new DAOException(throwables);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -187,6 +202,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -205,6 +221,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             preparedStatement.execute();
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         } finally {
             connectionPool.releaseConnection(connection);
@@ -213,6 +230,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -235,6 +253,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         } finally {
             connectionPool.releaseConnection(connection);
@@ -243,6 +262,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -269,6 +289,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             preparedStatement.execute();
 
         }  catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -277,6 +298,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -307,6 +329,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         } finally {
             connectionPool.releaseConnection(connection);
@@ -315,6 +338,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatementForInsert.close();
                 }
             } catch (SQLException throwables) {
+                //logger.log(Level.ERROR,throwables);
                 throw new DAOException("Close preparedStatement error ", throwables);
             }
             try {
@@ -322,6 +346,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatementForSelect.close();
                 }
             } catch (SQLException e) {
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }

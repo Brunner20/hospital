@@ -1,5 +1,6 @@
 package com.hospital.dao;
 
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.Appointment;
 import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentStatus;

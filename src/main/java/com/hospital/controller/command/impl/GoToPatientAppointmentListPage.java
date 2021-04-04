@@ -3,8 +3,8 @@ package com.hospital.controller.command.impl;
 import com.hospital.controller.command.Command;
 import com.hospital.entity.dto.AppointmentDTO;
 import com.hospital.service.AppointmentService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

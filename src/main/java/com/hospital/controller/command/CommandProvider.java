@@ -23,12 +23,12 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOADDSTAFFPAGE, new GoToAddStaffPage());
         commands.put(CommandName.GOTOEPICRISISPAGE,new GoToEpicrisisPage());
         commands.put(CommandName.GOTOMAINSTAFFPAGE, new GoToMainStaffPage());
+        commands.put(CommandName.ADDADDITIONALINFO, new AddAdditionalInfo());
         commands.put(CommandName.GOTOMAINADMINPAGE, new GoToMainAdminPage());
         commands.put(CommandName.GOTORECEIPTDATEPAGE,new GoToReceiptDatePage());
         commands.put(CommandName.ADDPATIENTSTODOCTOR, new AddPatientsToDoctor());
         commands.put(CommandName.GOTOMAINPATIENTPAGE, new GoToMainPatientPage());
         commands.put(CommandName.GOTOFREEPATIENTSPAGE, new GoToFreePatientsPage());
-        commands.put(CommandName.ADDADDITIONALINFOPAGE, new AddAdditionalInfoPage());
         commands.put(CommandName.GOTOMEDICALHISTORYPAGE,new GoToMedicalHistoryPage());
         commands.put(CommandName.GOTOPASSWORDUPDATEPAGE, new GoToPasswordUpdatePage());
         commands.put(CommandName.GOTOADDAPPOINTMENTPAGE, new GoToAddAppointmentPage());

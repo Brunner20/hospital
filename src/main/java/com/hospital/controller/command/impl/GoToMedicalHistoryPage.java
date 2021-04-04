@@ -4,8 +4,8 @@ import com.hospital.controller.command.Command;
 import com.hospital.entity.dto.EpicrisisDTO;
 import com.hospital.service.AppointmentService;
 import com.hospital.service.EpicrisisService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +21,7 @@ public class GoToMedicalHistoryPage implements Command {
 
     private static final String PATH_TO_HISTORY = "/WEB-INF/jsp/medical_history.jsp";
     private static final String GO_TO_HISTORY = "Controller?command=gotomedicalhistorypage";
+    private static final String ATTRIBUTE_MEDICAL_HISTORY = "medicalHistory";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +38,6 @@ public class GoToMedicalHistoryPage implements Command {
 
         if (isAuth == null || !isAuth) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -56,11 +56,13 @@ public class GoToMedicalHistoryPage implements Command {
         try {
             epicrisisList = epicrisisService.getEpicrisisByPatientId(patientId);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
+            response.sendRedirect(GO_TO_ERROR_PAGE);
+            return;
         }
 
         session.setAttribute(ATTRIBUTE_URL,GO_TO_HISTORY);
-        request.setAttribute("medicalHistory",epicrisisList);
+        request.setAttribute(ATTRIBUTE_MEDICAL_HISTORY,epicrisisList);
         request.getRequestDispatcher(PATH_TO_HISTORY).forward(request,response);
     }
 }

@@ -5,6 +5,7 @@ import com.hospital.entity.AppointmentInfo;
 import com.hospital.entity.AppointmentStatus;
 import com.hospital.entity.AppointmentType;
 import com.hospital.entity.dto.AppointmentDTO;
+import com.hospital.service.exception.ServiceException;
 
 import java.sql.Date;
 import java.util.List;

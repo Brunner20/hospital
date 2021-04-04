@@ -1,6 +1,6 @@
 package com.hospital.service.validation;
 
-import com.hospital.entity.RegistrationInfo;
+import com.hospital.entity.UserInfo;
 
 public class Validator {
     private static final String NAME_REGEX = "[A-ZА-Я][a-zа-я]+";
@@ -25,10 +25,9 @@ public class Validator {
         return login != null && login.matches(LOGIN_REGEX);
     }
 
-    public static boolean isRegistrationInfoValid(RegistrationInfo reg){
+    public static boolean isRegistrationInfoValid(UserInfo reg){
 
-        return isLoginValid(reg.getLogin()) && isNameValid(reg.getFirstname())
-                && isSurnameValid(reg.getLastname()) && isPasswordValid(reg.getPassword());
+        return isLoginValid(reg.getLogin()) && isPasswordValid(reg.getPassword());
     }
 
     public static boolean isIdValid(long id){

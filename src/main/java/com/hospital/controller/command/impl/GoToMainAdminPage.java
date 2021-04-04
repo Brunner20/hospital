@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
+import static com.hospital.controller.command.CommandParameter.*;
 
 public class GoToMainAdminPage implements Command{
 
@@ -19,8 +19,18 @@ public class GoToMainAdminPage implements Command{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
+        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+
+        if (isAuth == null || !isAuth || !role.equals(ROLE_ADMIN)) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
+            return;
+        }
+
         session.setAttribute(ATTRIBUTE_URL,GO_TO_ADMIN);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(PATH_TO_MAIN_ADMIN);
         requestDispatcher.forward(request, response);
+
     }
 }

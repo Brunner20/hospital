@@ -1,11 +1,11 @@
 package com.hospital.service.impl;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.MedicalHistoryDAO;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.MedicalHistory;
 import com.hospital.service.MedicalHistoryService;
-import com.hospital.service.ServiceException;
+import com.hospital.service.exception.ServiceException;
 import com.hospital.service.validation.Validator;
 
 

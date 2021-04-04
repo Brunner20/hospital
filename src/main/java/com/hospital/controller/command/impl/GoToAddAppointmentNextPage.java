@@ -2,9 +2,9 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 import com.hospital.entity.Staff;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +40,6 @@ public class GoToAddAppointmentNextPage implements Command {
 
             if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
                 session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-                request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
                 response.sendRedirect(GO_TO_INDEX_PAGE);
                 return;
             }
@@ -50,9 +49,8 @@ public class GoToAddAppointmentNextPage implements Command {
             try {
                 allStaff = staffService.getAll();
             } catch (ServiceException e) {
-                request.setAttribute("error","patient not found");
-                session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_PAGE);
-                response.sendRedirect(GO_TO_APPOINT_PAGE);
+                session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
+                response.sendRedirect(GO_TO_ERROR_PAGE);
             }
 
             session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);

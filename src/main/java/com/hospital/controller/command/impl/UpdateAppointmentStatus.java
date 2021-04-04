@@ -2,8 +2,8 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 import com.hospital.entity.AppointmentStatus;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +33,6 @@ public class UpdateAppointmentStatus implements Command {
 
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -47,11 +46,10 @@ public class UpdateAppointmentStatus implements Command {
 
             response.sendRedirect(GO_TO_STAFF_PAGE);
         } catch (ServiceException e) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
-            response.sendRedirect(GO_TO_STAFF_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_ERROR_PAGE);
+            response.sendRedirect(GO_TO_ERROR_PAGE);
 
         }
-
 
     }
 }

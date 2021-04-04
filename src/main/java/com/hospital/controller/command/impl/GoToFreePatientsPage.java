@@ -3,8 +3,8 @@ package com.hospital.controller.command.impl;
 import com.hospital.controller.command.Command;
 import com.hospital.entity.Patient;
 import com.hospital.service.PatientService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +37,6 @@ public class GoToFreePatientsPage implements Command {
 
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -52,8 +51,8 @@ public class GoToFreePatientsPage implements Command {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_FREE_PATIENTS);
             request.getRequestDispatcher(PATH_TO_FREE_PATIENTS).forward(request, response);
         }catch (ServiceException e){
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            response.sendRedirect(GO_TO_INDEX_PAGE);
+            session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
+            response.sendRedirect(GO_TO_ERROR_PAGE);
         }
     }
 }

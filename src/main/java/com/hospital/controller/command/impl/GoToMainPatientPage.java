@@ -20,22 +20,14 @@ public class GoToMainPatientPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        if(session == null) {
-            response.sendRedirect(GO_TO_INDEX_PAGE);
-            return;
-        }
-
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth || !role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
 
-        request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
         session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
         request.getRequestDispatcher(PATH_TO_MAIN_PATIENT).forward(request, response);
     }

@@ -18,6 +18,10 @@
 	<fmt:message bundle="${loc}" key="local.btn.add_appointment" var="add"/>
 	<fmt:message bundle="${loc}" key="local.btn.my_patients" var="my"/>
 	<fmt:message bundle="${loc}" key="local.btn.get_patient" var="get"/>
+	<fmt:message bundle="${loc}" key="local.card.my_patients" var="card_p"/>
+	<fmt:message bundle="${loc}" key="local.card.my_app" var="my_app_card"/>
+	<fmt:message bundle="${loc}" key="local.card.get_from_free" var="card_free"/>
+	<fmt:message bundle="${loc}" key="local.card.add_app" var="card_add"/>
 	<fmt:message bundle="${loc}" key="local.btn.my_appointments" var="appoint"/>
 	<fmt:message bundle="${loc}" key="local.page.staff" var="title"/>
 	<title>${title}</title>
@@ -28,7 +32,7 @@
 					<div class="card m-2" style="width: 18rem;">
 						<div class="card-body m-2">
 							<h5 class="card-title">${add}</h5>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<p class="card-text">${card_add}</p>
 							<form action="Controller" method="post">
 								<input type="hidden" name="command" value="gotoaddappointmentpage"/>
 								<button class="btn btn-info card-link">${add}</button>
@@ -38,7 +42,7 @@
 					<div class="card m-2" style="width: 18rem;">
 						<div class="card-body m-2">
 							<h5 class="card-title">${my}</h5>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<p class="card-text">${card_p}</p>
 							<form action="Controller" method="post">
 								<input type="hidden" name="command" value="gotodoctorspatientspage"/>
 								<button class="btn btn-info card-link">${my}</button>
@@ -48,7 +52,7 @@
 					<div class="card m-2" style="width: 18rem;">
 						<div class="card-body m-2">
 							<h5 class="card-title">${get}</h5>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<p class="card-text">${card_free}</p>
 							<form action="Controller" method="post">
 								<input type="hidden" name="command" value="gotofreepatientspage"/>
 								<button class="btn btn-info card-link">${get}</button>
@@ -59,15 +63,33 @@
 					<div class="card m-2" style="width: 18rem;">
 						<div class="card-body m-2">
 							<h5 class="card-title">${appoint}</h5>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<p class="card-text">${my_app_card}</p>
 							<form action="Controller" method="post">
 								<input type="hidden" name="command" value="gotostaffappointmentlistpage"/>
 								<button class="btn btn-info card-link">${appoint}</button>
 							</form>
 						</div>
 					</div>
-			</div>
+            </div>
 
+		<c:if test="${errorMessage != null}">
+			<c:forEach var="errorMessageKey" items="${errorMessage}">
+				<fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageEr"/>
+				<div class="alert alert-danger" role="alert">
+						${messageEr}
+				</div>
+			</c:forEach>
+			<c:remove var="errorMessage"/>
+		</c:if>
 
+		<c:if test="${informationMessage != null}">
+			<c:forEach var="errorMessageKey" items="${informationMessage}">
+				<fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageInf"/>
+				<div class="alert alert-info" role="alert">
+						${messageInf}
+				</div>
+			</c:forEach>
+			<c:remove var="informationMessage"/>
+		</c:if>
 </body>
 </html>

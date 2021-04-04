@@ -12,20 +12,36 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.age" var="age"/>
-    <fmt:message bundle="${loc}" key="local.pic" var="pic"/>
+    <fmt:message bundle="${loc}" key="local.firstname" var="first"/>
+    <fmt:message bundle="${loc}" key="local.lastname" var="last"/>
     <fmt:message bundle="${loc}" key="local.btn.enter" var="submit"/>
     <fmt:message bundle="${loc}" key="local.page.additional_info" var="title"/>
     <title>${title}</title>
 </head>
 <body>
 
-
-    <form action="UploadFileController" method="post" enctype="multipart/form-data">
-        ${pic} <input type="file" name="file" required/><br/>
-        ${age} <input type="number" name="age" required /><br/>
-        <input type="submit" value="Ok" />
-
-    </form>
+<div class="container">
+    <div class="row d-flex w-100 justify-content-center">
+        <div class="col-lg-5 flex">
+            <form action="Controller" method="post" >
+                <input type="hidden" name="command" value="addadditionalinfo" />
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="firstname" id="floatingInput" required>
+                    <label for="floatingInput">${first}</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="lastname" id="lastname" required>
+                    <label for="lastname">${last}</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <label for="age" class="form-label">${age}</label>
+                    <input type="number" name="age" class="form-control" id="age" required />
+                </div>
+                <button type="submit" class="btn btn-success m-2">Ok</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 </body>
 </body>

@@ -5,8 +5,8 @@ import com.hospital.entity.Epicrisis;
 import com.hospital.entity.Patient;
 import com.hospital.service.EpicrisisService;
 import com.hospital.service.PatientService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
@@ -21,6 +22,8 @@ public class AddPatientsToDoctor implements Command {
 
     private static final String GO_TO_STAFF_PAGE = "Controller?command=gotomainstaffpage";
     private static final String PATH_TO_FREE_PATIENTS = "/WEB-INF/jsp/free_patients.jsp";
+    private static final String PATIENT_ADDED_OK = "local.info.patient_added";
+    private static final String PATIENT_ADDED_ERROR = "local.error.patient_not_added";
 
 
     @Override
@@ -28,7 +31,6 @@ public class AddPatientsToDoctor implements Command {
 
         HttpSession session = request.getSession(true);
         if(session == null) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -38,7 +40,6 @@ public class AddPatientsToDoctor implements Command {
 
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -48,7 +49,6 @@ public class AddPatientsToDoctor implements Command {
         String preliminaryDiagnosis = request.getParameter("preliminaryDiagnosis");
         Long doctorId = (Long)session.getAttribute(ATTRIBUTE_VISITOR_ID);
         Date receiptDate = Date.valueOf(request.getParameter("receiptDate"));
-
 
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         PatientService patientService = serviceProvider.getPatientService();
@@ -65,10 +65,11 @@ public class AddPatientsToDoctor implements Command {
             patient.setAttendingDoctorID(doctorId);
             patientService.update(patient);
 
-            //TODO  опоыещеие о успешном добавлении
+            session.setAttribute(ATTRIBUTE_INFO_MESSAGE, Arrays.asList(PATIENT_ADDED_OK));
             session.setAttribute(ATTRIBUTE_URL,PATH_TO_FREE_PATIENTS);
             response.sendRedirect(GO_TO_STAFF_PAGE);
         } catch (ServiceException e) {
+            session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(PATIENT_ADDED_ERROR));
             session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
             response.sendRedirect(GO_TO_STAFF_PAGE);
         }

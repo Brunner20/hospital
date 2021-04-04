@@ -1,11 +1,14 @@
 package com.hospital.dao.impl;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.PatientDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.Patient;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientDAOImpl implements PatientDAO {
+
+    private static final Logger logger = LogManager.getLogger(PatientDAOImpl.class);
 
     private static final String UPDATE_PATIENT ="UPDATE hospital.patients SET firstname= ?, lastname = ?, age = ?, " +
             " department_id = ?, attending_doctor = ?, status =?, account_id = ?, patient_pic = ? WHERE id = ?";
@@ -51,6 +56,7 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement.executeUpdate();
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -59,6 +65,7 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+               logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -78,6 +85,7 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement.executeUpdate();
 
         } catch (ConnectionPoolException | SQLException e) {
+           logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -86,6 +94,7 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -106,6 +115,7 @@ public class PatientDAOImpl implements PatientDAO {
                 patients.add(patient);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
+           logger.log(Level.ERROR,throwables);
             throw new DAOException(throwables);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -114,6 +124,7 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -137,6 +148,7 @@ public class PatientDAOImpl implements PatientDAO {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -145,6 +157,7 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -165,6 +178,7 @@ public class PatientDAOImpl implements PatientDAO {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -173,6 +187,7 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -193,6 +208,7 @@ public class PatientDAOImpl implements PatientDAO {
                 patient = patientMapping(resultSet);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
+            logger.log(Level.ERROR,throwables);
             throw new DAOException(throwables);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -201,6 +217,7 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -222,6 +239,7 @@ public class PatientDAOImpl implements PatientDAO {
                 patients.add(patient);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
+            logger.log(Level.ERROR,throwables);
             throw new DAOException(throwables);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -230,6 +248,7 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }

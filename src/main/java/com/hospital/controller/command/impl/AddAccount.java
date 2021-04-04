@@ -1,93 +1,89 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.controller.builder.UserInfoBuilder;
 import com.hospital.controller.command.Command;
 import com.hospital.entity.*;
 import com.hospital.service.*;
+import com.hospital.service.exception.DataFormatServiceException;
+import com.hospital.service.exception.LoginIsBusyServiceException;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
 public class AddAccount implements Command {
 
 
-
-    private static final String ATTRIBUTE_INFO_MESSAGE = "informationMessage";
-    private static final String REGISTRATION_OK = "registration successful";
-    private static final String REGISTRATION_ERROR = "registration unsuccessful";
     private static final String GO_TO_ADMIN = "Controller?command=gotomainadminpage";
-    private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
-    private static final String WRONG_IN_CATCH = "login already exist";
+    private static final String GO_TO_REGISTRATION_PAGE = "Controller?command=registration";
 
-    private static final String LOGIN = "login";
-    private static final String PASSWORD = "password";
-    private static final String FIRSTNAME = "firstname";
-    private static final String LASTNAME = "lastname";
+    private static final String REGISTRATION_OK = "local.message.registration_ok";
+    private static final String ERROR_BUSY = "local.error.login_is_busy";
+    private static final String ERROR_DATA = "local.error.data_format";
+
     private static final String STAFF_TYPE = "staff_type";
 
-    private static final String ATTRIBUTE_URL = "url";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String firstname;
-        String lastname;
-        String login;
-        String password;
-        long roleId;
         long staffType = 0;
-
-        firstname = request.getParameter(FIRSTNAME);
-        lastname = request.getParameter(LASTNAME);
-        login = request.getParameter(LOGIN);
-        password = request.getParameter(PASSWORD);
+        String returnPage;
 
         HttpSession session = request.getSession(true);
+        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
 
+        UserInfoBuilder userInfoBuilder = new UserInfoBuilder();
+        userInfoBuilder.buildUserInfo(request);
 
-
-        if(session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_ADMIN))
+        if(isAuth != null )
         {
-            session.setAttribute(ATTRIBUTE_URL, GO_TO_ADMIN);
+            returnPage = GO_TO_ADMIN;
             staffType = Long.parseLong(request.getParameter(STAFF_TYPE));
-            roleId = 2;
-
+            userInfoBuilder.setRoleId(2);
         } else {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            roleId = 3;
+            returnPage = GO_TO_INDEX_PAGE;
+            userInfoBuilder.setRoleId(3);
         }
 
-        RegistrationInfo registrationInfo = new RegistrationInfo(firstname,lastname,login,password,roleId);
+        UserInfo userInfo = userInfoBuilder.getUserInfo();
         ServiceProvider provider = ServiceProvider.getInstance();
-        AccountService userService = provider.getAccountService();
+        AccountService accountService = provider.getAccountService();
         MedicalHistoryService medicalHistoryService = provider.getMedicalHistoryService();
         StaffService staffService = provider.getStaffService();
+        PatientService patientService = provider.getPatientService();
         try {
-           if(!userService.registration(registrationInfo)){
-               Visitor visitor =userService.authorization(login,password);
-               if(visitor instanceof Patient)
-               {
-                   Patient patient = (Patient) visitor;
-                   MedicalHistory medicalHistory = new MedicalHistory();
-                   medicalHistory.setPatientId(patient.getId());
-                   medicalHistoryService.add(medicalHistory);
-               }else if(visitor instanceof Staff){
-                   Staff staff = (Staff) visitor;
-                   staff.setStaffTypeID(staffType);
-                   staffService.update(staff);
-               }
-               request.setAttribute(ATTRIBUTE_INFO_MESSAGE,REGISTRATION_OK);
-               response.sendRedirect(GO_TO_INDEX_PAGE);
-               return;
-           }
-           request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,REGISTRATION_ERROR);
-           response.sendRedirect(GO_TO_INDEX_PAGE);
-
-        } catch (ServiceException e) {
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_IN_CATCH );
-            response.sendRedirect(GO_TO_INDEX_PAGE);
+            accountService.registration(userInfo);
+            Visitor visitor = accountService.authorization(userInfo.getLogin(),userInfo.getPassword());
+            if(visitor instanceof Patient)
+            {
+                Patient patient = (Patient) visitor;
+                patientService.savePictureToPatient(patient,null);
+                MedicalHistory medicalHistory = new MedicalHistory();
+                medicalHistory.setPatientId(patient.getId());
+                medicalHistoryService.add(medicalHistory);
+            }else if(visitor instanceof Staff){
+                Staff staff = (Staff) visitor;
+                staff.setStaffTypeID(staffType);
+                staff.setFirstname(userInfo.getFirstname());
+                staff.setLastname(userInfo.getLastname());
+                staffService.update(staff);
+                staffService.savePictureToStaff(staff,null);
+            }
+            session.setAttribute(ATTRIBUTE_INFO_MESSAGE,Arrays.asList(REGISTRATION_OK));
+            response.sendRedirect(returnPage);
+        }catch (LoginIsBusyServiceException e) {
+            session.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(ERROR_BUSY));
+            response.sendRedirect(GO_TO_REGISTRATION_PAGE);
+        }catch (DataFormatServiceException e) {
+            session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(ERROR_DATA));
+            response.sendRedirect(GO_TO_REGISTRATION_PAGE);
+        }catch (ServiceException e) {
+            response.sendRedirect(GO_TO_ERROR_PAGE);
         }
     }
 }

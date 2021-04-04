@@ -24,32 +24,56 @@
 </head>
 <body>
 
+<div class="container">
+    <div class="row d-flex w-100 justify-content-center">
+        <div class="col-lg-5 flex">
+    <form align = "center" action="Controller" method="post">
+        <input type="hidden" name="command" value="addaccount" />
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="firstname" id="floatingInput" required>
+            <label for="floatingInput">${first}</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="lastname" id="lastname" required>
+            <label for="lastname">${last}</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="login" id="login" required>
+            <label for="login">${login}</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" name="password" id="passIn" required>
+            <label for="passIn">${password}</label>
+        </div>
+        <label for="staff" class="form-label m-2">${staff}</label>
+        <select name = "staff_type"  class="form-select m-2" id="staff" >
+            <option value="1">${doctor} </option>
+            <option value="2">${nurse} </option>
+        </select><br/>
+         <button type="submit" class="btn btn-primary m-2">${add}</button>
+    </form>
 
+            <c:if test="${errorMessage != null}">
+                <c:forEach var="errorMessageKey" items="${errorMessage}">
+                    <fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageEr"/>
+                    <div class="alert alert-danger" role="alert">
+                            ${messageEr}
+                    </div>
+                </c:forEach>
+                <c:remove var="errorMessage"/>
+            </c:if>
 
-<form align = "center" action="Controller" method="post">
-    <input type="hidden" name="command" value="addaccount" />
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="firstname" id="floatingInput" required>
-        <label for="floatingInput">${first}</label>
+            <c:if test="${informationMessage != null}">
+                <c:forEach var="errorMessageKey" items="${informationMessage}">
+                    <fmt:message bundle="${loc}" key="${errorMessageKey}" var="messageInf"/>
+                    <div class="alert alert-info" role="alert">
+                            ${messageInf}
+                    </div>
+                </c:forEach>
+                <c:remove var="informationMessage"/>
+            </c:if>
+        </div>
     </div>
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="lastname" id="lastname" required>
-        <label for="lastname">${last}</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" name="login" id="login" required>
-        <label for="login">${login}</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type="password" class="form-control" name="password" id="passIn" required>
-        <label for="passIn">${password}</label>
-    </div>
-    <label for="staff" class="form-label m-2">${staff}</label>
-    <select name = "staff_type"  class="form-select m-2" id="staff" >
-        <option value="1">${doctor} </option>
-        <option value="2">${nurse} </option>
-    </select><br/>
-    < <button type="submit" class="btn btn-primary m-2">${add}</button>
-</form>
+</div>
 </body>
 </html>

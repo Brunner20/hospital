@@ -1,11 +1,14 @@
 package com.hospital.dao.impl;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.StaffDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.Staff;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaffDAOImpl implements StaffDAO {
+
+    private static final Logger logger = LogManager.getLogger(StaffDAOImpl.class);
 
     private static final String UPDATE_STAFF ="UPDATE hospital.staff SET firstname= ?, lastname = ?,  " +
             "staff_pic = ?, department_id = ?, type_id = ? WHERE id = ?";
@@ -40,6 +45,7 @@ public class StaffDAOImpl implements StaffDAO {
             preparedStatement.setLong(6,staff.getId());
             preparedStatement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -48,6 +54,7 @@ public class StaffDAOImpl implements StaffDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -71,6 +78,7 @@ public class StaffDAOImpl implements StaffDAO {
                 staff = staffMapping(resultSet);
             }
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -79,6 +87,7 @@ public class StaffDAOImpl implements StaffDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -103,6 +112,7 @@ public class StaffDAOImpl implements StaffDAO {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
             throw new DAOException(e);
         }finally {
             connectionPool.releaseConnection(connection);
@@ -111,6 +121,7 @@ public class StaffDAOImpl implements StaffDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }

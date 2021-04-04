@@ -1,5 +1,6 @@
 package com.hospital.dao;
 
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.Patient;
 
 import java.util.List;

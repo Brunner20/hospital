@@ -1,12 +1,12 @@
 package com.hospital.service.impl;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.EpicrisisDAO;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.Epicrisis;
 import com.hospital.entity.dto.EpicrisisDTO;
 import com.hospital.service.EpicrisisService;
-import com.hospital.service.ServiceException;
+import com.hospital.service.exception.ServiceException;
 import com.hospital.service.util.MappingUtil;
 import com.hospital.service.util.UtilException;
 import com.hospital.service.validation.Validator;
@@ -82,7 +82,7 @@ public class EpicrisisServiceImpl implements EpicrisisService {
         Epicrisis maxEpicrisis = null;
         Date maxDate  = new Date(0L);
         for(Epicrisis epicrisis:epicrisisAll){
-            if(epicrisis.getDischargeDate().getTime()>maxDate.getTime()){
+            if(epicrisis.getReceiptDate().getTime()>maxDate.getTime()){
                 maxEpicrisis = epicrisis;
                 maxDate = epicrisis.getDischargeDate();
             }

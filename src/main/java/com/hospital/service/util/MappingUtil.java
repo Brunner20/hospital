@@ -1,8 +1,8 @@
 package com.hospital.service.util;
 
-import com.hospital.dao.DAOException;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.StaffDAO;
+import com.hospital.dao.exception.DAOException;
 import com.hospital.entity.*;
 import com.hospital.entity.dto.AppointmentDTO;
 import com.hospital.entity.dto.EpicrisisDTO;

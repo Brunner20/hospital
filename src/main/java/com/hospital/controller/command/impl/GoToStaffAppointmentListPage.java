@@ -3,8 +3,8 @@ package com.hospital.controller.command.impl;
 import com.hospital.controller.command.Command;
 import com.hospital.entity.dto.AppointmentDTO;
 import com.hospital.service.AppointmentService;
-import com.hospital.service.ServiceException;
 import com.hospital.service.ServiceProvider;
+import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ public class GoToStaffAppointmentListPage implements Command {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         AppointmentService appointmentService = serviceProvider.getAppointmentService();
         List<AppointmentDTO> allAppointments = new ArrayList<>();
-        if(!session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_PATIENT))
+        if(session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_DOCTOR))
         {
             try {
                 allAppointments = appointmentService.getAllAppointmentsByStaffId(visitorId);

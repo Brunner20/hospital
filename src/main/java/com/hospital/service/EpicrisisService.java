@@ -2,6 +2,7 @@ package com.hospital.service;
 
 import com.hospital.entity.Epicrisis;
 import com.hospital.entity.dto.EpicrisisDTO;
+import com.hospital.service.exception.ServiceException;
 
 import java.util.List;
 

@@ -43,7 +43,7 @@
                                     <a  class="nav-link active" href="Controller?command=gotoprofilepage">${profile}</a>
                                 </li>
                             </c:if>
-                            <c:if test="${(sessionScope.auth == false || sessionScope.auth == null) && sessionScope.url != 'Controller?command=gotoindexpage'}">
+                            <c:if test="${sessionScope.auth == false || sessionScope.auth == null}">
                                 <li  class="nav-item">
                                     <a  class="nav-link active" href="Controller?command=gotoindexpage"><fmt:message bundle="${loc}" key="header.login"/></a>
                                 </li>
