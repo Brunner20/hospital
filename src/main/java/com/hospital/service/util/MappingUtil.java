@@ -1,11 +1,11 @@
 package com.hospital.service.util;
 
+import com.hospital.bean.*;
+import com.hospital.bean.dto.AppointmentDTO;
+import com.hospital.bean.dto.EpicrisisDTO;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.StaffDAO;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.*;
-import com.hospital.entity.dto.AppointmentDTO;
-import com.hospital.entity.dto.EpicrisisDTO;
 
 import java.util.ArrayList;
 import java.util.List;

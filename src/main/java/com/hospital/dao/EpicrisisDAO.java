@@ -1,7 +1,7 @@
 package com.hospital.dao;
 
+import com.hospital.bean.Epicrisis;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.Epicrisis;
 
 import java.util.List;
 

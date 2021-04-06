@@ -1,4 +1,4 @@
-package com.hospital.entity;
+package com.hospital.bean;
 
 
 import java.sql.Date;

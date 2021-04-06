@@ -1,10 +1,10 @@
 package com.hospital.service.impl;
 
+import com.hospital.bean.Epicrisis;
+import com.hospital.bean.dto.EpicrisisDTO;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.EpicrisisDAO;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.Epicrisis;
-import com.hospital.entity.dto.EpicrisisDTO;
 import com.hospital.service.EpicrisisService;
 import com.hospital.service.exception.ServiceException;
 import com.hospital.service.util.MappingUtil;

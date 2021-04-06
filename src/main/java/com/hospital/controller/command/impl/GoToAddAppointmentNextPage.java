@@ -1,7 +1,7 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.Staff;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.Staff;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
 import com.hospital.service.exception.ServiceException;
@@ -25,15 +25,15 @@ public class GoToAddAppointmentNextPage implements Command {
     private static final String PATIENT_ALL_STAFF = "allStaff";
 
 
-        @Override
-        public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-            HttpSession session = request.getSession(true);
-            if(session == null) {
-                session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-                response.sendRedirect(GO_TO_INDEX_PAGE);
-                return;
-            }
+        HttpSession session = request.getSession(true);
+        if(session == null) {
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
+            response.sendRedirect(GO_TO_INDEX_PAGE);
+            return;
+        }
 
             Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
             String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);

@@ -1,8 +1,8 @@
 package com.hospital.dao;
 
+import com.hospital.bean.Account;
+import com.hospital.bean.UserInfo;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.Account;
-import com.hospital.entity.UserInfo;
 
 public interface AccountDAO {
     Account authorization (String login, String password) throws DAOException;

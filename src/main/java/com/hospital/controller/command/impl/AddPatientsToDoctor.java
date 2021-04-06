@@ -1,8 +1,8 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.Epicrisis;
+import com.hospital.bean.Patient;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.Epicrisis;
-import com.hospital.entity.Patient;
 import com.hospital.service.EpicrisisService;
 import com.hospital.service.PatientService;
 import com.hospital.service.ServiceProvider;
@@ -20,7 +20,7 @@ import static com.hospital.controller.command.CommandParameter.*;
 
 public class AddPatientsToDoctor implements Command {
 
-    private static final String GO_TO_STAFF_PAGE = "Controller?command=gotomainstaffpage";
+
     private static final String PATH_TO_FREE_PATIENTS = "/WEB-INF/jsp/free_patients.jsp";
     private static final String PATIENT_ADDED_OK = "local.info.patient_added";
     private static final String PATIENT_ADDED_ERROR = "local.error.patient_not_added";
@@ -66,12 +66,12 @@ public class AddPatientsToDoctor implements Command {
             patientService.update(patient);
 
             session.setAttribute(ATTRIBUTE_INFO_MESSAGE, Arrays.asList(PATIENT_ADDED_OK));
-            session.setAttribute(ATTRIBUTE_URL,PATH_TO_FREE_PATIENTS);
-            response.sendRedirect(GO_TO_STAFF_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
+            response.sendRedirect(GO_TO_MAIN_PAGE);
         } catch (ServiceException e) {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(PATIENT_ADDED_ERROR));
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
-            response.sendRedirect(GO_TO_STAFF_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
+            response.sendRedirect(GO_TO_MAIN_PAGE);
         }
     }
 }

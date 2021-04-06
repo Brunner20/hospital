@@ -1,6 +1,6 @@
 package com.hospital.service;
 
-import com.hospital.entity.Patient;
+import com.hospital.bean.Patient;
 import com.hospital.service.exception.ServiceException;
 
 import javax.servlet.http.Part;

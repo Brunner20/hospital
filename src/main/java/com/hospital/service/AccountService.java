@@ -1,7 +1,7 @@
 package com.hospital.service;
 
-import com.hospital.entity.Account;
-import com.hospital.entity.UserInfo;
+import com.hospital.bean.Account;
+import com.hospital.bean.UserInfo;
 import com.hospital.service.exception.ServiceException;
 
 public interface AccountService {

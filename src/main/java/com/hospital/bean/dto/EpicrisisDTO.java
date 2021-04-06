@@ -1,4 +1,4 @@
-package com.hospital.entity.dto;
+package com.hospital.bean.dto;
 
 import java.sql.Date;
 import java.util.List;

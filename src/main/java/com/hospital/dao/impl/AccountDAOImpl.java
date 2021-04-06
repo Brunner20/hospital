@@ -1,13 +1,13 @@
 package com.hospital.dao.impl;
 
+import com.hospital.bean.Account;
+import com.hospital.bean.UserInfo;
 import com.hospital.dao.AccountDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
 import com.hospital.dao.exception.DAOException;
 import com.hospital.dao.exception.DataNotFoundException;
-import com.hospital.entity.Account;
-import com.hospital.entity.UserInfo;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

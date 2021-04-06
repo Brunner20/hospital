@@ -1,7 +1,7 @@
 package com.hospital.dao;
 
+import com.hospital.bean.Staff;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.Staff;
 
 import java.util.List;
 

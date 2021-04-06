@@ -1,9 +1,9 @@
 package com.hospital.service.impl;
 
+import com.hospital.bean.Patient;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.PatientDAO;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.Patient;
 import com.hospital.service.PatientService;
 import com.hospital.service.exception.ServiceException;
 import com.hospital.service.validation.Validator;

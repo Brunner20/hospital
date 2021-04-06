@@ -1,6 +1,6 @@
 package com.hospital.service.validation;
 
-import com.hospital.entity.UserInfo;
+import com.hospital.bean.UserInfo;
 
 public class Validator {
     private static final String NAME_REGEX = "[A-ZА-Я][a-zа-я]+";

@@ -1,11 +1,11 @@
 package com.hospital.dao.impl;
 
+import com.hospital.bean.MedicalHistory;
 import com.hospital.dao.MedicalHistoryDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.MedicalHistory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

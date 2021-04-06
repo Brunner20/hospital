@@ -1,6 +1,6 @@
 package com.hospital.service;
 
-import com.hospital.entity.MedicalHistory;
+import com.hospital.bean.MedicalHistory;
 import com.hospital.service.exception.ServiceException;
 
 public interface MedicalHistoryService {

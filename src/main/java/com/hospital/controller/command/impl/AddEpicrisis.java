@@ -1,10 +1,10 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.Appointment;
+import com.hospital.bean.Epicrisis;
+import com.hospital.bean.MedicalHistory;
+import com.hospital.bean.Patient;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.Appointment;
-import com.hospital.entity.Epicrisis;
-import com.hospital.entity.MedicalHistory;
-import com.hospital.entity.Patient;
 import com.hospital.service.*;
 import com.hospital.service.exception.ServiceException;
 

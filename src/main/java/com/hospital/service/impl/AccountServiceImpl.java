@@ -1,11 +1,11 @@
 package com.hospital.service.impl;
 
+import com.hospital.bean.Account;
+import com.hospital.bean.UserInfo;
 import com.hospital.dao.AccountDAO;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.exception.DAOException;
 import com.hospital.dao.exception.DataNotFoundException;
-import com.hospital.entity.Account;
-import com.hospital.entity.UserInfo;
 import com.hospital.service.AccountService;
 import com.hospital.service.exception.DataFormatServiceException;
 import com.hospital.service.exception.DataNotFoundServiceException;

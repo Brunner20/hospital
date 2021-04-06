@@ -1,7 +1,7 @@
 package com.hospital.dao;
 
+import com.hospital.bean.MedicalHistory;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.MedicalHistory;
 
 public interface MedicalHistoryDAO {
 

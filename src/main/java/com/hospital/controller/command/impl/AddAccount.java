@@ -1,8 +1,8 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.*;
 import com.hospital.controller.builder.UserInfoBuilder;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.*;
 import com.hospital.service.*;
 import com.hospital.service.exception.DataFormatServiceException;
 import com.hospital.service.exception.LoginIsBusyServiceException;
@@ -19,7 +19,7 @@ import static com.hospital.controller.command.CommandParameter.*;
 public class AddAccount implements Command {
 
 
-    private static final String GO_TO_ADMIN = "Controller?command=gotomainadminpage";
+
     private static final String GO_TO_REGISTRATION_PAGE = "Controller?command=registration";
 
     private static final String REGISTRATION_OK = "local.message.registration_ok";
@@ -43,12 +43,12 @@ public class AddAccount implements Command {
 
         if(isAuth != null )
         {
-            returnPage = GO_TO_ADMIN;
+
             returnErrorPage = GO_TO_ADD_STAFF_PAGE;
             staffType = Long.parseLong(request.getParameter(STAFF_TYPE));
             userInfoBuilder.setRoleId(2);
         } else {
-            returnPage = GO_TO_INDEX_PAGE;
+
             returnErrorPage = GO_TO_REGISTRATION_PAGE;
             userInfoBuilder.setRoleId(3);
         }
@@ -78,7 +78,7 @@ public class AddAccount implements Command {
                 staffService.savePictureToStaff(staff,null);
             }
             session.setAttribute(ATTRIBUTE_INFO_MESSAGE,Arrays.asList(REGISTRATION_OK));
-            response.sendRedirect(returnPage);
+            response.sendRedirect(GO_TO_MAIN_PAGE);
         }catch (LoginIsBusyServiceException e) {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(ERROR_BUSY));
             response.sendRedirect(returnErrorPage);

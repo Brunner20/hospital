@@ -1,7 +1,7 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.AppointmentStatus;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.AppointmentStatus;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.exception.ServiceException;
 

@@ -1,9 +1,9 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.Account;
+import com.hospital.bean.Patient;
+import com.hospital.bean.Staff;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.Account;
-import com.hospital.entity.Patient;
-import com.hospital.entity.Staff;
 import com.hospital.service.AccountService;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.exception.DataFormatServiceException;
@@ -78,8 +78,8 @@ public class Login implements Command {
             }else if (account.getRoleId()==1) {
 
                 session.setAttribute(ATTRIBUTE_ROLE,ROLE_ADMIN);
-                session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_ADMIN_PAGE);
-                response.sendRedirect(GO_TO_MAIN_ADMIN_PAGE);
+                session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_PAGE);
+                response.sendRedirect(GO_TO_MAIN_PAGE);
             }
         }catch (DataFormatServiceException e) {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(ERROR_DATA));

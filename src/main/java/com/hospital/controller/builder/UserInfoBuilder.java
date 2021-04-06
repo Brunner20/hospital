@@ -1,6 +1,6 @@
 package com.hospital.controller.builder;
 
-import com.hospital.entity.UserInfo;
+import com.hospital.bean.UserInfo;
 
 import javax.servlet.http.HttpServletRequest;
 

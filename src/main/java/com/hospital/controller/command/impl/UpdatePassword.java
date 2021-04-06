@@ -1,8 +1,8 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.Patient;
+import com.hospital.bean.Staff;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.Patient;
-import com.hospital.entity.Staff;
 import com.hospital.service.AccountService;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.exception.DataFormatServiceException;

@@ -1,7 +1,7 @@
 package com.hospital.controller;
 
-import com.hospital.entity.Patient;
-import com.hospital.entity.Staff;
+import com.hospital.bean.Patient;
+import com.hospital.bean.Staff;
 import com.hospital.service.PatientService;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;

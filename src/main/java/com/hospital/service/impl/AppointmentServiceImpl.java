@@ -1,13 +1,13 @@
 package com.hospital.service.impl;
 
+import com.hospital.bean.Appointment;
+import com.hospital.bean.AppointmentInfo;
+import com.hospital.bean.AppointmentStatus;
+import com.hospital.bean.AppointmentType;
+import com.hospital.bean.dto.AppointmentDTO;
 import com.hospital.dao.AppointmentDAO;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.Appointment;
-import com.hospital.entity.AppointmentInfo;
-import com.hospital.entity.AppointmentStatus;
-import com.hospital.entity.AppointmentType;
-import com.hospital.entity.dto.AppointmentDTO;
 import com.hospital.service.AppointmentService;
 import com.hospital.service.exception.ServiceException;
 import com.hospital.service.util.MappingUtil;

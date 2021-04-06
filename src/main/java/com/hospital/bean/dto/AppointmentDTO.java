@@ -1,7 +1,7 @@
-package com.hospital.entity.dto;
+package com.hospital.bean.dto;
 
-import com.hospital.entity.AppointmentStatus;
-import com.hospital.entity.AppointmentType;
+import com.hospital.bean.AppointmentStatus;
+import com.hospital.bean.AppointmentType;
 
 import java.sql.Date;
 import java.util.Objects;

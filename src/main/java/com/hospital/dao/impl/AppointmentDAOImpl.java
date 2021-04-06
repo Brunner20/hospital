@@ -1,14 +1,14 @@
 package com.hospital.dao.impl;
 
+import com.hospital.bean.Appointment;
+import com.hospital.bean.AppointmentInfo;
+import com.hospital.bean.AppointmentStatus;
+import com.hospital.bean.AppointmentType;
 import com.hospital.dao.AppointmentDAO;
 import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
 import com.hospital.dao.exception.DAOException;
-import com.hospital.entity.Appointment;
-import com.hospital.entity.AppointmentInfo;
-import com.hospital.entity.AppointmentStatus;
-import com.hospital.entity.AppointmentType;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

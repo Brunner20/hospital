@@ -1,10 +1,10 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.Appointment;
+import com.hospital.bean.AppointmentInfo;
+import com.hospital.bean.AppointmentStatus;
+import com.hospital.bean.AppointmentType;
 import com.hospital.controller.command.Command;
-import com.hospital.entity.Appointment;
-import com.hospital.entity.AppointmentInfo;
-import com.hospital.entity.AppointmentStatus;
-import com.hospital.entity.AppointmentType;
 import com.hospital.service.AppointmentService;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.exception.ServiceException;
