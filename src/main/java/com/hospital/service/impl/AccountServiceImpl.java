@@ -4,8 +4,8 @@ import com.hospital.dao.AccountDAO;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.exception.DAOException;
 import com.hospital.dao.exception.DataNotFoundException;
+import com.hospital.entity.Account;
 import com.hospital.entity.UserInfo;
-import com.hospital.entity.Visitor;
 import com.hospital.service.AccountService;
 import com.hospital.service.exception.DataFormatServiceException;
 import com.hospital.service.exception.DataNotFoundServiceException;
@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
     private static final String WRONG_LOGIN_OR_PASSWORD = "login and password are invalid";
 
     @Override
-    public Visitor authorization(String login, String password) throws ServiceException {
+    public Account authorization(String login, String password) throws ServiceException {
 
         if(!Validator.isPasswordValid(password)&&!Validator.isLoginValid(login))
         {
@@ -28,14 +28,14 @@ public class AccountServiceImpl implements AccountService {
         DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
 
-        Visitor visitor = null;
+        Account account = null;
         try {
-          visitor = userDAO.authorization(login,password);
+          account = userDAO.authorization(login,password);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
-        return visitor;
+        return account;
     }
 
     @Override

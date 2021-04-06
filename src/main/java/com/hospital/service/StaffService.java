@@ -12,7 +12,9 @@ public interface StaffService {
 
     Staff getStaffById(Long id) throws ServiceException;
 
-    List<Staff> getAll() throws ServiceException;
+    Staff getStaffByAccount(long id) throws ServiceException;
+
+    List<Staff> getAllByType(Long typeId) throws ServiceException;
 
     void update(Staff staff) throws ServiceException;
 

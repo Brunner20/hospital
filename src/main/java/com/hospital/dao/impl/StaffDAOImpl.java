@@ -25,7 +25,8 @@ public class StaffDAOImpl implements StaffDAO {
             "staff_pic = ?, department_id = ?, type_id = ? WHERE id = ?";
 
     private static final String SELECT_STAFF_BY_ID = "SELECT * FROM hospital.staff WHERE id =?";
-    private static final String GET_ALL_STAFF ="select * from hospital.staff ";
+    private static final String SELECT_STAFF_BY_ACCOUNT = "SELECT * FROM hospital.staff WHERE account =?";
+    private static final String GET_ALL_STAFF_BY_TYPE ="select * from hospital.staff  where type_id = ?";
 
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
@@ -63,6 +64,35 @@ public class StaffDAOImpl implements StaffDAO {
     }
 
 
+    @Override
+    public Staff getStaffByAccount(long accountId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Staff staff = null;
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_STAFF_BY_ACCOUNT);
+            preparedStatement.setLong(1,accountId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                staff = staffMapping(resultSet);
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            logger.log(Level.ERROR,e);
+            throw new DAOException(e);
+        }finally {
+            connectionPool.releaseConnection(connection);
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            }catch (SQLException e){
+                logger.log(Level.ERROR,e);
+                throw new DAOException("Close preparedStatement error ", e);
+            }
+        }
+        return staff;
+    }
 
     @Override
     public Staff getStaffById(Long id) throws DAOException {
@@ -97,13 +127,14 @@ public class StaffDAOImpl implements StaffDAO {
 
 
     @Override
-    public List<Staff> getAll() throws DAOException {
+    public List<Staff> getAllByType(Long typeId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         List<Staff> allStaff = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(GET_ALL_STAFF);
+            preparedStatement = connection.prepareStatement(GET_ALL_STAFF_BY_TYPE);
+            preparedStatement.setLong(1,typeId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

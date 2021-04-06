@@ -33,6 +33,7 @@ public class AddAccount implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long staffType = 0;
         String returnPage;
+        String returnErrorPage;
 
         HttpSession session = request.getSession(true);
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
@@ -43,10 +44,12 @@ public class AddAccount implements Command {
         if(isAuth != null )
         {
             returnPage = GO_TO_ADMIN;
+            returnErrorPage = GO_TO_ADD_STAFF_PAGE;
             staffType = Long.parseLong(request.getParameter(STAFF_TYPE));
             userInfoBuilder.setRoleId(2);
         } else {
             returnPage = GO_TO_INDEX_PAGE;
+            returnErrorPage = GO_TO_REGISTRATION_PAGE;
             userInfoBuilder.setRoleId(3);
         }
 
@@ -58,16 +61,16 @@ public class AddAccount implements Command {
         PatientService patientService = provider.getPatientService();
         try {
             accountService.registration(userInfo);
-            Visitor visitor = accountService.authorization(userInfo.getLogin(),userInfo.getPassword());
-            if(visitor instanceof Patient)
+            Account account = accountService.authorization(userInfo.getLogin(),userInfo.getPassword());
+            if(account.getRoleId()==3)
             {
-                Patient patient = (Patient) visitor;
+                Patient patient = ServiceProvider.getInstance().getPatientService().getPatientByAccount(account.getId());;
                 patientService.savePictureToPatient(patient,null);
                 MedicalHistory medicalHistory = new MedicalHistory();
                 medicalHistory.setPatientId(patient.getId());
                 medicalHistoryService.add(medicalHistory);
-            }else if(visitor instanceof Staff){
-                Staff staff = (Staff) visitor;
+            }else if(account.getRoleId()==2){
+                Staff staff = ServiceProvider.getInstance().getStaffService().getStaffByAccount(account.getId());
                 staff.setStaffTypeID(staffType);
                 staff.setFirstname(userInfo.getFirstname());
                 staff.setLastname(userInfo.getLastname());
@@ -78,10 +81,10 @@ public class AddAccount implements Command {
             response.sendRedirect(returnPage);
         }catch (LoginIsBusyServiceException e) {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(ERROR_BUSY));
-            response.sendRedirect(GO_TO_REGISTRATION_PAGE);
+            response.sendRedirect(returnErrorPage);
         }catch (DataFormatServiceException e) {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(ERROR_DATA));
-            response.sendRedirect(GO_TO_REGISTRATION_PAGE);
+            response.sendRedirect(returnErrorPage);
         }catch (ServiceException e) {
             response.sendRedirect(GO_TO_ERROR_PAGE);
         }

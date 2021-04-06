@@ -47,7 +47,12 @@ public class GoToAddAppointmentNextPage implements Command {
             StaffService staffService = ServiceProvider.getInstance().getStaffService();
             List<Staff> allStaff = new ArrayList<>();
             try {
-                allStaff = staffService.getAll();
+                if(request.getParameter(SELECTED_TYPE).equals("3")){
+                    allStaff = staffService.getAllByType(1L);
+                }else{
+                    allStaff = staffService.getAllByType(2L);
+                    allStaff.addAll(staffService.getAllByType(1L));
+                }
             } catch (ServiceException e) {
                 session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
                 response.sendRedirect(GO_TO_ERROR_PAGE);

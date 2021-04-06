@@ -27,7 +27,6 @@ public class GoToReceiptDatePage implements Command {
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         if (isAuth == null || !isAuth) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }

@@ -76,14 +76,14 @@ public class AddEpicrisis implements Command {
             List<Appointment> appointmentList = appointmentService.getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate());
             appointmentService.updateAppointmentEpirisis(appointmentList,epicrisis.getId());
 
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
             session.setAttribute(ATTRIBUTE_INFO_MESSAGE,Arrays.asList(EPICRISIS_ADDED_OK));
-            response.sendRedirect(GO_TO_STAFF_PAGE);
+            response.sendRedirect(GO_TO_MAIN_PAGE);
 
         } catch (ServiceException e) {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(EPICRISIS_ADDED_ERROR));
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
-            response.sendRedirect(GO_TO_STAFF_PAGE);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_ERROR_PAGE);
+            response.sendRedirect(GO_TO_ERROR_PAGE);
         }
 
 

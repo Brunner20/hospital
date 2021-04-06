@@ -2,7 +2,6 @@ package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
 import com.hospital.entity.dto.EpicrisisDTO;
-import com.hospital.service.AppointmentService;
 import com.hospital.service.EpicrisisService;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.exception.ServiceException;
@@ -51,7 +50,6 @@ public class GoToMedicalHistoryPage implements Command {
         }
         ServiceProvider provider = ServiceProvider.getInstance();
         EpicrisisService epicrisisService = provider.getEpicrisisService();
-        AppointmentService appointmentService = provider.getAppointmentService();
         List<EpicrisisDTO> epicrisisList = new ArrayList<>();
         try {
             epicrisisList = epicrisisService.getEpicrisisByPatientId(patientId);

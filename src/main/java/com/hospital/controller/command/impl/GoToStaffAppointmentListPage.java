@@ -34,7 +34,6 @@ public class GoToStaffAppointmentListPage implements Command {
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         if (isAuth == null || !isAuth) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -43,13 +42,13 @@ public class GoToStaffAppointmentListPage implements Command {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         AppointmentService appointmentService = serviceProvider.getAppointmentService();
         List<AppointmentDTO> allAppointments = new ArrayList<>();
-        if(session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_DOCTOR))
+        if(session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_DOCTOR) ||session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_NURSE))
         {
             try {
                 allAppointments = appointmentService.getAllAppointmentsByStaffId(visitorId);
             } catch (ServiceException e) {
-                session.setAttribute(ATTRIBUTE_URL,GO_TO_STAFF_PAGE);
-                response.sendRedirect(GO_TO_STAFF_PAGE);
+                session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
+                response.sendRedirect(GO_TO_MAIN_PAGE);
                 return;
             }
         }

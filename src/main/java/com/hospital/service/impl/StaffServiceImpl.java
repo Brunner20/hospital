@@ -34,9 +34,7 @@ public class StaffServiceImpl implements StaffService {
         }
 
         DAOProvider daoProvider = DAOProvider.getInstance();
-
         StaffDAO staffDAO = daoProvider.getStaffDAO();
-
         Staff staff = null;
         try {
             staff = staffDAO.getStaffById(id);
@@ -48,14 +46,28 @@ public class StaffServiceImpl implements StaffService {
 
     }
 
+    @Override
+    public Staff getStaffByAccount(long id) throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        StaffDAO staffDAO = daoProvider.getStaffDAO();
+        Staff staff = null;
+        try {
+            staff = staffDAO.getStaffByAccount(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return staff;
+    }
+
 
     @Override
-    public List<Staff> getAll() throws ServiceException {
+    public List<Staff> getAllByType(Long typeId) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
         StaffDAO staffDAO = daoProvider.getStaffDAO();
         List<Staff> allStaff = new ArrayList<>();
         try {
-            allStaff = staffDAO.getAll();
+            allStaff = staffDAO.getAllByType(typeId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -87,7 +99,7 @@ public class StaffServiceImpl implements StaffService {
             } catch (IOException e) {
                throw new ServiceException(e);
             }
-            staff.setPicture(PATH_TO_STORAGE_IN_USER);
+            staff.setPicture(PATH_TO_STORAGE_IN_USER+fileName);
         }
         update(staff);
     }

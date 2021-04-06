@@ -76,26 +76,7 @@ public class PatientServiceImpl implements PatientService {
         return patients;
     }
 
-    @Override
-    public void updateDoctor(List<String> selectedPatientsIds, Long doctorId) throws ServiceException {
 
-        if(!Validator.isIdValid(doctorId)){
-            throw new ServiceException("id not valid");
-        }
-        for(String patientsId: selectedPatientsIds) {
-            if(!Validator.isIdValid(patientsId)){
-                throw new ServiceException("id not valid");
-            }
-        }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        PatientDAO patientDAO = daoProvider.getPatientDAO();
-        try {
-             patientDAO.updateDoctor(selectedPatientsIds,doctorId);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-
-    }
 
     @Override
     public Patient getPatientById(Long id) throws ServiceException {
@@ -107,6 +88,18 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = null;
         try {
             patient = patientDAO.getPatientById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return patient;
+    }
+    @Override
+    public Patient getPatientByAccount(long accountId) throws ServiceException {
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        Patient patient = null;
+        try {
+            patient = patientDAO.getPatientByAccount(accountId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -10,15 +10,15 @@ public interface PatientService {
 
 
 
-    List<Patient> getFreePatients() throws ServiceException;
+    Patient getPatientById(Long id) throws ServiceException;
 
-    List<Patient> getAllPatientsByStaff(long id) throws ServiceException;
+    Patient getPatientByAccount(long id) throws ServiceException;
 
     List<Patient> getAll() throws ServiceException;
 
-    void updateDoctor(List<String> selectedPatientsIds, Long doctorId) throws ServiceException;
+    List<Patient> getFreePatients() throws ServiceException;
 
-    Patient getPatientById(Long id) throws ServiceException;
+    List<Patient> getAllPatientsByStaff(long id) throws ServiceException;
 
     void update(Patient patient) throws ServiceException;
 

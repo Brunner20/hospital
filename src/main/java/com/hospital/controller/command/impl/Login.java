@@ -1,9 +1,9 @@
 package com.hospital.controller.command.impl;
 
 import com.hospital.controller.command.Command;
+import com.hospital.entity.Account;
 import com.hospital.entity.Patient;
 import com.hospital.entity.Staff;
-import com.hospital.entity.Visitor;
 import com.hospital.service.AccountService;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.exception.DataFormatServiceException;
@@ -39,14 +39,12 @@ public class Login implements Command {
         AccountService accountService = provider.getAccountService();
 
         HttpSession session = request.getSession(true);
-
-
-        Visitor visitor;
+        Account account;
         try {
 
-            visitor = accountService.authorization(login, password);
+            account = accountService.authorization(login, password);
 
-            if (visitor == null) {
+            if (account == null) {
                 session.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(WRONG_LOGIN_OR_PASSWORD));
                 response.sendRedirect(GO_TO_INDEX_PAGE);
                 return;
@@ -54,35 +52,30 @@ public class Login implements Command {
 
 
             session.setAttribute(ATTRIBUTE_AUTH, true);
-            if(visitor instanceof Staff)
-            {
-                Staff staff = (Staff) visitor;
-                session.setAttribute(ATTRIBUTE_URL, GO_TO_STAFF_PAGE);
-                if(staff.getStaffTypeID()==1)
-                {
+            if(account.getRoleId()==2) {
+                Staff staff = ServiceProvider.getInstance().getStaffService().getStaffByAccount(account.getId());
+                session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_PAGE);
+                if(staff.getStaffTypeID()==1) {
                     session.setAttribute(ATTRIBUTE_ROLE,ROLE_DOCTOR);
                 }
-                else
-                {
+                else {
                     session.setAttribute(ATTRIBUTE_ROLE,ROLE_NURSE);
                 }
-                session.setAttribute(ATTRIBUTE_VISITOR_ID,((Staff) visitor).getId());
-                response.sendRedirect(GO_TO_STAFF_PAGE);
+                session.setAttribute(ATTRIBUTE_VISITOR_ID,(staff.getId()));
+                response.sendRedirect(GO_TO_MAIN_PAGE);
             }
-            else if (visitor instanceof Patient)
-            {
+            else if (account.getRoleId()==3) {
+                Patient patient = ServiceProvider.getInstance().getPatientService().getPatientByAccount(account.getId());
                 session.setAttribute(ATTRIBUTE_ROLE,ROLE_PATIENT);
-                session.setAttribute(ATTRIBUTE_VISITOR_ID,((Patient)visitor).getId());
-                Patient patient = (Patient) visitor;
-                if(patient.getAge()==0)
-                {
+                session.setAttribute(ATTRIBUTE_VISITOR_ID,(patient.getId()));
+                if(patient.getAge()==0) {
                     session.setAttribute(ATTRIBUTE_URL,PATH_TO_ADDITIONAL_INFO_PAGE);
                     request.getRequestDispatcher(PATH_TO_ADDITIONAL_INFO_PAGE).forward(request, response);
                 }else {
-                    session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
-                    response.sendRedirect(GO_TO_PATIENT_PAGE);
+                    session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
+                    response.sendRedirect(GO_TO_MAIN_PAGE);
                 }
-            }else {
+            }else if (account.getRoleId()==1) {
 
                 session.setAttribute(ATTRIBUTE_ROLE,ROLE_ADMIN);
                 session.setAttribute(ATTRIBUTE_URL, GO_TO_MAIN_ADMIN_PAGE);

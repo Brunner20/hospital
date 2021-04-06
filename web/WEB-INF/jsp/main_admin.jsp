@@ -22,10 +22,8 @@
 <body  class="bg-info">
 
 <h1 align="center">
-    !!! ${welcome}!!!
+
 </h1>
-
-
 
         <c:if test="${sessionScope.role == 'admin'}">
             <div class="d-flex flex-row flex-wrap">
@@ -39,6 +37,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
         </c:if>
 
                 <c:if test="${errorMessage != null}">

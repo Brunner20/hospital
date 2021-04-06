@@ -21,7 +21,7 @@
     <fmt:message bundle="${loc}" key="local.page.update_password" var="title"/>
     <title>${title}</title>
 </head>
-<body class="bg-info">
+<body>
 
 
 <div class="container">
@@ -29,11 +29,11 @@
         <div class="col-lg-5 flex">
             <form action="Controller" method="post">
                 <input type="hidden" name="command" value="updatepassword" />
-                <div class="form-floating">
+                <div class="form-floating m-2">
                     <input type="password" name="old_password" class="form-control" id="old_p" minlength="6" required />
                     <label for="old_p" class="form-label">${old}</label>
                 </div >
-                <div class="form-floating">
+                <div class="form-floating m-2">
                     <input type="password" name="new_password" class="form-control" id="new_p" minlength="6"  aria-describedby="passwordHelpBlock"  required />
                     <label for="new_p" class="form-label">${newp}</label>
                     <div id="passwordHelpBlock" class="form-text">

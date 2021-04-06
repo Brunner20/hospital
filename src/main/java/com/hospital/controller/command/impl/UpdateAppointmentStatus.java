@@ -44,7 +44,7 @@ public class UpdateAppointmentStatus implements Command {
             ServiceProvider.getInstance().getAppointmentService()
                     .updateAppointmentStatus(appointmentId, AppointmentStatus.valueOf(appointmentNewStatus.toUpperCase()));
 
-            response.sendRedirect(GO_TO_STAFF_PAGE);
+            response.sendRedirect(GO_TO_MAIN_PAGE);
         } catch (ServiceException e) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_ERROR_PAGE);
             response.sendRedirect(GO_TO_ERROR_PAGE);

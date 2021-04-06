@@ -6,10 +6,8 @@ import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.PoolProvider;
 import com.hospital.dao.exception.DAOException;
 import com.hospital.dao.exception.DataNotFoundException;
-import com.hospital.entity.Patient;
-import com.hospital.entity.Staff;
+import com.hospital.entity.Account;
 import com.hospital.entity.UserInfo;
-import com.hospital.entity.Visitor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,8 +21,6 @@ public class AccountDAOImpl implements AccountDAO {
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM hospital.accounts JOIN hospital.roles ON" +
             " hospital.accounts.id_role = hospital.roles.id WHERE login = ? and password = ? ";
 
-    private static final String FIND_PATIENT_BY_ACCOUNT = "select * from hospital.patients WHERE hospital.patients.account_id = ?";
-    private static final String FIND_STAFF_BY_ACCOUNT = "select * from hospital.staff WHERE hospital.staff.account = ?";
     private static final String FIND_USER_BY_LOGIN = "select * from hospital.accounts where login = ?";
     private static final String FIND_ACCOUNT_BY_ID_AND_PASSWORD = "SELECT * FROM hospital.accounts where id=? and password= ?";
     private static final String UPDATE_PASSWORD = "update hospital.accounts set password = ? where id = ?";
@@ -36,17 +32,20 @@ public class AccountDAOImpl implements AccountDAO {
 
 
     @Override
-    public Visitor authorization(String login, String password) throws DAOException {
+    public Account authorization(String login, String password) throws DAOException {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Visitor visitor;
+        Account account = null;
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
-            visitor = getAccount(preparedStatement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                account = accountMapping(resultSet);
+            }
         } catch (SQLException | ConnectionPoolException e) {
             logger.log(Level.ERROR,e);
             throw new DAOException("find error ",e);
@@ -61,7 +60,7 @@ public class AccountDAOImpl implements AccountDAO {
                 }
             }
         }
-        return visitor;
+        return account;
     }
 
     @Override
@@ -207,96 +206,13 @@ public class AccountDAOImpl implements AccountDAO {
         preparedStatement.close();
     }
 
-
-    private Visitor getAccount(PreparedStatement preparedStatement) throws SQLException, ConnectionPoolException, DAOException {
-        Visitor visitor = null;
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            if (resultSet.getString("title").equals("patient")) {
-                visitor = getPatientInfo(resultSet.getString(1));
-            } else if(resultSet.getString("title").equals("staff")) {
-                visitor = getStaffInfo(resultSet.getString(1));
-            }
-        }
-        preparedStatement.close();
-        return visitor;
+    private Account accountMapping(ResultSet resultSet) throws SQLException, ConnectionPoolException {
+        Account account = new Account() ;
+        account.setId(resultSet.getLong(1));
+        account.setLogin(resultSet.getString(2));
+        account.setPassword(resultSet.getString(3));
+        account.setRoleId(resultSet.getLong(4));
+        return account;
     }
 
-    private Visitor getStaffInfo(String accountId) throws DAOException {
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Staff staff =null;
-        try {
-            connection = connectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(FIND_STAFF_BY_ACCOUNT);
-            preparedStatement.setString(1, accountId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                staff = new Staff();
-                staff.setId(resultSet.getLong(1));
-                staff.setFirstname(resultSet.getString(2));
-                staff.setLastname(resultSet.getString(3));
-                staff.setPicture(resultSet.getString(4));
-                staff.setStaffTypeID(resultSet.getInt(5));
-                staff.setDepartment(resultSet.getInt(6));
-                staff.setAccountID(resultSet.getInt(7));
-
-            }
-        } catch (ConnectionPoolException | SQLException e) {
-            logger.log(Level.WARN,e);
-            throw new DAOException(e);
-        } finally {
-            connectionPool.releaseConnection(connection);
-            try {
-                if (preparedStatement != null && !preparedStatement.isClosed()) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException throwables) {
-                throw new DAOException(throwables);
-            }
-        }
-        return staff;
-    }
-
-    private Patient getPatientInfo(String accountId) throws DAOException {
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        Patient patient = null;
-
-        try {
-            connection = connectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(FIND_PATIENT_BY_ACCOUNT);
-            preparedStatement.setString(1, accountId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                patient = new Patient();
-                patient.setId(resultSet.getLong(1));
-                patient.setFirstname(resultSet.getString(2));
-                patient.setLastname(resultSet.getString(3));
-                patient.setAge(resultSet.getInt(4));
-                patient.setPatientPic(resultSet.getString(5));
-                patient.setDepartment(resultSet.getInt(6));
-                patient.setAttendingDoctorID(resultSet.getLong(7));
-                patient.setStatusID(resultSet.getInt(8));
-                patient.setAccountID(resultSet.getInt(9));
-            }
-        } catch (SQLException | ConnectionPoolException throwables) {
-            logger.log(Level.WARN,throwables);
-            throw new DAOException(throwables);
-        }finally {
-            connectionPool.releaseConnection(connection);
-            try {
-                if (preparedStatement != null && !preparedStatement.isClosed()) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException throwables) {
-                logger.log(Level.WARN,throwables);
-                throw new DAOException(throwables);
-            }
-        }
-        return patient;
-    }
 }

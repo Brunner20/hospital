@@ -19,10 +19,6 @@ import static com.hospital.controller.command.CommandParameter.*;
 
 public class AddAdditionalInfo implements Command {
 
-
-
-    private static final String GO_TO_PATIENT_PAGE = "Controller?command=gotomainpatientpage";
-    private static final String PATH_TO_MAIN_PATIENT = "/WEB-INF/jsp/main_patient.jsp";
     private static final String PATH_TO_ADDITIONAL_INFO_PAGE = "/WEB-INF/jsp/additional_info.jsp";
 
     private static final String ERROR_DATA = "local.error.data_format";
@@ -62,8 +58,8 @@ public class AddAdditionalInfo implements Command {
                 patient.setFirstname(firstname);
                 patient.setLastname(lastname);
                 patientService.update(patient);
-                session.setAttribute(ATTRIBUTE_URL,PATH_TO_MAIN_PATIENT);
-                response.sendRedirect(GO_TO_PATIENT_PAGE);
+                session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
+                response.sendRedirect(GO_TO_MAIN_PAGE);
 
             } catch (ServiceException e) {
                 request.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(ERROR_DATA));

@@ -16,23 +16,15 @@
 <fmt:message bundle="${loc}" key="header.profile" var="profile"/>
 
 
-
-
 <header >
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <c:choose>
-                <c:when test="${sessionScope.role=='doctor' || sessionScope.role =='nurse'}">
-                    <a class="navbar-brand m-3" href="Controller?command=gotomainstaffpage">
-                </c:when>
-                <c:when test="${sessionScope.role=='patient'}">
-                    <a class="navbar-brand m-3" href="Controller?command=gotomainpatientpage">
-                </c:when>
-                <c:when test="${sessionScope.role=='admin'}">
-                    <a class="navbar-brand m-3" href="Controller?command=gotomainadminpage">
+                <c:when test="${sessionScope.role== null}">
+                    <a class="navbar-brand m-3" href="Controller?command=gotoindexpage ">
                 </c:when>
                 <c:otherwise>
-                        <a class="navbar-brand m-3" href="Controller?command=gotoindexpage">
+                        <a class="navbar-brand m-3" href="Controller?command=gotomainpage">
                 </c:otherwise>
             </c:choose>
                     ${home}</a>

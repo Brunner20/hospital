@@ -39,15 +39,13 @@ public class UpdatePassword  implements Command{
         }
 
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
-        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
 
         if (isAuth == null || !isAuth ) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-        String pageToReturn = GO_TO_INDEX_PAGE;
+
         String oldPass = request.getParameter(OLD_PASSWORD);
         String newPass = request.getParameter(NEW_PASSWORD);
         ServiceProvider provider = ServiceProvider.getInstance();
@@ -56,18 +54,16 @@ public class UpdatePassword  implements Command{
             if (session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_PATIENT)) {
                 Patient patient = provider.getPatientService().getPatientById((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
                 accountId = patient.getAccountID();
-                pageToReturn = GO_TO_PATIENT_PAGE;
             } else if (session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_DOCTOR)||session.getAttribute(ATTRIBUTE_ROLE).equals(ROLE_NURSE)) {
                 Staff staff = provider.getStaffService().getStaffById((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
                 accountId = staff.getAccountID();
-                pageToReturn = GO_TO_STAFF_PAGE;
             }
 
             AccountService accountService = provider.getAccountService();
             accountService.updatePassword(accountId,oldPass,newPass);
 
-            session.setAttribute(ATTRIBUTE_URL,pageToReturn);
-            response.sendRedirect(pageToReturn);
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
+            response.sendRedirect(GO_TO_MAIN_PAGE);
         } catch (DataFormatServiceException e){
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(ERROR_NEW_PASS));
             session.setAttribute(ATTRIBUTE_URL,GO_TO_UPDATE_PASSWORD_PAGE);

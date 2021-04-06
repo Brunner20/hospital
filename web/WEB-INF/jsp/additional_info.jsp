@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-floating mb-3">
                     <label for="age" class="form-label">${age}</label>
-                    <input type="number" name="age" class="form-control" id="age" required />
+                    <input type="number" name="age" class="form-control"  min="1" id="age" required />
                 </div>
                 <button type="submit" class="btn btn-success m-2">Ok</button>
             </form>

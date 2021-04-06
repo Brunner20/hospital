@@ -6,9 +6,11 @@ import com.hospital.entity.Staff;
 import java.util.List;
 
 public interface StaffDAO {
-    void update(Staff staff) throws DAOException;
+    Staff getStaffByAccount(long id) throws DAOException;
 
     Staff getStaffById(Long id)throws DAOException;
 
-    List<Staff> getAll() throws DAOException;
+    List<Staff> getAllByType(Long typeId) throws DAOException;
+
+    void update(Staff staff) throws DAOException;
 }

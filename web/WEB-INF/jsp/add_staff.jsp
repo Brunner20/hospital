@@ -18,6 +18,7 @@
     <fmt:message bundle="${loc}" key="local.btn.add" var="add"/>
     <fmt:message bundle="${loc}" key="local.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="local.staff" var="staff"/>
+    <fmt:message bundle="${loc}" key="local.info_for_password" var="describ"/>
     <fmt:message bundle="${loc}" key="local.nurse" var="nurse"/>
     <fmt:message bundle="${loc}" key="local.page.registration" var="title"/>
     <title>${title}</title>
@@ -42,8 +43,11 @@
             <label for="login">${login}</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="password" id="passIn" required>
+            <input type="password" class="form-control" name="password" id="passIn"  aria-describedby="passwordHelpBlock" required>
             <label for="passIn">${password}</label>
+            <div id="passwordHelpBlock" class="form-text">
+                ${describ}
+            </div>
         </div>
         <label for="staff" class="form-label m-2">${staff}</label>
         <select name = "staff_type"  class="form-select m-2" id="staff" >

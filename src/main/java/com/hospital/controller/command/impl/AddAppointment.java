@@ -95,7 +95,7 @@ public class AddAppointment implements Command {
         try {
             appointmentService.addAppointment(appointment);
             session.setAttribute(ATTRIBUTE_INFO_MESSAGE, Arrays.asList(APPOINTMENT_ADDED_OK));
-            request.getRequestDispatcher(GO_TO_STAFF_PAGE).forward(request,response);
+            request.getRequestDispatcher(GO_TO_MAIN_PAGE).forward(request,response);
         } catch (ServiceException e) {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(APPOINTMENT_ADDED_ERROR));
             session.setAttribute(ATTRIBUTE_URL, GO_TO_ADD_APPOINTMENT_PAGE);

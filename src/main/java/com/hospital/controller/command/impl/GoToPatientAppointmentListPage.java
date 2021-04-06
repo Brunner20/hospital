@@ -34,7 +34,6 @@ public class GoToPatientAppointmentListPage implements Command {
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         if (isAuth == null || !isAuth) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -48,8 +47,8 @@ public class GoToPatientAppointmentListPage implements Command {
             try {
                 allAppointments = appointmentService.getAllAppointmentsByPatientId(visitorId);
             } catch (ServiceException e) {
-                session.setAttribute(ATTRIBUTE_URL,GO_TO_PATIENT_PAGE);
-                response.sendRedirect(GO_TO_PATIENT_PAGE);
+                session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
+                response.sendRedirect(GO_TO_MAIN_PAGE);
                 return;
             }
         }

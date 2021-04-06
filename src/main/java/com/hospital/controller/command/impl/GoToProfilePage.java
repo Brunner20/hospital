@@ -21,8 +21,8 @@ public class GoToProfilePage implements Command {
 
     private static final String GO_TO_PROFILE_PAGE = "Controller?command=gotoprofilepage";
     private static final String PATH_TO_PROFILE = "/WEB-INF/jsp/profile.jsp";
-    private static final String ATTRIBUTE_ERROR_MESSAGE = "errorMessage";
-    private static final String WRONG_AUTH ="wrong auth";
+
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +37,6 @@ public class GoToProfilePage implements Command {
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         if (isAuth == null || !isAuth) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
-            request.setAttribute(ATTRIBUTE_ERROR_MESSAGE,WRONG_AUTH);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
@@ -48,8 +47,6 @@ public class GoToProfilePage implements Command {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         StaffService staffService = serviceProvider.getStaffService();
         PatientService patientService = serviceProvider.getPatientService();
-
-        session.setAttribute(ATTRIBUTE_URL,GO_TO_PROFILE_PAGE);
         try {
             if (role.contains(ROLE_DOCTOR) || role.contains(ROLE_NURSE)) {
 
@@ -61,6 +58,7 @@ public class GoToProfilePage implements Command {
                 request.setAttribute("patient",patient);
                 request.setAttribute("attendingDoctor",attendingDoctor);
             }
+            session.setAttribute(ATTRIBUTE_URL,GO_TO_PROFILE_PAGE);
             request.getRequestDispatcher(PATH_TO_PROFILE).forward(request, response);
         } catch (ServiceException e) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);

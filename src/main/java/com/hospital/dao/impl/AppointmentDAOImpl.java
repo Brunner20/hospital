@@ -65,7 +65,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
-                //logger.log(Level.ERROR,e);
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
