@@ -63,6 +63,7 @@ public class AddPatientsToDoctor implements Command {
 
             Patient patient = patientService.getPatientById(selectedPatientsId);
             patient.setAttendingDoctorID(doctorId);
+            patient.setStatusID(1);
             patientService.update(patient);
 
             session.setAttribute(ATTRIBUTE_INFO_MESSAGE, Arrays.asList(PATIENT_ADDED_OK));

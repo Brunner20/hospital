@@ -102,9 +102,6 @@ public class Patient implements Visitor{
         this.patientPic = patientPic;
     }
 
-    public void setStatusID(Long statusID) {
-        this.statusID = statusID;
-    }
 
 
     @Override

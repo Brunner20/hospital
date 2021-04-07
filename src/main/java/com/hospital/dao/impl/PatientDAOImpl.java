@@ -24,10 +24,8 @@ public class PatientDAOImpl implements PatientDAO {
     private static final String UPDATE_PATIENT ="UPDATE hospital.patients SET firstname= ?, lastname = ?, age = ?, " +
             " department_id = ?, attending_doctor = ?, status =?, account_id = ?, patient_pic = ? WHERE id = ?";
 
-    private static final String UPDATE_AGE = "UPDATE hospital.patients SET age = ? where id = ?";
-    private static final String UPDATE_DOCTOR= "UPDATE hospital.patients SET attending_doctor = ? and status = 1 where id = ?";
-    private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
-    private static final String GET_FREE_PATIENTS ="select * from hospital.patients where attending_doctor is null";
+   private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
+    private static final String GET_FREE_PATIENTS ="select * from hospital.patients where attending_doctor is null and status = 3";
     private static final String GET_ALL_PATIENTS ="select * from hospital.patients where age is not null";
     private static final String SELECT_PATIENT_BY_ID = "SELECT * FROM hospital.patients WHERE id =?";
     private static final String SELECT_PATIENT_BY_ACCOUNT = "SELECT * FROM hospital.patients WHERE account_id =?";
@@ -139,34 +137,7 @@ public class PatientDAOImpl implements PatientDAO {
         return patients;
     }
 
-    @Override
-    public void updateDoctor(List<String> selectedPatientsIds, Long doctorId) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = connectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_DOCTOR);
-            for(String patientsId: selectedPatientsIds) {
-                preparedStatement.setLong(1, doctorId);
-                preparedStatement.setLong(2, Integer.parseInt(patientsId));
-                preparedStatement.executeUpdate();
-            }
 
-        } catch (ConnectionPoolException | SQLException e) {
-            logger.log(Level.ERROR,e);
-            throw new DAOException(e);
-        }finally {
-            connectionPool.releaseConnection(connection);
-            try {
-                if (preparedStatement != null && !preparedStatement.isClosed()) {
-                    preparedStatement.close();
-                }
-            }catch (SQLException e){
-                logger.log(Level.ERROR,e);
-                throw new DAOException("Close preparedStatement error ", e);
-            }
-        }
-    }
 
     @Override
     public Patient getPatientById(Long id) throws DAOException {

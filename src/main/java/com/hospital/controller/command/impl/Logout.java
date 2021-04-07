@@ -11,13 +11,6 @@ import static com.hospital.controller.command.CommandParameter.*;
 
 public class Logout implements Command {
 
- 
-
-
-    private static final String ATTRIBUTE_INFO_MESSAGE = "informationMessage";
-    private static final String LOGOUT_OK = "logout successful";
-
-
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -29,7 +22,6 @@ public class Logout implements Command {
             session.removeAttribute(ATTRIBUTE_AUTH);
             session.removeAttribute(ATTRIBUTE_ROLE);
         }
-        request.setAttribute(ATTRIBUTE_INFO_MESSAGE,LOGOUT_OK);
         response.sendRedirect(GO_TO_INDEX_PAGE);
     }
 }

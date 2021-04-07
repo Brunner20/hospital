@@ -56,6 +56,7 @@ public class GoToAddAppointmentNextPage implements Command {
             } catch (ServiceException e) {
                 session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
                 response.sendRedirect(GO_TO_ERROR_PAGE);
+                return;
             }
 
             session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);

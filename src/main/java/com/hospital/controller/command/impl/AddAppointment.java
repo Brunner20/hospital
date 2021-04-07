@@ -78,6 +78,7 @@ public class AddAppointment implements Command {
             session.setAttribute(ATTRIBUTE_ERROR_MESSAGE,Arrays.asList(APPOINTMENT_ADDED_ERROR));
             session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_PAGE);
             response.sendRedirect(GO_TO_APPOINT_PAGE);
+            return;
         }
 
         Appointment appointment = new Appointment();

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.hospital.controller.command.CommandParameter.GO_TO_ERROR_PAGE;
-
 public class Controller extends HttpServlet {
 
     private static final long serialVersionUID = 1788742651L;
@@ -34,13 +32,10 @@ public class Controller extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         String name;
         Command command;
-    try {
+
         name = request.getParameter("command");
         command = provider.takeCommand(name);
         command.execute(request, response);
-    }catch (NullPointerException e){
-        request.getRequestDispatcher(GO_TO_ERROR_PAGE).forward(request,response); ;
-    }
 
     }
 

@@ -84,7 +84,7 @@ public class EpicrisisServiceImpl implements EpicrisisService {
         for(Epicrisis epicrisis:epicrisisAll){
             if(epicrisis.getReceiptDate().getTime()>maxDate.getTime()){
                 maxEpicrisis = epicrisis;
-                maxDate = epicrisis.getDischargeDate();
+                maxDate = epicrisis.getReceiptDate();
             }
         }
         return maxEpicrisis;

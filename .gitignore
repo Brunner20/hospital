@@ -1,6 +1,6 @@
 HELP.md
 target/
-out/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -15,6 +15,7 @@ out/
 .sts4-cache
 
 ### IntelliJ IDEA ###
+out/artifacts
 .idea
 *.iws
 *.iml
