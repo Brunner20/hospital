@@ -15,7 +15,6 @@ public class AppContextListener implements ServletContextListener {
 
     private static final Logger logger = LogManager.getLogger(AppContextListener.class);
 
-
     private static final String UNABLE_TO_INIT_POOL="Error while initializing pool data";
     private static final String ERROR_ON_CLOSING_POOL="Error while closing connection pool";
     @Override

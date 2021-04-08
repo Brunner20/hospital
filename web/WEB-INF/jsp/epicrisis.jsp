@@ -13,6 +13,8 @@
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.age" var="age"/>
     <fmt:message bundle="${loc}" key="local.pic" var="pic"/>
+    <fmt:message bundle="${loc}" key="local.receiptDate" var="receipt"/>
+    <fmt:message bundle="${loc}" key="local.preliminaryDiagnosis" var="preliminary"/>
     <fmt:message bundle="${loc}" key="local.btn.enter" var="submit"/>
     <fmt:message bundle="${loc}" key="local.dischargeDate" var="discharge"/>
     <fmt:message bundle="${loc}" key="local.definitiveDiagnosis" var="diagnosis"/>
@@ -23,6 +25,14 @@
     <div class="container">
         <div class="row d-flex w-100 justify-content-center">
             <div class="col-lg-5 flex">
+                <ul class="list-group m-2">
+                    <li class="list-group-item">
+                      ${receipt} : ${requestScope.epicrisis.receiptDate}
+                    </li>
+                    <li class="list-group-item">
+                       ${preliminary} : ${requestScope.epicrisis.preliminaryDiagnosis}
+                    </li>
+                </ul>
                 <form action="Controller" method="post" >
                     <input type="hidden" name="command" value="addepicrisis" />
                     <input type="hidden" name="patient_id" value="${requestScope.patient_id}">

@@ -1,9 +1,6 @@
 package com.hospital.controller.command;
 
-import com.hospital.controller.command.impl.AddAccount;
-import com.hospital.controller.command.impl.GoToMainPage;
-import com.hospital.controller.command.impl.Login;
-import com.hospital.controller.command.impl.UpdateAppointmentStatus;
+import com.hospital.controller.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +23,7 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOPROFILEPAGE, new GoToProfilePage());
         commands.put(CommandName.GOTOADDSTAFFPAGE, new GoToAddStaffPage());
         commands.put(CommandName.GOTOEPICRISISPAGE,new GoToEpicrisisPage());
+        commands.put(CommandName.SUBMITAPPLICATION, new SubmitApplication());
         commands.put(CommandName.GOTOADDADDITIONALINFOPAGE, new GoToAddAdditionalInfoPage());
         commands.put(CommandName.ADDADDITIONALINFO, new AddAdditionalInfo());
         commands.put(CommandName.GOTORECEIPTDATEPAGE,new GoToReceiptDatePage());

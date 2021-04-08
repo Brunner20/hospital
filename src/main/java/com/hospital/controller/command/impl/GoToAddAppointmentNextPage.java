@@ -1,7 +1,9 @@
 package com.hospital.controller.command.impl;
 
+import com.hospital.bean.Patient;
 import com.hospital.bean.Staff;
 import com.hospital.controller.command.Command;
+import com.hospital.service.PatientService;
 import com.hospital.service.ServiceProvider;
 import com.hospital.service.StaffService;
 import com.hospital.service.exception.ServiceException;
@@ -11,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.hospital.controller.command.CommandParameter.*;
@@ -45,8 +46,11 @@ public class GoToAddAppointmentNextPage implements Command {
             }
 
             StaffService staffService = ServiceProvider.getInstance().getStaffService();
-            List<Staff> allStaff = new ArrayList<>();
+            PatientService patientService = ServiceProvider.getInstance().getPatientService();
+            List<Staff> allStaff;
+            Patient patient;
             try {
+                patient = patientService.getPatientById(Long.valueOf(request.getParameter(SELECTED_PATIENT)));
                 if(request.getParameter(SELECTED_TYPE).equals("3")){
                     allStaff = staffService.getAllByType(1L);
                 }else{
@@ -62,7 +66,7 @@ public class GoToAddAppointmentNextPage implements Command {
             session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);
             request.setAttribute(SELECTED_TYPE, request.getParameter(SELECTED_TYPE));
             request.setAttribute(ATTRIBUTE_APPOINT_DATE, request.getParameter(ATTRIBUTE_APPOINT_DATE));
-            request.setAttribute(SELECTED_PATIENT, request.getParameter(SELECTED_PATIENT));
+            request.setAttribute(SELECTED_PATIENT, patient);
             request.setAttribute(PATIENT_ALL_STAFF, allStaff);
             request.getRequestDispatcher(PATH_TO_APPOINTMENT_NEXT_PAGE).forward(request, response);
         }

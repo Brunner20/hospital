@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
-import static com.hospital.controller.command.CommandParameter.GO_TO_INDEX_PAGE;
 
 public class SubmitApplication implements Command {
 
@@ -34,7 +33,7 @@ public class SubmitApplication implements Command {
             Patient patient = patientService.getPatientById(patientId);
             patient.setStatusID(3);
             patientService.update(patient);
-            request.setAttribute("patient",patient);
+            session.setAttribute(ROLE_PATIENT,patient);
             session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
             response.sendRedirect(GO_TO_MAIN_PAGE);
         }catch (ServiceException e) {

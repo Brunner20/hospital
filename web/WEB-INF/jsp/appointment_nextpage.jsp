@@ -15,9 +15,15 @@
     <fmt:message bundle="${loc}" key="local.select" var="select"/>
     <fmt:message bundle="${loc}" key="local.btn.add" var="add"/>
     <fmt:message bundle="${loc}" key="local.appointment" var="appoint"/>
+    <fmt:message bundle="${loc}" key="local.date_of_appointmen" var="date_app"/>
     <fmt:message bundle="${loc}" key="local.staff" var="st"/>
+    <fmt:message bundle="${loc}" key="local.type" var="type"/>
+    <fmt:message bundle="${loc}" key="local.surgery" var="surgery"/>
+    <fmt:message bundle="${loc}" key="local.preparations" var="prep"/>
+    <fmt:message bundle="${loc}" key="local.procedure" var="procedure"/>
     <fmt:message bundle="${loc}" key="local.doctor" var="doctor"/>
     <fmt:message bundle="${loc}" key="local.nurse" var="nurse"/>
+    <fmt:message bundle="${loc}" key="local.patient" var="patient"/>
     <fmt:message bundle="${loc}" key="local.page.appointment" var="title"/>
     <title>${title}</title>
 
@@ -26,11 +32,26 @@
 <div class="container ">
     <div class="row d-flex w-100 justify-content-center">
         <div class="col-6">
+            <ul class="list-group m-2">
+                <li class="list-group-item">${type} :
+                    <c:if test="${requestScope.select_type == 1}">
+                        ${prep}</li>
+                </c:if>
+                <c:if test="${requestScope.select_type == 2}">
+                    ${procedure}</li>
+                </c:if>
+                <c:if test="${requestScope.select_type == 3}">
+                    ${surgery}</li>
+                </c:if>
+
+                <li class="list-group-item">${date_app} : ${requestScope.dateOfAppointment}</li>
+                <li class="list-group-item">${patient} : ${requestScope.select_patient_id.firstname} ${requestScope.select_patient_id.id}</li>
+            </ul>
             <form action="Controller" method="post">
                 <input type="hidden" name="command" value="addappointment" />
                 <input type="hidden" name="select_type" value="${requestScope.select_type}" />
                 <input type="hidden" name="dateOfAppointment" value="${requestScope.dateOfAppointment}" />
-                <input type="hidden" name="select_patient_id" value="${requestScope.select_patient_id}" />
+                <input type="hidden" name="select_patient_id" value="${requestScope.select_patient_id.id}" />
 
                 <c:if test="${requestScope.select_type!=1}">
                     <label for="inputDate" class="form-label m-2">${date_comp}</label>

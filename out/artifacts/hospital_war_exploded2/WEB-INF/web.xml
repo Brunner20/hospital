@@ -36,7 +36,6 @@
 	<listener>
 		<listener-class>com.hospital.controller.listener.AppContextListener</listener-class>
 	</listener>
-
 	<filter>
 		<filter-name>CharsetFilter</filter-name>
 		<filter-class>com.hospital.controller.filter.CharsetFilter</filter-class>

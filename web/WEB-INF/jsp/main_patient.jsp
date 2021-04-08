@@ -46,17 +46,7 @@
                     </form>
                 </div>
             </div>
-            <div class="card m-2" style="width: 18rem;">
-                <div class="card-body m-2">
-                    <h5 class="card-title">${submit}</h5>
-                    <p class="card-text">${request}</p>
-                    <form action="Controller" method="post">
-                        <input type="hidden" name="command" value="submitapplication"/>
-                        <button class="btn btn-info card-link">${submit}</button>
-                    </form>
-                </div>
-            </div>
-            <c:if test="${sessionScope.patient.statusID == 2}">
+            <c:if test="${sessionScope.patient.statusID==2}">
                 <div class="card m-2" style="width: 18rem;">
                     <div class="card-body m-2">
                         <h5 class="card-title">${submit}</h5>
@@ -68,12 +58,12 @@
                     </div>
                 </div>
             </c:if>
-            <c:if test="${sessionScope.patient.statusID == 1|| sessionScope.patient.statusID == 3}">
+            <c:if test="${sessionScope.patient.statusID==1 || sessionScope.patient.statusID ==3}">
                 <div class="card m-2" style="width: 18rem;">
                     <div class="card-body m-2">
-                        <h5 class="card-title">${application_submitted}</h5>
+                        <h5 class="card-title">${submit}</h5>
                         <p class="card-text">${request}</p>
-                        <button class="btn btn btn-success btn-lg card-link">${application_submitted}</button>
+                        <button class="btn btn-success btn-lg">${application_submitted}</button>
                     </div>
                 </div>
             </c:if>
