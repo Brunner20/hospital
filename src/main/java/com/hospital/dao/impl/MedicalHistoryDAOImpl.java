@@ -15,6 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The class for working with the database for the medical history
+ */
 public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
 
     private static final Logger logger = LogManager.getLogger(MedicalHistoryDAOImpl.class);

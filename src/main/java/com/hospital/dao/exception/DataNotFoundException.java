@@ -1,5 +1,8 @@
 package com.hospital.dao.exception;
 
+/**
+ * The type Dao exception for invalid data.
+ */
 public class DataNotFoundException extends DAOException {
     public DataNotFoundException() {
         super();

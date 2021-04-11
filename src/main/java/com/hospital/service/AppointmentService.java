@@ -23,7 +23,7 @@ public interface AppointmentService {
 
     void updateAppointmentStatus(Long appointmentId, AppointmentStatus appointmentStatus) throws ServiceException;
 
-    List<Appointment> getAllAppointmentBetweenDate(Date dateFrom,Date dateTo)throws ServiceException;
+    List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo, long id)throws ServiceException;
 
     void updateAppointmentEpirisis(List<Appointment> appointmentList, long epicrisisId) throws ServiceException;
 }

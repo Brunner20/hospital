@@ -17,7 +17,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * The class for working with the database for the epicrisis
+ */
 public class EpicrisisDAOImpl implements EpicrisisDAO {
 
    private static final Logger logger = LogManager.getLogger(EpicrisisDAOImpl.class);

@@ -2,6 +2,10 @@ package com.hospital.dao;
 
 import com.hospital.dao.impl.*;
 
+
+/**
+ * The class that serves as a provider for the dao layer
+ */
 public final class DAOProvider {
 
     private static DAOProvider instance = new DAOProvider();

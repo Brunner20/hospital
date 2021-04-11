@@ -10,7 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-
+/**
+ * The class for working with connection pool
+ */
 public class ConnectionPoolImpl implements ConnectionPool {
 
     private BlockingQueue<Connection>  connectionPool;
@@ -68,13 +70,12 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     @Override
-    public boolean releaseConnection(Connection connection) {
+    public void releaseConnection(Connection connection) {
         if(connection!=null)
         {
             usedConnections.remove(connection);
-            return connectionPool.add(connection);
+            connectionPool.add(connection);
         }
-        return false;
     }
 
     @Override

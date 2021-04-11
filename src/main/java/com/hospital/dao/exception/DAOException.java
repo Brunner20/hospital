@@ -1,6 +1,10 @@
 package com.hospital.dao.exception;
 
+/**
+ * The type Dao exception.
+ */
 public class DAOException extends Exception{
+
     public DAOException() {
         super();
     }

@@ -1,5 +1,8 @@
 package com.hospital.dao.connection.resource;
 
+/**
+ * The class that contains parameters for the database
+ */
 public final class DBParameter {
 
     public static final String DB_DRIVER = "db.driver";
@@ -8,6 +11,6 @@ public final class DBParameter {
     public static final String DB_PASSWORD ="db.password";
     public static final String DB_POOLSIZE = "db.poolsize";
 
-    public DBParameter() {
+    private DBParameter() {
     }
 }

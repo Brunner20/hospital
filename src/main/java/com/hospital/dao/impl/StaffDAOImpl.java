@@ -17,6 +17,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class for working with the database for the staff
+ */
+
 public class StaffDAOImpl implements StaffDAO {
 
     private static final Logger logger = LogManager.getLogger(StaffDAOImpl.class);

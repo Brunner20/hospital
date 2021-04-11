@@ -108,7 +108,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo) throws ServiceException {
+    public List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo, long id) throws ServiceException {
         if(dateFrom==null || dateTo == null){
             logger.log(Level.WARN,dateFrom+" "+dateTo+INVALID);
             throw new ServiceException(dateFrom+" "+dateTo+INVALID);
@@ -117,7 +117,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         List<Appointment> appointments;
         try {
-            appointments = appointmentDAO.getAllAppointmentBetweenDate(dateFrom,dateTo);
+            appointments = appointmentDAO.getAllAppointmentBetweenDate(dateFrom,dateTo,id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

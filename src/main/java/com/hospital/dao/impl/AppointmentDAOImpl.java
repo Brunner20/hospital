@@ -16,7 +16,9 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The class for working with the database for the appointment
+ */
 public class AppointmentDAOImpl implements AppointmentDAO {
 
 
@@ -33,7 +35,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     private static final String SELECT_APPOINTMENT_BY_PATIENT = "select * from hospital.patient_appointments where id_patient =?";
     private static final String SELECT_APPOINTMENT_BY_STAFF = "select * from hospital.patient_appointments where id_executor =? and status = 1";
     private static final String UPDATE_APPOINTMENT_STATUS = "update hospital.patient_appointments set status = ? where id = ? ";
-    private static final String SELECT_APPOINTMENT_BETWEEN_DATES = "select * from hospital.patient_appointments where date_of_appointment  BETWEEN ? and ?";
+    private static final String SELECT_APPOINTMENT_BETWEEN_DATES = "select * from hospital.patient_appointments where id_patient = ? and date_of_appointment  BETWEEN ? and ?";
 
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
@@ -230,15 +232,16 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     }
 
     @Override
-    public List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo) throws DAOException {
+    public List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo, long patientId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         List<Appointment> selectedAppointments = new ArrayList<>();
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_BETWEEN_DATES);
-            preparedStatement.setDate(1,dateFrom);
-            preparedStatement.setDate(2,dateTo);
+            preparedStatement.setLong(1,patientId);
+            preparedStatement.setDate(2,dateFrom);
+            preparedStatement.setDate(3,dateTo);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Appointment appointment = appointmentMapping(resultSet);

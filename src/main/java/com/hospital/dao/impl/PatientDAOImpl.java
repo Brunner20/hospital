@@ -17,6 +17,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class for working with the database for the patient
+ */
 public class PatientDAOImpl implements PatientDAO {
 
     private static final Logger logger = LogManager.getLogger(PatientDAOImpl.class);

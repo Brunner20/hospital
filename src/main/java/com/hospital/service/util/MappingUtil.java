@@ -49,9 +49,9 @@ public final class MappingUtil {
         List<AppointmentDTO> appointmentDTOInEpicrisi = new ArrayList<>();
         Patient patient = null;
         try {
-            List<Appointment> appointmentsInEpicrisis  = DAOProvider.getInstance()
-                    .getAppointmentDAO().getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate());
             patient = DAOProvider.getInstance().getPatientDAO().getPatientById(epicrisis.getPatientId());
+            List<Appointment> appointmentsInEpicrisis  = DAOProvider.getInstance()
+                    .getAppointmentDAO().getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate(), patient.getId());
             for(Appointment appointment: appointmentsInEpicrisis){
                 appointmentDTOInEpicrisi.add(mapToAppointmentDTO(appointment));
             }

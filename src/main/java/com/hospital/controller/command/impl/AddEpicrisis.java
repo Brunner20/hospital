@@ -69,7 +69,7 @@ public class AddEpicrisis implements Command {
             patient.setStatusID(2);
             patientService.update(patient);
 
-            List<Appointment> appointmentList = appointmentService.getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate());
+            List<Appointment> appointmentList = appointmentService.getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate(),patient.getId());
             appointmentService.updateAppointmentEpirisis(appointmentList,epicrisis.getId());
 
             session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);

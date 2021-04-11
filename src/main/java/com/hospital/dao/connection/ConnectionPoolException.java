@@ -1,5 +1,8 @@
 package com.hospital.dao.connection;
 
+/**
+ * The type connection pool exception.
+ */
 public class ConnectionPoolException extends Exception{
 
     public ConnectionPoolException() {
