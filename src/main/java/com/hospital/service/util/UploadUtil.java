@@ -8,6 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
+
+/**
+ * The class for loading images
+ */
 public class UploadUtil {
 
     private static final String PATH_TO_STORAGE = ResourceBundle.getBundle("application").getString("application.path_to_storage_in_server");
@@ -15,6 +19,11 @@ public class UploadUtil {
     private static final String PATH_TO_STORAGE_DEFAULT = ResourceBundle.getBundle("application").getString("application.path_to_default_image");
 
 
+    /**
+     * Save the picture on the server
+     * @param part data of picture
+     * @return string path to picture
+     */
     public static String upload(Part part){
         String path;
         if(part == null){

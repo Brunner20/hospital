@@ -2,6 +2,9 @@ package com.hospital.service;
 
 import com.hospital.service.impl.*;
 
+/**
+ * The class that serves as a provider for the service layer
+ */
 public final class ServiceProvider {
 
     private static ServiceProvider instance = new ServiceProvider();

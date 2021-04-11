@@ -19,6 +19,9 @@ import java.util.Arrays;
 import static com.hospital.controller.command.CommandParameter.*;
 
 
+/**
+ * Command to login user
+ */
 public class Login implements Command {
 
 

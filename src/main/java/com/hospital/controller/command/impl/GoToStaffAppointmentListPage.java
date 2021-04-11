@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to appointment list page
+ */
 public class GoToStaffAppointmentListPage implements Command {
 
     private static final String GO_TO_APPOINTMENT_STAFF_LIST_PAGE = "Controller?command=gotostaffappointmentlistpage";

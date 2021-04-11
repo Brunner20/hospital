@@ -13,7 +13,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
-
+/**
+ * Command when the appointment status is updated
+ */
 public class UpdateAppointmentStatus implements Command {
 
     private static final String ATTRIBUTE_STATUS = "status";

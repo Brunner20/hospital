@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.Part;
 import java.util.List;
 
+/**
+ * The class containing business logic to work with patient
+ */
 public class PatientServiceImpl implements PatientService {
 
 

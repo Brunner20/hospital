@@ -18,7 +18,9 @@ import java.sql.Date;
 import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
-
+/**
+ * Command to add a appointment to a patient
+ */
 public class AddAppointment implements Command {
 
     private Date appointmentDate;

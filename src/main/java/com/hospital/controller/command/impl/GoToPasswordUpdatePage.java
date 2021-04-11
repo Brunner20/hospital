@@ -10,6 +10,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
 
+/**
+ * Command to go to update password page
+ */
 public class GoToPasswordUpdatePage implements Command {
 
     private static final String PATH_TO_UPDATE_PASSWORD = "/WEB-INF/jsp/update_password.jsp";

@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
-
+/**
+ * Command to go to add info page
+ */
 public class GoToAddAdditionalInfoPage implements Command {
 
     private static final String PATH_TO_ADDITIONAL_INFO_PAGE = "/WEB-INF/jsp/additional_info.jsp";

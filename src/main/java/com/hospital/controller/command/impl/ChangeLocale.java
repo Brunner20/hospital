@@ -11,6 +11,9 @@ import java.io.IOException;
 import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
 import static com.hospital.controller.command.CommandParameter.GO_TO_INDEX_PAGE;
 
+/**
+ * Command to change the language
+ */
 public class ChangeLocale implements Command {
 
     private static final String ATTRIBUTE_LOCAL = "locale";

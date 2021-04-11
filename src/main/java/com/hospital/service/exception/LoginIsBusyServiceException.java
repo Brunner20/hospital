@@ -1,5 +1,8 @@
 package com.hospital.service.exception;
 
+/**
+ * The type service exception when login is busy.
+ */
 public class LoginIsBusyServiceException extends ServiceException {
     public LoginIsBusyServiceException() {
         super();

@@ -11,20 +11,20 @@ import java.util.List;
 public interface StaffDAO {
 
     /**
-     * Find staff bu account id
-     * @param id  the account of staff id
-     * @return found staff
-     * @throws DAOException if an dao exception occurred while processing
-     */
-    Staff getStaffByAccount(long id) throws DAOException;
-
-    /**
      * Find staff by id
      * @param id the staff id
      * @return found staff
      * @throws DAOException if an dao exception occurred while processing
      */
     Staff getStaffById(Long id)throws DAOException;
+
+    /**
+     * Find staff bu account id
+     * @param id  the account of staff id
+     * @return found staff
+     * @throws DAOException if an dao exception occurred while processing
+     */
+    Staff getStaffByAccount(long id) throws DAOException;
 
     /**
      * Find all staff of given type

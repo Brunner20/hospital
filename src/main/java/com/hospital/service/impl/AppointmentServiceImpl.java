@@ -22,6 +22,9 @@ import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The class containing business logic to work with appointment
+ */
 public class AppointmentServiceImpl implements AppointmentService {
 
     private static final Logger logger = LogManager.getLogger(AppointmentServiceImpl.class);
@@ -125,7 +128,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public void updateAppointmentEpirisis(List<Appointment> appointmentList, long epicrisisId) throws ServiceException {
+    public void updateAppointmentEpicrisis(List<Appointment> appointmentList, long epicrisisId) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         for(Appointment appointment:appointmentList){

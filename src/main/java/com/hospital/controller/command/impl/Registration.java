@@ -11,6 +11,10 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
 
+
+/**
+ * Command to go to registration page
+ */
 public class Registration implements Command {
 
     private static final String GO_TO_REG_PAGE ="/WEB-INF/jsp/registration.jsp";

@@ -10,6 +10,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to main page
+ */
 public class GoToMainPage implements Command {
 
     private static final String PATH_TO_MAIN_PATIENT ="/WEB-INF/jsp/main_patient.jsp";

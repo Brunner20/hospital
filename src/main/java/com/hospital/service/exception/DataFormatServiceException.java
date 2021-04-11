@@ -1,5 +1,9 @@
 package com.hospital.service.exception;
 
+
+/**
+ * The type service exception for invalid data.
+ */
 public class DataFormatServiceException extends ServiceException{
     private static final long serialVersionUID = 1L;
 

@@ -1,5 +1,8 @@
 package com.hospital.controller.command;
 
+/**
+ * Constants for receiving and sending requests
+ */
 public final class CommandParameter {
 
     public static final String GO_TO_ADD_APPOINTMENT_PAGE = "Controller?command=gotoaddappointmentpage";

@@ -10,8 +10,17 @@ import com.hospital.dao.exception.DAOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class for mapping
+ */
 public final class MappingUtil {
 
+    /**
+     * Mapping appointment to DTO
+     * @param appointment appointment for mapping
+     * @return appointmentDTO after mapping
+     * @throws UtilException if an dao exception occurred while processing
+     */
     public static AppointmentDTO mapToAppointmentDTO(Appointment appointment) throws UtilException {
         AppointmentDTO dto = new AppointmentDTO();
 
@@ -44,7 +53,13 @@ public final class MappingUtil {
 
     }
 
-    public static EpicrisisDTO matToEpicrosisDTO(Epicrisis epicrisis) throws UtilException{
+    /**
+     * Mapping epicrisis to DTO
+     * @param epicrisis epicrisis for mapping
+     * @return epicrisisDTO after mapping
+     * @throws UtilException if an dao exception occurred while processing
+     */
+    public static EpicrisisDTO matToEpicrisisDTO(Epicrisis epicrisis) throws UtilException{
         EpicrisisDTO epicrisisDTO = new EpicrisisDTO();
         List<AppointmentDTO> appointmentDTOInEpicrisi = new ArrayList<>();
         Patient patient = null;

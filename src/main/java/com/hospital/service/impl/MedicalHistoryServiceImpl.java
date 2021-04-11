@@ -11,7 +11,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ * The class containing business logic to work with medical history
+ */
 public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 
     private static final Logger logger = LogManager.getLogger(MedicalHistoryServiceImpl.class);

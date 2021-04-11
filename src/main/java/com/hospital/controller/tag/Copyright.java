@@ -8,6 +8,10 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
+
+/**
+ * The class that creates the custom tag
+ */
 public class Copyright extends SimpleTagSupport {
 
     private static final Logger logger = LogManager.getLogger(Copyright.class);
@@ -16,30 +20,7 @@ public class Copyright extends SimpleTagSupport {
     private static final String START_COPYRIGHT = "<footer>";
     private static final String END_COPYRIGHT = "</footer>";
 
-//    @Override
-//    public int doStartTag() throws JspException {
-//        JspWriter out = pageContext.getOut();
-//        try {
-//            out.write(START_COPYRIGHT);
-//            out.write(COPYRIGHT);
-//        } catch (IOException e) {
-//            logger.log(Level.WARN, e);
-//            throw new JspException(e);
-//        }
-//        return SKIP_BODY;
-//    }
-//
-//    @Override
-//    public int doEndTag() throws JspException {
-//        JspWriter out = pageContext.getOut();
-//        try {
-//            out.write(END_COPYRIGHT);
-//        } catch (IOException e) {
-//            logger.log(Level.WARN, e);
-//            throw new JspException(e);
-//        }
-//        return EVAL_PAGE;
-//    }
+
 
     @Override
     public void doTag() throws JspException, IOException {

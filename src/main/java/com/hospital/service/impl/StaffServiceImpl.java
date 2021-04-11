@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.Part;
 import java.util.List;
 
+/**
+ * The class containing business logic to work with staff
+ */
 public class StaffServiceImpl implements StaffService {
 
     private static final Logger logger = LogManager.getLogger(StaffServiceImpl.class);

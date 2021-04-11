@@ -15,6 +15,9 @@ import java.util.List;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to the page with  patients of doctor
+ */
 public class GoToDoctorsPatientsPage implements Command {
 
 

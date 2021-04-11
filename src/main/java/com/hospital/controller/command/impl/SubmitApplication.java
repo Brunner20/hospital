@@ -14,6 +14,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command when the patient makes an submit
+ */
 public class SubmitApplication implements Command {
 
     @Override

@@ -14,6 +14,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to epicrisis page
+ */
 public class GoToEpicrisisPage implements Command {
 
     private static final String PATH_TO_EPICRISIS = "/WEB-INF/jsp/epicrisis.jsp";

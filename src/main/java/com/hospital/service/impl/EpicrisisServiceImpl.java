@@ -18,6 +18,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class containing business logic to work with epicrisis
+ */
 public class EpicrisisServiceImpl implements EpicrisisService {
 
     private static final Logger logger = LogManager.getLogger(EpicrisisServiceImpl.class);
@@ -51,7 +54,7 @@ public class EpicrisisServiceImpl implements EpicrisisService {
         try {
             epicrisisList = epicrisisDAO.getEpicrisisByPatientId(patientID);
             for(Epicrisis epicrisis:epicrisisList){
-                epicrisisDTOList.add(MappingUtil.matToEpicrosisDTO(epicrisis));
+                epicrisisDTOList.add(MappingUtil.matToEpicrisisDTO(epicrisis));
             }
         } catch (DAOException | UtilException e) {
             throw new ServiceException(e);

@@ -19,6 +19,9 @@ import java.util.List;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to add a epicrisis to a patient
+ */
 public class AddEpicrisis implements Command {
 
 
@@ -70,7 +73,7 @@ public class AddEpicrisis implements Command {
             patientService.update(patient);
 
             List<Appointment> appointmentList = appointmentService.getAllAppointmentBetweenDate(epicrisis.getReceiptDate(),epicrisis.getDischargeDate(),patient.getId());
-            appointmentService.updateAppointmentEpirisis(appointmentList,epicrisis.getId());
+            appointmentService.updateAppointmentEpicrisis(appointmentList,epicrisis.getId());
 
             session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
             session.setAttribute(ATTRIBUTE_INFO_MESSAGE,Arrays.asList(EPICRISIS_ADDED_OK));

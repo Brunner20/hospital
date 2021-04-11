@@ -16,7 +16,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ * The class containing business logic to work with account
+ */
 public class AccountServiceImpl implements AccountService {
 
     private static final Logger logger = LogManager.getLogger(AccountServiceImpl.class);

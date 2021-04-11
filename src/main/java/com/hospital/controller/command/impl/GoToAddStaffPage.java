@@ -11,6 +11,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.ATTRIBUTE_URL;
 
+/**
+ * Command to go to the page for add staff
+ */
 public class GoToAddStaffPage implements Command {
 
 

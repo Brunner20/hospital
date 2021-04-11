@@ -1,5 +1,8 @@
 package com.hospital.controller.command;
 
+/**
+ * The enum Command type.
+ */
 public enum CommandName {
     LOGIN,
     LOGOUT,

@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
-
+/**
+ * Command to add a additional information to a patient
+ */
 
 public class AddAdditionalInfo implements Command {
 

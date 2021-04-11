@@ -18,6 +18,9 @@ import java.util.List;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to add appointment page
+ */
 public class GoToAddAppointmentPage implements Command {
 
 

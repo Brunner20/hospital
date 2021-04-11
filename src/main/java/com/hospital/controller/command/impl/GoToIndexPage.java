@@ -9,6 +9,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.GO_TO_INDEX_PAGE;
 
+/**
+ * Command to go to index page
+ */
 public class GoToIndexPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

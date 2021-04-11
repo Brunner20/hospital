@@ -1,5 +1,8 @@
 package com.hospital.service.exception;
 
+/**
+ * The type service exception when data not found.
+ */
 public class DataNotFoundServiceException extends ServiceException{
     public DataNotFoundServiceException() {
         super();

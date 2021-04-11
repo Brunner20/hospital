@@ -10,6 +10,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to receipt page
+ */
 public class GoToReceiptDatePage implements Command {
 
     private static final String GO_TO_RECEIPT_PAGE = "Controller?command=gotoreceiptdatepage";

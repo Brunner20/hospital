@@ -1,5 +1,9 @@
 package com.hospital.service.util;
 
+
+/**
+ * The type Util exception.
+ */
 public class UtilException extends RuntimeException{
 
 

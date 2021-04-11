@@ -5,10 +5,18 @@ import com.hospital.controller.command.impl.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that provides access to command objects
+ */
 public final class CommandProvider {
-
+    /**
+     * Map that matches the name of a command with an object that implements this command
+     */
     private Map<CommandName,Command> commands = new HashMap<>();
 
+    /**
+     * Construct a CommandProvider and put commands
+     */
     public CommandProvider() {
         commands.put(CommandName.LOGIN, new Login());
         commands.put(CommandName.LOGOUT, new Logout());
@@ -40,7 +48,12 @@ public final class CommandProvider {
         commands.put(CommandName.GOTOADDADDITIONALINFOPAGE, new GoToAddAdditionalInfoPage());
         commands.put(CommandName.GOTOPATIENTAPPOINTMENTLISTPAGE, new GoToPatientAppointmentListPage());
     }
-
+    /**
+     * Finds and returns a command by name
+     *
+     * @param command name of command
+     * @return object that implements this command
+     */
     public Command takeCommand(String name){
        CommandName commandName = CommandName.valueOf(name.toUpperCase());
        return commands.get(commandName);

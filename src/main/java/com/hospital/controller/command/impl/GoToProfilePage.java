@@ -16,6 +16,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to profile page
+ */
 public class GoToProfilePage implements Command {
 
 

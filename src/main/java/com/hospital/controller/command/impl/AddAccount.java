@@ -16,6 +16,9 @@ import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to add new account
+ */
 public class AddAccount implements Command {
 
 

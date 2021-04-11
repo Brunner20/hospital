@@ -1,5 +1,8 @@
 package com.hospital.service.exception;
 
+/**
+ * The type Service exception.
+ */
 public class ServiceException extends Exception{
 
     public ServiceException() {

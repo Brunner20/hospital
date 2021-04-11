@@ -9,6 +9,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command where user can log out from their profile
+ */
 public class Logout implements Command {
 
 

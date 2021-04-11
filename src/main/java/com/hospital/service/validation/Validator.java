@@ -2,11 +2,30 @@ package com.hospital.service.validation;
 
 import com.hospital.bean.UserInfo;
 
+
+/**
+ * The class for data validation
+ */
 public class Validator {
+    /**
+     * regular expression for validation name
+     */
     private static final String NAME_REGEX = "[A-ZА-Я][a-zа-я]+";
+    /**
+     * regular expression for validation login
+     */
     private static final String LOGIN_REGEX = "[A-Za-zА-Яа-я0-9_]+";
+    /**
+     * regular expression for validation password
+     */
     private static final String PASSWORD_REGEX = "^(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-ZА-Я])(?=.*[a-zа-я]).*$";
+    /**
+     * regular expression for validation id
+     */
     private static final String ID_REGEX = "[0-9]+";
+    /**
+     * regular expression for validation age
+     */
     private static final String AGE_REGEX = "[1-9][0-9]*";
 
     public static boolean isNameValid(String name) {
@@ -32,10 +51,6 @@ public class Validator {
 
     public static boolean isIdValid(long id){
         return  String.valueOf(id).matches(ID_REGEX);
-    }
-
-    public static boolean isIdValid(String id){
-        return  id.matches(ID_REGEX);
     }
 
     public static boolean isTitleValid(String title) {return title!=null;}

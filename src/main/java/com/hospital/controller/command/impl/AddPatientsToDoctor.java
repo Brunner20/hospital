@@ -18,6 +18,10 @@ import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+
+/**
+ * Command to add a patient to a doctor
+ */
 public class AddPatientsToDoctor implements Command {
 
 

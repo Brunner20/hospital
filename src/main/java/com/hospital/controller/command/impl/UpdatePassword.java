@@ -18,6 +18,9 @@ import java.util.Arrays;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command when the password is updated
+ */
 public class UpdatePassword  implements Command{
 
     private static final String GO_TO_UPDATE_PASSWORD_PAGE = "Controller?command=gotopasswordupdatepage";

@@ -15,6 +15,9 @@ import java.util.List;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to the page with free patients
+ */
 public class GoToFreePatientsPage implements Command {
 
 

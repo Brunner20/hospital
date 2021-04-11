@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * Command to go to medical history page
+ */
 public class GoToMedicalHistoryPage implements Command {
 
     private static final String PATH_TO_HISTORY = "/WEB-INF/jsp/medical_history.jsp";

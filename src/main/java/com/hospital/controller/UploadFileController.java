@@ -14,6 +14,9 @@ import java.io.IOException;
 
 import static com.hospital.controller.command.CommandParameter.*;
 
+/**
+ * The servlet which handles file upload requests
+ */
 @MultipartConfig
 public class UploadFileController extends HttpServlet {
 
