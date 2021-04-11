@@ -21,7 +21,6 @@ import static com.hospital.controller.command.CommandParameter.*;
 public class AddPatientsToDoctor implements Command {
 
 
-    private static final String PATH_TO_FREE_PATIENTS = "/WEB-INF/jsp/free_patients.jsp";
     private static final String PATIENT_ADDED_OK = "local.info.patient_added";
     private static final String PATIENT_ADDED_ERROR = "local.error.patient_not_added";
 
@@ -34,10 +33,8 @@ public class AddPatientsToDoctor implements Command {
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);

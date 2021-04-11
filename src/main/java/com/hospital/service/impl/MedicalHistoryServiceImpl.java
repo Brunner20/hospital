@@ -7,9 +7,16 @@ import com.hospital.dao.exception.DAOException;
 import com.hospital.service.MedicalHistoryService;
 import com.hospital.service.exception.ServiceException;
 import com.hospital.service.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class MedicalHistoryServiceImpl implements MedicalHistoryService {
+
+    private static final Logger logger = LogManager.getLogger(MedicalHistoryServiceImpl.class);
+    private static final String INVALID = " is wrong";
+
     @Override
     public void add(MedicalHistory medicalHistory) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
@@ -24,11 +31,12 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
     @Override
     public MedicalHistory getByPatientId(long patientId) throws ServiceException {
       if(!Validator.isIdValid(patientId)){
-          throw new ServiceException("wrong id");
+          logger.log(Level.WARN,patientId+INVALID);
+          throw new ServiceException(patientId+INVALID);
       }
         DAOProvider daoProvider = DAOProvider.getInstance();
         MedicalHistoryDAO medicalHistoryDAO = daoProvider.getMedicalHistoryDAO();
-        MedicalHistory medicalHistory = null;
+        MedicalHistory medicalHistory;
         try {
             medicalHistory = medicalHistoryDAO.getByPatientId(patientId);
         } catch (DAOException e) {

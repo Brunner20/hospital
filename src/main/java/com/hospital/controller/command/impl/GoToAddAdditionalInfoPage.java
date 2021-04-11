@@ -16,11 +16,8 @@ public class GoToAddAdditionalInfoPage implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         HttpSession session = request.getSession(true);
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
-        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth ) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);

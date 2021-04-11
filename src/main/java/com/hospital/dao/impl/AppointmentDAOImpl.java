@@ -41,7 +41,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     public void addAppointment(Appointment appointment) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_APPOINTMENT);
@@ -53,8 +52,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             preparedStatement.setLong(6,appointment.getStatus().getId());
             preparedStatement.setLong(7,appointment.getAppointingDoctorId());
             preparedStatement.execute();
-
-
         }  catch (ConnectionPoolException | SQLException e) {
            logger.log(Level.ERROR,e);
             throw new DAOException(e);
@@ -76,14 +73,13 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     public AppointmentInfo getAppointmentInfo(String title, AppointmentType type) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        AppointmentInfo appointmentInfo = null;
+        AppointmentInfo appointmentInfo;
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_INFO);
             preparedStatement.setString(1,title);
             preparedStatement.setLong(2,type.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if(resultSet.next()){
                 appointmentInfo = new AppointmentInfo();
                 appointmentInfo.setId(resultSet.getLong(1));
@@ -92,7 +88,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             }else{
                  appointmentInfo = insertAppointmentInfo(title,type);
             }
-
         } catch (ConnectionPoolException | SQLException e) {
             logger.log(Level.ERROR,e);
             throw new DAOException(e);
@@ -120,14 +115,13 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_BY_PATIENT);
             preparedStatement.setLong(1,patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 Appointment appointment = appointmentMapping(resultSet);
                 appointmentsByPatient.add(appointment);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
            logger.log(Level.ERROR,throwables);
-            throw new DAOException(throwables);
+           throw new DAOException(throwables);
         }finally {
             connectionPool.releaseConnection(connection);
             try {
@@ -135,7 +129,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
-             //   logger.log(Level.ERROR,e);
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -152,7 +146,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             preparedStatement = connection.prepareStatement(SELECT_APPOINTMENT_INFO_BY_ID);
             preparedStatement.setLong(1,infoId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if(resultSet.next()){
                 appointmentInfo = new AppointmentInfo();
                 appointmentInfo.setId(resultSet.getLong(1));
@@ -170,7 +163,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
-              //  logger.log(Level.ERROR,e);
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
@@ -273,7 +266,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     public void update(Appointment appointment) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_APPOINTMENT);
@@ -287,7 +279,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             preparedStatement.setLong(8,appointment.getEpicrisisID());
             preparedStatement.setLong(9,appointment.getId());
             preparedStatement.execute();
-
         }  catch (ConnectionPoolException | SQLException e) {
             logger.log(Level.ERROR,e);
             throw new DAOException(e);
@@ -302,7 +293,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
-
     }
 
     private AppointmentInfo insertAppointmentInfo(String title, AppointmentType type) throws DAOException {
@@ -327,9 +317,8 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                 appointmentInfo.setInfo(resultSet.getString(2));
                 appointmentInfo.setType(resultSet.getInt(3));
             }
-
         } catch (ConnectionPoolException | SQLException e) {
-            logger.log(Level.ERROR,e);
+            logger.log(Level.ERROR,"insert error");
             throw new DAOException(e);
         } finally {
             connectionPool.releaseConnection(connection);
@@ -338,7 +327,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                     preparedStatementForInsert.close();
                 }
             } catch (SQLException throwables) {
-                //logger.log(Level.ERROR,throwables);
+                logger.log(Level.ERROR,throwables);
                 throw new DAOException("Close preparedStatement error ", throwables);
             }
             try {
@@ -366,6 +355,4 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         appointment.setEpicrisisID(resultSet.getLong(9));
         return appointment;
     }
-
-
 }

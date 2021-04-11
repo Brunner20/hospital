@@ -38,6 +38,8 @@ public class Validator {
         return  id.matches(ID_REGEX);
     }
 
+    public static boolean isTitleValid(String title) {return title!=null;}
+
     public static boolean isAgeValid(String age) {
         boolean isValid = age.matches(AGE_REGEX);
        try {

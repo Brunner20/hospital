@@ -26,18 +26,15 @@ public class GoToPatientAppointmentListPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         if(session == null) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         if (isAuth == null || !isAuth) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
         long visitorId = (long) session.getAttribute(ATTRIBUTE_VISITOR_ID);
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         AppointmentService appointmentService = serviceProvider.getAppointmentService();

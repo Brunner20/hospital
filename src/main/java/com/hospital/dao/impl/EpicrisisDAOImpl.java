@@ -32,7 +32,6 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
     public void addEpicrisis(Epicrisis epicrisis) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_EPICRISIS);
@@ -43,9 +42,9 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
             preparedStatement.setLong(4,epicrisis.getPatientId());
             preparedStatement.setString(5,epicrisis.getPreliminaryDiagnosis());
             if(epicrisis.getMedicalHistoryId()==0)
-                preparedStatement.setString(6,null);
+            { preparedStatement.setString(6,null);}
             else
-                preparedStatement.setLong(6,epicrisis.getMedicalHistoryId());
+            { preparedStatement.setLong(6,epicrisis.getMedicalHistoryId());}
             preparedStatement.execute();
 
         } catch (SQLException | ConnectionPoolException e) {
@@ -57,7 +56,7 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                  //  logger.log(Level.ERROR,e);
+                    logger.log(Level.ERROR,e);
                     throw new DAOException("Close preparedStatement error ", e);
                 }
             }
@@ -72,14 +71,12 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_BY_PATIENT);
-
             preparedStatement.setLong(1,patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Epicrisis epicrisis = mappingEpicrisis(resultSet);
                 epicrisisList.add(epicrisis);
             }
-
         } catch (SQLException | ConnectionPoolException e) {
             logger.log(Level.ERROR,e);
             throw new DAOException("select error ",e);
@@ -101,11 +98,9 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
     public void update(Epicrisis epicrisis) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_EPICRISIS);
-
             preparedStatement.setString(1,epicrisis.getDefinitiveDiagnosis());
             preparedStatement.setDate(2,epicrisis.getDischargeDate());
             if(epicrisis.getMedicalHistoryId() == 0)
@@ -114,7 +109,6 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
                 preparedStatement.setLong(3,epicrisis.getMedicalHistoryId());
             preparedStatement.setLong(4,epicrisis.getId());
             preparedStatement.execute();
-
         } catch (SQLException | ConnectionPoolException e) {
             logger.log(Level.ERROR,e);
             throw new DAOException("update error ",e);

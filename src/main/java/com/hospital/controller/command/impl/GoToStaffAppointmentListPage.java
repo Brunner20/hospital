@@ -23,10 +23,8 @@ public class GoToStaffAppointmentListPage implements Command {
     private static final String ATTRIBUTE_APPOINTMENT_LIST = "appointment_list";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         HttpSession session = request.getSession(true);
         if(session == null) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }

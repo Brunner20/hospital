@@ -27,21 +27,16 @@ public class GoToAddAppointmentPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         if(session == null) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
-
         PatientService patientService = ServiceProvider.getInstance().getPatientService();
         List<Patient> patients = new ArrayList<>();
         try {
@@ -51,7 +46,6 @@ public class GoToAddAppointmentPage implements Command {
             response.sendRedirect(GO_TO_ERROR_PAGE);
             return;
         }
-
         session.setAttribute(ATTRIBUTE_URL,GO_TO_APPOINT_PAGE);
         request.setAttribute(ATTRIBUTE_APPOINTMENT_TYPES, Arrays.asList(AppointmentType.values()));
         request.setAttribute(ATTRIBUTE_PATIENTS, patients);

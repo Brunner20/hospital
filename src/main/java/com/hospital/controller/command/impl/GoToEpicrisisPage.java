@@ -27,7 +27,6 @@ public class GoToEpicrisisPage implements Command {
         HttpSession session = request.getSession(true);
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);

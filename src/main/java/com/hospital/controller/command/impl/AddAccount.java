@@ -32,7 +32,6 @@ public class AddAccount implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long staffType = 0;
-        String returnPage;
         String returnErrorPage;
 
         HttpSession session = request.getSession(true);
@@ -43,7 +42,6 @@ public class AddAccount implements Command {
 
         if(isAuth != null )
         {
-
             returnErrorPage = GO_TO_ADD_STAFF_PAGE;
             staffType = Long.parseLong(request.getParameter(STAFF_TYPE));
             userInfoBuilder.setRoleId(2);

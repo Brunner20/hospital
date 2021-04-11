@@ -28,46 +28,42 @@ public class GoToAddAppointmentNextPage implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         HttpSession session = request.getSession(true);
         if(session == null) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
+        Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
+        String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
 
-            Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
-            String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
-            if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
+        if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
                 session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
                 response.sendRedirect(GO_TO_INDEX_PAGE);
                 return;
-            }
-
-            StaffService staffService = ServiceProvider.getInstance().getStaffService();
-            PatientService patientService = ServiceProvider.getInstance().getPatientService();
-            List<Staff> allStaff;
-            Patient patient;
-            try {
-                patient = patientService.getPatientById(Long.valueOf(request.getParameter(SELECTED_PATIENT)));
-                if(request.getParameter(SELECTED_TYPE).equals("3")){
-                    allStaff = staffService.getAllByType(1L);
-                }else{
-                    allStaff = staffService.getAllByType(2L);
-                    allStaff.addAll(staffService.getAllByType(1L));
-                }
-            } catch (ServiceException e) {
-                session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
-                response.sendRedirect(GO_TO_ERROR_PAGE);
-                return;
-            }
-
-            session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);
-            request.setAttribute(SELECTED_TYPE, request.getParameter(SELECTED_TYPE));
-            request.setAttribute(ATTRIBUTE_APPOINT_DATE, request.getParameter(ATTRIBUTE_APPOINT_DATE));
-            request.setAttribute(SELECTED_PATIENT, patient);
-            request.setAttribute(PATIENT_ALL_STAFF, allStaff);
-            request.getRequestDispatcher(PATH_TO_APPOINTMENT_NEXT_PAGE).forward(request, response);
         }
+        StaffService staffService = ServiceProvider.getInstance().getStaffService();
+        PatientService patientService = ServiceProvider.getInstance().getPatientService();
+        List<Staff> allStaff;
+        Patient patient;
+        try {
+            patient = patientService.getPatientById(Long.valueOf(request.getParameter(SELECTED_PATIENT)));
+            if(request.getParameter(SELECTED_TYPE).equals("3")){
+                allStaff = staffService.getAllByType(1L);
+            }else{
+                allStaff = staffService.getAllByType(2L);
+                allStaff.addAll(staffService.getAllByType(1L));
+            }
+        } catch (ServiceException e) {
+            session.setAttribute(ATTRIBUTE_URL, GO_TO_ERROR_PAGE);
+            response.sendRedirect(GO_TO_ERROR_PAGE);
+            return;
+        }
+
+        session.setAttribute(ATTRIBUTE_URL, GO_TO_APPOINT_NEXT_PAGE);
+        request.setAttribute(SELECTED_TYPE, request.getParameter(SELECTED_TYPE));
+        request.setAttribute(ATTRIBUTE_APPOINT_DATE, request.getParameter(ATTRIBUTE_APPOINT_DATE));
+        request.setAttribute(SELECTED_PATIENT, patient);
+        request.setAttribute(PATIENT_ALL_STAFF, allStaff);
+        request.getRequestDispatcher(PATH_TO_APPOINTMENT_NEXT_PAGE).forward(request, response);
+    }
 }

@@ -20,7 +20,6 @@ public class AccountDAOImpl implements AccountDAO {
 
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM hospital.accounts JOIN hospital.roles ON" +
             " hospital.accounts.id_role = hospital.roles.id WHERE login = ? and password = ? ";
-
     private static final String FIND_USER_BY_LOGIN = "select * from hospital.accounts where login = ?";
     private static final String FIND_ACCOUNT_BY_ID_AND_PASSWORD = "SELECT * FROM hospital.accounts where id=? and password= ?";
     private static final String UPDATE_PASSWORD = "update hospital.accounts set password = ? where id = ?";
@@ -33,7 +32,6 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public Account authorization(String login, String password) throws DAOException {
-
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         Account account = null;
@@ -68,7 +66,6 @@ public class AccountDAOImpl implements AccountDAO {
         Connection connection = null;
         PreparedStatement accountSt = null;
         Savepoint savepointOne = null;
-
         try {
             connection = connectionPool.getConnection();
             connection.setAutoCommit(false);
@@ -173,6 +170,7 @@ public class AccountDAOImpl implements AccountDAO {
                 id = resultSet.getLong(1);
             }
         } catch (SQLException | ConnectionPoolException throwables) {
+            logger.log(Level.WARN,throwables);
             throw new DAOException(throwables);
         }
 
@@ -180,7 +178,6 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     private void insertStaff(UserInfo info, int accountId, Connection connection)throws SQLException {
-
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STAFF);
         preparedStatement.setString(1,info.getFirstname());
         preparedStatement.setString(2,info.getLastname());

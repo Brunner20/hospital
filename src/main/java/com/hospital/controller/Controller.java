@@ -32,11 +32,12 @@ public class Controller extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         String name;
         Command command;
-
-        name = request.getParameter("command");
-        command = provider.takeCommand(name);
-        command.execute(request, response);
-
+        try {
+            name = request.getParameter("command");
+            command = provider.takeCommand(name);
+            command.execute(request, response);
+        }catch (RuntimeException e){
+            request.getRequestDispatcher("error404.html").forward(request,response);
+        }
     }
-
 }

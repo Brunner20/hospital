@@ -24,28 +24,21 @@ public class GoToDoctorsPatientsPage implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         HttpSession session = request.getSession(true);
         if(session == null) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         PatientService patientService = serviceProvider.getPatientService();
-
-        List<Patient> patients = null;
+        List<Patient> patients;
         try {
             patients = patientService.getAllPatientsByStaff((Long) session.getAttribute(ATTRIBUTE_VISITOR_ID));
             session.setAttribute(ATTRIBUTE_URL,GO_TO_DOCTORS_PATIENTS);

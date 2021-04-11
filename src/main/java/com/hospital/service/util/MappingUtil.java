@@ -10,7 +10,7 @@ import com.hospital.dao.exception.DAOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MappingUtil {
+public final class MappingUtil {
 
     public static AppointmentDTO mapToAppointmentDTO(Appointment appointment) throws UtilException {
         AppointmentDTO dto = new AppointmentDTO();

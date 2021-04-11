@@ -30,17 +30,14 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
     public void add(MedicalHistory medicalHistory) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_HISTORY);
-
             preparedStatement.setLong(1,medicalHistory.getPatientId());
             preparedStatement.execute();
-
         } catch (SQLException | ConnectionPoolException e) {
             logger.log(Level.ERROR,e);
-            throw new DAOException("find error ",e);
+            throw new DAOException("add error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
             if(preparedStatement!=null){
@@ -62,7 +59,6 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_HISTORY);
-
             preparedStatement.setLong(1,patientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -92,7 +88,6 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
     public void update(MedicalHistory medicalHistory) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         try {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_HISTORY);
@@ -103,7 +98,7 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
 
         } catch (SQLException | ConnectionPoolException e) {
             logger.log(Level.ERROR,e);
-            throw new DAOException("find error ",e);
+            throw new DAOException("update error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
             if(preparedStatement!=null){

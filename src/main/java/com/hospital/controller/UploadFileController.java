@@ -30,24 +30,19 @@ public class UploadFileController extends HttpServlet {
 
         HttpSession session = request.getSession(true);
         if(session == null) {
-            session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
 
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
 
-
-
         Part filePart = request.getPart("file");
-
         if(role.equals(ROLE_PATIENT)) {
             PatientService patientService = ServiceProvider.getInstance().getPatientService();
             try {

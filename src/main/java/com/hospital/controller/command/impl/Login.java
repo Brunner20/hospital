@@ -32,17 +32,14 @@ public class Login implements Command {
 
         String login = request.getParameter(LOGIN);
         String password = request.getParameter(PASSWORD);
-
         ServiceProvider provider = ServiceProvider.getInstance();
         AccountService accountService = provider.getAccountService();
-
         HttpSession session = request.getSession(true);
         Account account;
         String returnPage = GO_TO_MAIN_PAGE;
         try {
 
             account = accountService.authorization(login, password);
-
             if (account == null) {
                 session.setAttribute(ATTRIBUTE_ERROR_MESSAGE, Arrays.asList(WRONG_LOGIN_OR_PASSWORD));
                 response.sendRedirect(GO_TO_INDEX_PAGE);

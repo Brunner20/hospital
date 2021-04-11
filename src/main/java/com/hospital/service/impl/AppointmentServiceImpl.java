@@ -9,18 +9,23 @@ import com.hospital.dao.AppointmentDAO;
 import com.hospital.dao.DAOProvider;
 import com.hospital.dao.exception.DAOException;
 import com.hospital.service.AppointmentService;
+import com.hospital.service.exception.DataFormatServiceException;
 import com.hospital.service.exception.ServiceException;
 import com.hospital.service.util.MappingUtil;
 import com.hospital.service.util.UtilException;
 import com.hospital.service.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class AppointmentServiceImpl implements AppointmentService {
 
+    private static final Logger logger = LogManager.getLogger(AppointmentServiceImpl.class);
+    private static final String INVALID = " is wrong";
     @Override
     public void addAppointment(Appointment appointment) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
@@ -34,13 +39,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public AppointmentInfo getAppointmentInfo(String title, AppointmentType type) throws ServiceException {
-
-        if(title.isEmpty()||type==null){
-            throw new ServiceException("title is wrong");
+        if(!Validator.isTitleValid(title)){
+            logger.log(Level.WARN,title+INVALID);
+            throw new DataFormatServiceException(title+INVALID);
         }
         DAOProvider daoProvider = DAOProvider.getInstance();
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
-        AppointmentInfo appointmentInfo = null;
+        AppointmentInfo appointmentInfo;
         try {
           appointmentInfo = appointmentDAO.getAppointmentInfo(title,type);
         } catch (DAOException e) {
@@ -53,8 +58,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<AppointmentDTO> getAllAppointmentsByPatientId(long patientId) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
-        List<Appointment> appointmentsByPatient = new ArrayList<>();
-        List<AppointmentDTO> dtoList = new ArrayList<>();
+        List<Appointment> appointmentsByPatient;
+        List<AppointmentDTO> dtoList;
         try {
             appointmentsByPatient = appointmentDAO.getAllAppointmentsByPatientId(patientId);
             dtoList = appointmentsByPatient.stream().map(MappingUtil::mapToAppointmentDTO)
@@ -70,13 +75,13 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<AppointmentDTO> getAllAppointmentsByStaffId(long staffId) throws ServiceException {
 
         if(!Validator.isIdValid(staffId)){
-            throw new ServiceException("wrong id");
+            logger.log(Level.WARN,staffId+INVALID);
+            throw new ServiceException(staffId+INVALID);
         }
-
         DAOProvider daoProvider = DAOProvider.getInstance();
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
-        List<Appointment> appointmentsByPatient = new ArrayList<>();
-        List<AppointmentDTO> dtoList = new ArrayList<>();
+        List<Appointment> appointmentsByPatient;
+        List<AppointmentDTO> dtoList;
         try {
             appointmentsByPatient = appointmentDAO.getAllAppointmentsByStaffId(staffId);
             dtoList = appointmentsByPatient.stream().map(MappingUtil::mapToAppointmentDTO)
@@ -84,16 +89,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         } catch (DAOException | UtilException e) {
             throw new ServiceException(e);
         }
-
         return dtoList;
     }
 
     @Override
     public void updateAppointmentStatus(Long appointmentId, AppointmentStatus appointmentStatus) throws ServiceException {
         if(!Validator.isIdValid(appointmentId)){
-            throw new ServiceException("wrong id");
+            logger.log(Level.WARN,appointmentId+INVALID);
+            throw new ServiceException(appointmentId+INVALID);
         }
-
         DAOProvider daoProvider = DAOProvider.getInstance();
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
         try {
@@ -106,13 +110,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> getAllAppointmentBetweenDate(Date dateFrom, Date dateTo) throws ServiceException {
         if(dateFrom==null || dateTo == null){
-            throw new ServiceException("wrong date");
+            logger.log(Level.WARN,dateFrom+" "+dateTo+INVALID);
+            throw new ServiceException(dateFrom+" "+dateTo+INVALID);
         }
-
         DAOProvider daoProvider = DAOProvider.getInstance();
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
-        List<Appointment> appointments = new ArrayList<>();
-
+        List<Appointment> appointments;
         try {
             appointments = appointmentDAO.getAllAppointmentBetweenDate(dateFrom,dateTo);
         } catch (DAOException e) {
@@ -125,7 +128,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void updateAppointmentEpirisis(List<Appointment> appointmentList, long epicrisisId) throws ServiceException {
         DAOProvider daoProvider = DAOProvider.getInstance();
         AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
-
         for(Appointment appointment:appointmentList){
             appointment.setEpicrisisID(epicrisisId);
             try {

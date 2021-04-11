@@ -23,7 +23,6 @@ public class StaffDAOImpl implements StaffDAO {
 
     private static final String UPDATE_STAFF ="UPDATE hospital.staff SET firstname= ?, lastname = ?,  " +
             "staff_pic = ?, department_id = ?, type_id = ? WHERE id = ?";
-
     private static final String SELECT_STAFF_BY_ID = "SELECT * FROM hospital.staff WHERE id =?";
     private static final String SELECT_STAFF_BY_ACCOUNT = "SELECT * FROM hospital.staff WHERE account =?";
     private static final String GET_ALL_STAFF_BY_TYPE ="select * from hospital.staff  where type_id = ?";
@@ -59,10 +58,7 @@ public class StaffDAOImpl implements StaffDAO {
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
-
-
     }
-
 
     @Override
     public Staff getStaffByAccount(long accountId) throws DAOException {
@@ -124,8 +120,6 @@ public class StaffDAOImpl implements StaffDAO {
         return staff;
     }
 
-
-
     @Override
     public List<Staff> getAllByType(Long typeId) throws DAOException {
         Connection connection = null;
@@ -136,12 +130,10 @@ public class StaffDAOImpl implements StaffDAO {
             preparedStatement = connection.prepareStatement(GET_ALL_STAFF_BY_TYPE);
             preparedStatement.setLong(1,typeId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 Staff staff = staffMapping(resultSet);
                 allStaff.add(staff);
             }
-
         } catch (ConnectionPoolException | SQLException e) {
             logger.log(Level.ERROR,e);
             throw new DAOException(e);

@@ -4,6 +4,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="cpr" uri="/WEB-INF/tld/taglib.tld" %>
 <%@ include file = "header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -69,5 +70,6 @@
             </c:if>
         </c:if>
     </div>
+    <cpr:copyright/>
 </body>
 </html>

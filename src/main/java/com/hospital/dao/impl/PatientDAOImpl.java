@@ -44,16 +44,14 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement.setInt(3,patient.getAge());
             preparedStatement.setLong(4,patient.getDepartment().getId());
             if(patient.getAttendingDoctorID()==0)
-                preparedStatement.setString(5,null);
+            { preparedStatement.setString(5,null);}
             else
-                preparedStatement.setLong(5,patient.getAttendingDoctorID());
+            { preparedStatement.setLong(5,patient.getAttendingDoctorID());}
             preparedStatement.setLong(6,patient.getStatusID());
             preparedStatement.setLong(7,patient.getAccountID());
             preparedStatement.setString(8,patient.getPatientPic());
             preparedStatement.setLong(9,patient.getId());
-
             preparedStatement.executeUpdate();
-
         } catch (ConnectionPoolException | SQLException e) {
             logger.log(Level.ERROR,e);
             throw new DAOException(e);
@@ -64,12 +62,10 @@ public class PatientDAOImpl implements PatientDAO {
                     preparedStatement.close();
                 }
             }catch (SQLException e){
-               logger.log(Level.ERROR,e);
+                logger.log(Level.ERROR,e);
                 throw new DAOException("Close preparedStatement error ", e);
             }
         }
-
-
     }
 
 
@@ -82,7 +78,6 @@ public class PatientDAOImpl implements PatientDAO {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(GET_FREE_PATIENTS);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 Patient patient = patientMapping(resultSet);
                 patients.add(patient);
@@ -114,7 +109,6 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement = connection.prepareStatement(SELECT_PATIENTS);
             preparedStatement.setString(1, String.valueOf(attendingDoctorId));
             ResultSet set = preparedStatement.executeQuery();
-
             while (set.next()) {
                 Patient patient = patientMapping(set);
                 patients.add(patient);
@@ -137,8 +131,6 @@ public class PatientDAOImpl implements PatientDAO {
         return patients;
     }
 
-
-
     @Override
     public Patient getPatientById(Long id) throws DAOException {
         Connection connection = null;
@@ -149,7 +141,6 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement = connection.prepareStatement(SELECT_PATIENT_BY_ID);
             preparedStatement.setLong(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 patient = patientMapping(resultSet);
             }
@@ -180,7 +171,6 @@ public class PatientDAOImpl implements PatientDAO {
             preparedStatement = connection.prepareStatement(SELECT_PATIENT_BY_ACCOUNT);
             preparedStatement.setLong(1,accountId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 patient = patientMapping(resultSet);
             }

@@ -34,17 +34,14 @@ public class GoToFreePatientsPage implements Command {
 
         Boolean isAuth = (Boolean) session.getAttribute(ATTRIBUTE_AUTH);
         String role  = (String) session.getAttribute(ATTRIBUTE_ROLE);
-
         if (isAuth == null || !isAuth || role.equals(ROLE_PATIENT)) {
             session.setAttribute(ATTRIBUTE_URL,GO_TO_INDEX_PAGE);
             response.sendRedirect(GO_TO_INDEX_PAGE);
             return;
         }
-
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         PatientService patientService = serviceProvider.getPatientService();
-
-        List<Patient> patients = null;
+        List<Patient> patients;
         try {
             patients = patientService.getFreePatients();
             request.setAttribute(ATTRIBUTE_PATIENT, patients);
