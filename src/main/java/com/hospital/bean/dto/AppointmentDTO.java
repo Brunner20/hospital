@@ -6,6 +6,11 @@ import com.hospital.bean.AppointmentType;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * data transfer object for {@link com.hospital.bean.Appointment} class
+ *
+ * @author Anton Brunner
+ */
 public class AppointmentDTO {
 
     private long id;

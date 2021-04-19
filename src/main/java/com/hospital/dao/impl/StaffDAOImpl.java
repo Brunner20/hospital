@@ -25,13 +25,15 @@ public class StaffDAOImpl implements StaffDAO {
 
     private static final Logger logger = LogManager.getLogger(StaffDAOImpl.class);
 
-    private static final String UPDATE_STAFF ="UPDATE hospital.staff SET firstname= ?, lastname = ?,  " +
+    private static final String UPDATE_STAFF ="UPDATE staff SET firstname= ?, lastname = ?,  " +
             "staff_pic = ?, department_id = ?, type_id = ? WHERE id = ?";
-    private static final String SELECT_STAFF_BY_ID = "SELECT * FROM hospital.staff WHERE id =?";
-    private static final String SELECT_STAFF_BY_ACCOUNT = "SELECT * FROM hospital.staff WHERE account =?";
-    private static final String GET_ALL_STAFF_BY_TYPE ="select * from hospital.staff  where type_id = ?";
+    private static final String SELECT_STAFF_BY_ID = "SELECT * FROM staff WHERE id =?";
+    private static final String SELECT_STAFF_BY_ACCOUNT = "SELECT * FROM staff WHERE account =?";
+    private static final String GET_ALL_STAFF_BY_TYPE ="select * from staff  where type_id = ?";
 
-
+    /**
+     * Instance of {@link ConnectionPool}
+     */
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
     @Override

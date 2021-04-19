@@ -7,10 +7,7 @@ import com.hospital.bean.UserInfo;
  * The class for data validation
  */
 public class Validator {
-    /**
-     * regular expression for validation name
-     */
-    private static final String NAME_REGEX = "[A-ZА-Я][a-zа-я]+";
+
     /**
      * regular expression for validation login
      */
@@ -23,18 +20,8 @@ public class Validator {
      * regular expression for validation id
      */
     private static final String ID_REGEX = "[0-9]+";
-    /**
-     * regular expression for validation age
-     */
-    private static final String AGE_REGEX = "[1-9][0-9]*";
 
-    public static boolean isNameValid(String name) {
-        return name != null && name.matches(NAME_REGEX);
-    }
 
-    public static boolean isSurnameValid(String surname) {
-        return surname != null && surname.matches(NAME_REGEX);
-    }
 
     public static boolean isPasswordValid(String password) {
         return password != null && password.matches(PASSWORD_REGEX);
@@ -55,13 +42,5 @@ public class Validator {
 
     public static boolean isTitleValid(String title) {return title!=null;}
 
-    public static boolean isAgeValid(String age) {
-        boolean isValid = age.matches(AGE_REGEX);
-       try {
-           Integer.parseInt(age);
-       }catch (NumberFormatException e ){
-           isValid = false;
-       }
-       return isValid;
-    }
+
 }

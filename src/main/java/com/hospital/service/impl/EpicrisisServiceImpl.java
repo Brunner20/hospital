@@ -26,14 +26,18 @@ public class EpicrisisServiceImpl implements EpicrisisService {
     private static final Logger logger = LogManager.getLogger(EpicrisisServiceImpl.class);
     private static final String INVALID = " is wrong";
 
+    /**
+     * Instance of {@link DAOProvider}
+     */
+    private static final DAOProvider provider  = DAOProvider.getInstance();
+
     @Override
     public void addEpicrisis(Epicrisis epicrisis) throws ServiceException {
         if(epicrisis == null){
             logger.log(Level.WARN,"epicrisis"+INVALID);
             throw new ServiceException("epicrisis"+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        EpicrisisDAO epicrisisDAO = daoProvider.getEpicrisisDAO();
+        EpicrisisDAO epicrisisDAO = provider.getEpicrisisDAO();
         try {
             epicrisisDAO.addEpicrisis(epicrisis);
         } catch (DAOException e) {
@@ -47,8 +51,7 @@ public class EpicrisisServiceImpl implements EpicrisisService {
             logger.log(Level.WARN,patientID+INVALID);
             throw new ServiceException(patientID+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        EpicrisisDAO epicrisisDAO = daoProvider.getEpicrisisDAO();
+        EpicrisisDAO epicrisisDAO = provider.getEpicrisisDAO();
         List<EpicrisisDTO> epicrisisDTOList = new ArrayList<>();
         List<Epicrisis> epicrisisList;
         try {
@@ -64,8 +67,7 @@ public class EpicrisisServiceImpl implements EpicrisisService {
 
     @Override
     public void update(Epicrisis epicrisis) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        EpicrisisDAO epicrisisDAO = daoProvider.getEpicrisisDAO();
+        EpicrisisDAO epicrisisDAO = provider.getEpicrisisDAO();
         try {
             epicrisisDAO.update(epicrisis);
         } catch (DAOException e) {
@@ -79,8 +81,7 @@ public class EpicrisisServiceImpl implements EpicrisisService {
             logger.log(Level.WARN,patientID+INVALID);
             throw new ServiceException(patientID+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        EpicrisisDAO epicrisisDAO = daoProvider.getEpicrisisDAO();
+        EpicrisisDAO epicrisisDAO = provider.getEpicrisisDAO();
         List<Epicrisis> epicrisisAll;
         try {
             epicrisisAll = epicrisisDAO.getEpicrisisByPatientId(patientID);

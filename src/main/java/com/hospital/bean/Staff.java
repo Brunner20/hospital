@@ -2,6 +2,11 @@ package com.hospital.bean;
 
 import java.util.Objects;
 
+/**
+ * The entity Staff
+ *
+ * @author Anton Brunner
+ */
 public class Staff implements Visitor {
 
     private long id;

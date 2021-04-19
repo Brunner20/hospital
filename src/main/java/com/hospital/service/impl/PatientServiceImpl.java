@@ -24,10 +24,14 @@ public class PatientServiceImpl implements PatientService {
     private static final Logger logger = LogManager.getLogger(PatientServiceImpl.class);
     private static final String INVALID = " is wrong";
 
+    /**
+     * Instance of {@link DAOProvider}
+     */
+    private static final DAOProvider provider  = DAOProvider.getInstance();
+
     @Override
     public List<Patient> getFreePatients() throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        PatientDAO patientDAO = provider.getPatientDAO();
         List<Patient> patients;
         try {
            patients = patientDAO.getFreePatients();
@@ -43,8 +47,7 @@ public class PatientServiceImpl implements PatientService {
             logger.log(Level.WARN,id+INVALID);
             throw new ServiceException(id+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        PatientDAO patientDAO = provider.getPatientDAO();
         List<Patient> patients;
         try {
             patients = patientDAO.getAllPatientsByStaff(id);
@@ -56,8 +59,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> getAll() throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        PatientDAO patientDAO = provider.getPatientDAO();
         List<Patient> patients;
         try {
             patients = patientDAO.getAll();
@@ -73,8 +75,7 @@ public class PatientServiceImpl implements PatientService {
             logger.log(Level.WARN,id+INVALID);
             throw new ServiceException(id+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        PatientDAO patientDAO = provider.getPatientDAO();
         Patient patient;
         try {
             patient = patientDAO.getPatientById(id);
@@ -86,8 +87,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient getPatientByAccount(long accountId) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        PatientDAO patientDAO = provider.getPatientDAO();
         Patient patient;
         try {
             patient = patientDAO.getPatientByAccount(accountId);
@@ -99,8 +99,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void update(Patient patient) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        PatientDAO patientDAO = daoProvider.getPatientDAO();
+        PatientDAO patientDAO = provider.getPatientDAO();
         try {
             patientDAO.update(patient);
         } catch (DAOException e) {

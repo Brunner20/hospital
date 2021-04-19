@@ -19,10 +19,14 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
     private static final Logger logger = LogManager.getLogger(MedicalHistoryServiceImpl.class);
     private static final String INVALID = " is wrong";
 
+    /**
+     * Instance of {@link DAOProvider}
+     */
+    private static final DAOProvider provider  = DAOProvider.getInstance();
+
     @Override
     public void add(MedicalHistory medicalHistory) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        MedicalHistoryDAO medicalHistoryDAO = daoProvider.getMedicalHistoryDAO();
+        MedicalHistoryDAO medicalHistoryDAO = provider.getMedicalHistoryDAO();
         try {
              medicalHistoryDAO.add(medicalHistory);
         } catch (DAOException e) {
@@ -36,8 +40,7 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
           logger.log(Level.WARN,patientId+INVALID);
           throw new ServiceException(patientId+INVALID);
       }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        MedicalHistoryDAO medicalHistoryDAO = daoProvider.getMedicalHistoryDAO();
+        MedicalHistoryDAO medicalHistoryDAO = provider.getMedicalHistoryDAO();
         MedicalHistory medicalHistory;
         try {
             medicalHistory = medicalHistoryDAO.getByPatientId(patientId);
@@ -49,8 +52,7 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 
     @Override
     public void update(MedicalHistory medicalHistory) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        MedicalHistoryDAO medicalHistoryDAO = daoProvider.getMedicalHistoryDAO();
+        MedicalHistoryDAO medicalHistoryDAO = provider.getMedicalHistoryDAO();
         try {
             medicalHistoryDAO.update(medicalHistory);
         } catch (DAOException e) {

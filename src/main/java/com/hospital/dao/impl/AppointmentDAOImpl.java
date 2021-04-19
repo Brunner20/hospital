@@ -24,19 +24,22 @@ public class AppointmentDAOImpl implements AppointmentDAO {
 
     private static final Logger logger = LogManager.getLogger(AppointmentDAOImpl.class);
 
-    private static final String INSERT_APPOINTMENT = "insert into hospital.patient_appointments(date_of_completion,date_of_appointment," +
+    private static final String INSERT_APPOINTMENT = "insert into patient_appointments(date_of_completion,date_of_appointment," +
             "id_patient,id_appointment,id_executor,status,id_staff_appoint ) VALUES (?,?,?,?,?,?,?)";
-    private static final String UPDATE_APPOINTMENT = "update hospital.patient_appointments SET date_of_completion =?,date_of_appointment = ?" +
+    private static final String UPDATE_APPOINTMENT = "update patient_appointments SET date_of_completion =?,date_of_appointment = ?" +
             ",id_patient = ?,id_appointment = ?,id_executor = ?,status = ?,id_staff_appoint = ?, id_epicrisis = ? where id = ?";
 
-    private static final String SELECT_APPOINTMENT_INFO = "select * from hospital.appointments WHERE title = ? and type = ? ";
-    private static final String SELECT_APPOINTMENT_INFO_BY_ID = "select * from hospital.appointments WHERE id = ?  ";
-    private static final String INSERT_APPOINTMENT_INFO = "insert into hospital.appointments(title ,type) values (?,?)";
-    private static final String SELECT_APPOINTMENT_BY_PATIENT = "select * from hospital.patient_appointments where id_patient =?";
-    private static final String SELECT_APPOINTMENT_BY_STAFF = "select * from hospital.patient_appointments where id_executor =? and status = 1";
-    private static final String UPDATE_APPOINTMENT_STATUS = "update hospital.patient_appointments set status = ? where id = ? ";
-    private static final String SELECT_APPOINTMENT_BETWEEN_DATES = "select * from hospital.patient_appointments where id_patient = ? and date_of_appointment  BETWEEN ? and ?";
+    private static final String SELECT_APPOINTMENT_INFO = "select * from appointments WHERE title = ? and type = ? ";
+    private static final String SELECT_APPOINTMENT_INFO_BY_ID = "select * from appointments WHERE id = ?  ";
+    private static final String INSERT_APPOINTMENT_INFO = "insert into appointments(title ,type) values (?,?)";
+    private static final String SELECT_APPOINTMENT_BY_PATIENT = "select * from patient_appointments where id_patient =?";
+    private static final String SELECT_APPOINTMENT_BY_STAFF = "select * from patient_appointments where id_executor =? and status = 1";
+    private static final String UPDATE_APPOINTMENT_STATUS = "update patient_appointments set status = ? where id = ? ";
+    private static final String SELECT_APPOINTMENT_BETWEEN_DATES = "select * from patient_appointments where id_patient = ? and date_of_appointment  BETWEEN ? and ?";
 
+    /**
+     * Instance of {@link ConnectionPool}
+     */
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
     @Override

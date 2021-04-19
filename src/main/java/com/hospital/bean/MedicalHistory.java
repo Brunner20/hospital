@@ -2,6 +2,11 @@ package com.hospital.bean;
 
 import java.util.Objects;
 
+/**
+ * The entity MedicalHistory
+ *
+ * @author Anton Brunner
+ */
 public class MedicalHistory {
 
     private long id;

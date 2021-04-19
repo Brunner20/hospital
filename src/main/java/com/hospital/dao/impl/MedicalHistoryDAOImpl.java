@@ -26,6 +26,9 @@ public class MedicalHistoryDAOImpl implements MedicalHistoryDAO {
     private static final String SELECT_HISTORY = "select * from hospital.medical_history where patient = ?";
     private static final String UPDATE_HISTORY = "update hospital.medical_history SET patient = ? where id = ?";
 
+    /**
+     * Instance of {@link ConnectionPool}
+     */
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
     
     

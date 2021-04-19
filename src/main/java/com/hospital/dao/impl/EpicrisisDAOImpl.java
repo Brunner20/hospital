@@ -28,6 +28,9 @@ public class EpicrisisDAOImpl implements EpicrisisDAO {
     private static final String UPDATE_EPICRISIS = "update hospital.epicrisis set definitive_diagnosis = ?, date_of_issue = ?, history_id = ? where id = ?";
     private static final String SELECT_BY_PATIENT = "select * from hospital.epicrisis where patient = ?";
 
+    /**
+     * Instance of {@link ConnectionPool}
+     */
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
     @Override

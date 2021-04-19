@@ -26,14 +26,20 @@ public class AccountServiceImpl implements AccountService {
     private static final String LOGIN_BUSY = "login is busy";
     private static final String INVALID = "user data invalid";
 
+    /**
+     * Instance of {@link DAOProvider}
+     */
+    private static final DAOProvider provider  = DAOProvider.getInstance();
+
     @Override
     public Account authorization(String login, String password) throws ServiceException {
+        login = login.trim();
+        password = password.trim();
         if(!Validator.isPasswordValid(password)&&!Validator.isLoginValid(login))
         {
             logger.log(Level.WARN,WRONG_LOGIN_OR_PASSWORD);
             throw new DataFormatServiceException(WRONG_LOGIN_OR_PASSWORD);
         }
-        DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
         Account account;
         try {
@@ -55,7 +61,6 @@ public class AccountServiceImpl implements AccountService {
             logger.log(Level.WARN,LOGIN_BUSY);
             throw new LoginIsBusyServiceException(LOGIN_BUSY);
         }
-        DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
         try {
             userDAO.registration(regInfo);
@@ -65,7 +70,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private boolean isFreeLogin(String login) throws ServiceException {
-        DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
         Long id;
         try {
@@ -82,7 +86,6 @@ public class AccountServiceImpl implements AccountService {
             logger.log(Level.WARN, INVALID);
             throw new DataFormatServiceException(INVALID);
         }
-        DAOProvider provider = DAOProvider.getInstance();
         AccountDAO userDAO = provider.getAccountDAO();
         try {
            userDAO.updatePassword(accountId,oldPass,newPass);

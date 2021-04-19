@@ -23,14 +23,18 @@ public class StaffServiceImpl implements StaffService {
     private static final Logger logger = LogManager.getLogger(StaffServiceImpl.class);
     private static final String INVALID = " is wrong";
 
+    /**
+     * Instance of {@link DAOProvider}
+     */
+    private static final DAOProvider provider  = DAOProvider.getInstance();
+
     @Override
     public Staff getStaffById(Long id) throws ServiceException {
         if (!Validator.isIdValid(id)) {
             logger.log(Level.WARN,id+INVALID);
             throw new ServiceException(id+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        StaffDAO staffDAO = daoProvider.getStaffDAO();
+        StaffDAO staffDAO = provider.getStaffDAO();
         Staff staff;
         try {
             staff = staffDAO.getStaffById(id);
@@ -42,8 +46,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Staff getStaffByAccount(long id) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        StaffDAO staffDAO = daoProvider.getStaffDAO();
+        StaffDAO staffDAO = provider.getStaffDAO();
         Staff staff;
         try {
             staff = staffDAO.getStaffByAccount(id);
@@ -57,8 +60,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<Staff> getAllByType(Long typeId) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        StaffDAO staffDAO = daoProvider.getStaffDAO();
+        StaffDAO staffDAO = provider.getStaffDAO();
         List<Staff> allStaff;
         try {
             allStaff = staffDAO.getAllByType(typeId);
@@ -70,8 +72,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void update(Staff staff) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        StaffDAO staffDAO = daoProvider.getStaffDAO();
+        StaffDAO staffDAO = provider.getStaffDAO();
         try {
            staffDAO.update(staff);
         } catch (DAOException e) {

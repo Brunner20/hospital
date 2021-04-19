@@ -3,6 +3,11 @@ package com.hospital.bean;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * The entity Appointment
+ *
+ * @author Anton Brunner
+ */
 public class Appointment {
     private long id;
     private Date dateOfAppointment;

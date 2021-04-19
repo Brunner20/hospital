@@ -4,6 +4,11 @@ package com.hospital.bean;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * The entity Epicrisis
+ *
+ * @author Anton Brunner
+ */
 public class Epicrisis {
 
     private long id;

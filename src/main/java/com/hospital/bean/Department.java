@@ -2,6 +2,11 @@ package com.hospital.bean;
 
 import java.util.Arrays;
 
+/**
+ * The entity Department
+ *
+ * @author Anton Brunner
+ */
 public enum Department {
 
     SURGERY(1),

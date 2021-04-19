@@ -2,6 +2,12 @@ package com.hospital.bean;
 
 import java.util.Arrays;
 
+
+/**
+ * The entity AppointmentStatus
+ *
+ * @author Anton Brunner
+ */
 public enum AppointmentStatus {
 
     APPOINTED(1),

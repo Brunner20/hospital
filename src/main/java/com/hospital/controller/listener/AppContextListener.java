@@ -23,7 +23,7 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
-            PoolProvider.getConnectionPool().init();
+            PoolProvider.getConnectionPool().init("db");
         } catch (ConnectionPoolException e){
             logger.log(Level.FATAL,UNABLE_TO_INIT_POOL);
             throw new RuntimeException(UNABLE_TO_INIT_POOL,e);

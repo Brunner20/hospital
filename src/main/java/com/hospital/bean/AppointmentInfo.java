@@ -2,6 +2,11 @@ package com.hospital.bean;
 
 import java.util.Objects;
 
+/**
+ * The entity AppointmentInfo
+ *
+ * @author Anton Brunner
+ */
 public class AppointmentInfo {
     private long id;
     private String info;

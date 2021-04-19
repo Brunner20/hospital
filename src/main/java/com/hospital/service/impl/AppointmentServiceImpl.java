@@ -29,10 +29,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private static final Logger logger = LogManager.getLogger(AppointmentServiceImpl.class);
     private static final String INVALID = " is wrong";
+
+    /**
+     * Instance of {@link DAOProvider}
+     */
+    private static final DAOProvider provider  = DAOProvider.getInstance();
+
     @Override
     public void addAppointment(Appointment appointment) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        AppointmentDAO appointmentDAO = provider.getAppointmentDAO();
         try {
             appointmentDAO.addAppointment(appointment);
         } catch (DAOException e) {
@@ -46,8 +51,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             logger.log(Level.WARN,title+INVALID);
             throw new DataFormatServiceException(title+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        AppointmentDAO appointmentDAO = provider.getAppointmentDAO();
         AppointmentInfo appointmentInfo;
         try {
           appointmentInfo = appointmentDAO.getAppointmentInfo(title,type);
@@ -59,8 +63,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentDTO> getAllAppointmentsByPatientId(long patientId) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        AppointmentDAO appointmentDAO = provider.getAppointmentDAO();
         List<Appointment> appointmentsByPatient;
         List<AppointmentDTO> dtoList;
         try {
@@ -76,13 +79,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentDTO> getAllAppointmentsByStaffId(long staffId) throws ServiceException {
-
         if(!Validator.isIdValid(staffId)){
             logger.log(Level.WARN,staffId+INVALID);
             throw new ServiceException(staffId+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        AppointmentDAO appointmentDAO = provider.getAppointmentDAO();
         List<Appointment> appointmentsByPatient;
         List<AppointmentDTO> dtoList;
         try {
@@ -101,8 +102,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             logger.log(Level.WARN,appointmentId+INVALID);
             throw new ServiceException(appointmentId+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        AppointmentDAO appointmentDAO = provider.getAppointmentDAO();
         try {
             appointmentDAO.updateAppointmentStatus(appointmentId,appointmentStatus);
         } catch (DAOException e) {
@@ -116,8 +116,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             logger.log(Level.WARN,dateFrom+" "+dateTo+INVALID);
             throw new ServiceException(dateFrom+" "+dateTo+INVALID);
         }
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        AppointmentDAO appointmentDAO = provider.getAppointmentDAO();
         List<Appointment> appointments;
         try {
             appointments = appointmentDAO.getAllAppointmentBetweenDate(dateFrom,dateTo,id);
@@ -129,8 +128,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public void updateAppointmentEpicrisis(List<Appointment> appointmentList, long epicrisisId) throws ServiceException {
-        DAOProvider daoProvider = DAOProvider.getInstance();
-        AppointmentDAO appointmentDAO = daoProvider.getAppointmentDAO();
+        AppointmentDAO appointmentDAO = provider.getAppointmentDAO();
         for(Appointment appointment:appointmentList){
             appointment.setEpicrisisID(epicrisisId);
             try {

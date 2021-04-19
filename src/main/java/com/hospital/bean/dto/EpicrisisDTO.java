@@ -4,6 +4,11 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * data transfer object for {@link com.hospital.bean.Epicrisis} class
+ *
+ * @author Anton Brunner
+ */
 public class EpicrisisDTO {
 
     private long id;

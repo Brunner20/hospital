@@ -2,6 +2,11 @@ package com.hospital.bean;
 
 import java.util.Arrays;
 
+/**
+ * The entity AppointmentType
+ *
+ * @author Anton Brunner
+ */
 public enum AppointmentType {
 
     PREPARATION(1),

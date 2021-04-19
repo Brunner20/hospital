@@ -9,6 +9,9 @@ public final class PoolProvider {
 
     private PoolProvider() {}
 
+    /**
+     * Instance of {@link PoolProvider}
+     */
     private static ConnectionPool  connectionPool = new ConnectionPoolImpl();
 
     public static ConnectionPool getConnectionPool() { return connectionPool;}

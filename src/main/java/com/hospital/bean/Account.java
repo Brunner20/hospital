@@ -2,7 +2,14 @@ package com.hospital.bean;
 
 import java.util.Objects;
 
+
+/**
+ * The entity Account
+ *
+ * @author Anton Brunner
+ */
 public class Account {
+
 
     private long id;
     private String login;

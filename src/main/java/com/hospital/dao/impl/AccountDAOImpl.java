@@ -20,15 +20,18 @@ public class AccountDAOImpl implements AccountDAO {
 
     private static final Logger logger = LogManager.getLogger(AccountDAOImpl.class);
 
-    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM hospital.accounts JOIN hospital.roles ON" +
+    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM accounts JOIN hospital.roles ON" +
             " hospital.accounts.id_role = hospital.roles.id WHERE login = ? and password = ? ";
-    private static final String FIND_USER_BY_LOGIN = "select * from hospital.accounts where login = ?";
-    private static final String FIND_ACCOUNT_BY_ID_AND_PASSWORD = "SELECT * FROM hospital.accounts where id=? and password= ?";
-    private static final String UPDATE_PASSWORD = "update hospital.accounts set password = ? where id = ?";
-    private static final String INSERT_ACCOUNT = "insert into hospital.accounts(login,password,id_role) VALUES (?,?,?)";
-    private static final String INSERT_PATIENT = "insert into hospital.patients(account_id,status) VALUES (?,2)";
-    private static final String INSERT_STAFF = "insert into hospital.staff(firstname,lastname,account) VALUES (?,?,?)";
+    private static final String FIND_USER_BY_LOGIN = "select * from accounts where login = ?";
+    private static final String FIND_ACCOUNT_BY_ID_AND_PASSWORD = "SELECT * FROM accounts where id=? and password= ?";
+    private static final String UPDATE_PASSWORD = "update accounts set password = ? where id = ?";
+    private static final String INSERT_ACCOUNT = "insert into accounts(login,password,id_role) VALUES (?,?,?)";
+    private static final String INSERT_PATIENT = "insert into patients(account_id,status) VALUES (?,2)";
+    private static final String INSERT_STAFF = "insert into staff(firstname,lastname,account) VALUES (?,?,?)";
 
+    /**
+     * Instance of {@link ConnectionPool}
+     */
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
 

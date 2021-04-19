@@ -4,6 +4,9 @@ import com.hospital.dao.connection.ConnectionPool;
 import com.hospital.dao.connection.ConnectionPoolException;
 import com.hospital.dao.connection.resource.DBParameter;
 import com.hospital.dao.connection.resource.DBResourceManager;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,20 +15,54 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 /**
  * The class for working with connection pool
+ *  @author Anton Brunner
  */
 public class ConnectionPoolImpl implements ConnectionPool {
 
-    private BlockingQueue<Connection>  connectionPool;
+
+    private static final Logger logger = LogManager.getLogger(ConnectionPoolImpl.class);
+    /**
+     * Queue for storing free pool connections
+     */
+    private BlockingQueue<Connection> connectionPool;
+
+    /**
+     * Queue for for accounting for the given pool connections
+     */
     private BlockingQueue<Connection> usedConnections;
 
+    /**
+     * Database driver name
+     */
     private String driver;
+
+    /**
+     * URL to get the database connection
+     */
     private String url;
+
+    /**
+     * Database user name to get the database connection
+     */
     private String user;
+
+    /**
+     * Password to get the database connection
+     */
     private String password;
+
+    /**
+     * Number of connections to create
+     */
     private int size;
 
     public ConnectionPoolImpl()  {
+    }
+
+    @Override
+    public void init(String bundleName)throws ConnectionPoolException{
         DBResourceManager resourceManager = DBResourceManager.getInstance();
+        resourceManager.setBundle(bundleName);
         this.driver = resourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = resourceManager.getValue(DBParameter.DB_URL);
         this.user = resourceManager.getValue(DBParameter.DB_USER);
@@ -34,13 +71,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
         try {
             this.size = Integer.parseInt(resourceManager.getValue(DBParameter.DB_POOLSIZE));
         }catch (NumberFormatException e){
+            logger.log(Level.WARN,"pool size error. Creating pool with size 10");
             this.size = 10;
         }
-
-    }
-
-    @Override
-    public void init()throws ConnectionPoolException{
         try {
             Class.forName(driver);
             connectionPool = new ArrayBlockingQueue<>(size);
@@ -78,6 +111,10 @@ public class ConnectionPoolImpl implements ConnectionPool {
         }
     }
 
+    /**
+     * Dispose connection pool
+     * @throws ConnectionPoolException
+     */
     @Override
     public void dispose()throws ConnectionPoolException{
         try {
@@ -86,12 +123,22 @@ public class ConnectionPoolImpl implements ConnectionPool {
             throw new ConnectionPoolException(throwables);
         }
     }
-
+    /**
+     * Clear connection queues
+     *
+     * @throws SQLException  if {@link SQLException} occurs
+     */
     private void clearConnectionQueue() throws SQLException {
         closeConnectionQueue(connectionPool);
         closeConnectionQueue(usedConnections);
     }
 
+
+    /**
+     *  * Close connection queue
+     * @param connectionPool queue {@link BlockingQueue} of {@link Connection} queue to close
+     * @throws SQLException  if {@link SQLException} occurs
+     */
     private void closeConnectionQueue(BlockingQueue<Connection> connectionPool) throws SQLException {
 
         Connection connection;

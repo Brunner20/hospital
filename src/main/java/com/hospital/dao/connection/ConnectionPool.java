@@ -23,7 +23,7 @@ public interface ConnectionPool {
      * Initialize pool of connections
      * @throws ConnectionPoolException when there are problems connecting to the database
      */
-    void init() throws ConnectionPoolException;
+    void init(String bundle) throws ConnectionPoolException;
 
     /**
      * Dispose pool of connection

@@ -2,6 +2,11 @@ package com.hospital.bean;
 
 import java.util.Objects;
 
+/**
+ * The entity UserInfo
+ *
+ * @author Anton Brunner
+ */
 public class UserInfo {
 	
 	private String firstname;

@@ -19,7 +19,7 @@ public interface AccountService {
 
     /**
      * Register a new account
-     * @param regInfo information for registration
+     * @param regInfo information {@link UserInfo} for registration
      * @throws ServiceException if a service exception occurred while processing
      */
     void registration(UserInfo regInfo) throws ServiceException;

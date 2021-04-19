@@ -24,15 +24,18 @@ public class PatientDAOImpl implements PatientDAO {
 
     private static final Logger logger = LogManager.getLogger(PatientDAOImpl.class);
 
-    private static final String UPDATE_PATIENT ="UPDATE hospital.patients SET firstname= ?, lastname = ?, age = ?, " +
+    private static final String UPDATE_PATIENT ="UPDATE patients SET firstname= ?, lastname = ?, age = ?, " +
             " department_id = ?, attending_doctor = ?, status =?, account_id = ?, patient_pic = ? WHERE id = ?";
 
-   private static final String SELECT_PATIENTS = "SELECT * FROM hospital.patients WHERE attending_doctor =?";
-    private static final String GET_FREE_PATIENTS ="select * from hospital.patients where attending_doctor is null and status = 3";
-    private static final String GET_ALL_PATIENTS ="select * from hospital.patients where age is not null";
-    private static final String SELECT_PATIENT_BY_ID = "SELECT * FROM hospital.patients WHERE id =?";
-    private static final String SELECT_PATIENT_BY_ACCOUNT = "SELECT * FROM hospital.patients WHERE account_id =?";
+   private static final String SELECT_PATIENTS = "SELECT * FROM patients WHERE attending_doctor =?";
+    private static final String GET_FREE_PATIENTS ="select * from patients where attending_doctor is null and status = 3";
+    private static final String GET_ALL_PATIENTS ="select * from patients where age is not null";
+    private static final String SELECT_PATIENT_BY_ID = "SELECT * FROM patients WHERE id =?";
+    private static final String SELECT_PATIENT_BY_ACCOUNT = "SELECT * FROM patients WHERE account_id =?";
 
+    /**
+     * Instance of {@link ConnectionPool}
+     */
     private final ConnectionPool connectionPool = PoolProvider.getConnectionPool();
 
     @Override
