@@ -5,10 +5,11 @@ The web application is a hospital system. The user can register as a patient. Th
 Also, the patient can view their appointments and disease history. He can view the information about the traffic in the profile.
 
 A doctor can take a patient for himself for treatment, write out an appointment for him. Execute the appointment and discharge the patient. And also he can view his profile.
+
 The administrator can register a doctor.
 
 ## Roles
-*patient
+* patient
     * Registration
     * Authorization
     * Apply for treatment
@@ -16,7 +17,7 @@ The administrator can register a doctor.
     * View your medical history
     * Update password
     * Update image
-*staff
+* staff
     * Authorization
     * Take a patient for treatment
     * Prescribe an appointment for the patient
@@ -26,7 +27,7 @@ The administrator can register a doctor.
     * Update image
     * Update password
     * View your appointments
-*administrator
+* administrator
     * Authorization
     * Register doctor
     * Register nurse
