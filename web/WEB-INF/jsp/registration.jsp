@@ -42,7 +42,7 @@
 						<label for="login">${login}</label>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="password" class="form-control" name="password" id="passIn"  aria-describedby="passwordHelpBlock" required>
+						<input type="password" class="form-control" name="password" id="passIn"  minlength="6"  aria-describedby="passwordHelpBlock" required>
 						<label for="passIn">${password}</label>
 						<div id="passwordHelpBlock" class="form-text">
 							${describ}

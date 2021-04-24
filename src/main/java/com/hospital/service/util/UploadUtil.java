@@ -32,10 +32,12 @@ public class UploadUtil {
             String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
             File uploads = new File(PATH_TO_STORAGE);
             File file = new File(uploads, fileName);
-            try (InputStream fileContent = part.getInputStream();) {
-                Files.copy(fileContent, file.toPath());
-            } catch (IOException e) {
-                throw new UtilException(e);
+            if(!file.exists()) {
+                try (InputStream fileContent = part.getInputStream();) {
+                    Files.copy(fileContent, file.toPath());
+                } catch (IOException e) {
+                    throw new UtilException(e);
+                }
             }
             path = PATH_TO_STORAGE_IN_USER+fileName;
         }

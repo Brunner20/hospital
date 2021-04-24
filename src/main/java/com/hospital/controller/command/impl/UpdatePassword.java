@@ -31,6 +31,8 @@ public class UpdatePassword  implements Command{
     private static final String ERROR_OLD_PASS = "local.error.invalid_old_password";
     private static final String ERROR_NEW_PASS = "local.error.invalid_new_password";
 
+    private static final String UPDATE_PASSWORD_OK = "local.info.password_updated";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
@@ -60,7 +62,7 @@ public class UpdatePassword  implements Command{
 
             AccountService accountService = provider.getAccountService();
             accountService.updatePassword(accountId,oldPass,newPass);
-
+            session.setAttribute(ATTRIBUTE_INFO_MESSAGE,Arrays.asList(UPDATE_PASSWORD_OK));
             session.setAttribute(ATTRIBUTE_URL,GO_TO_MAIN_PAGE);
             response.sendRedirect(GO_TO_MAIN_PAGE);
         } catch (DataFormatServiceException e){

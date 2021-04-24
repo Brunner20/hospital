@@ -115,7 +115,7 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void updatePassword(long accountId, String oldPass, String newPass) throws DAOException {
         Connection connection = null;
-        Connection connectionForUpdate;
+        Connection connectionForUpdate = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatementForUpdate = null;
 
@@ -141,7 +141,7 @@ public class AccountDAOImpl implements AccountDAO {
             throw new DAOException("find error ",e);
         }finally {
             connectionPool.releaseConnection(connection);
-            connectionPool.releaseConnection(connection);
+            connectionPool.releaseConnection(connectionForUpdate);
             if(preparedStatement!=null){
                 try {
                     preparedStatement.close();

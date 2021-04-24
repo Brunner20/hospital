@@ -35,8 +35,8 @@
                     <label for="lastname">${last}</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <label for="age" class="form-label">${age}</label>
-                    <input type="number" name="age" class="form-control"  min="1" id="age" required />
+                    <input type="number" class="form-control" name="age"  min="1" id="age" required />
+                    <label for="age">${age}</label>
                 </div>
                 <button type="submit" class="btn btn-success m-2">Ok</button>
             </form>
